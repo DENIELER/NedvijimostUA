@@ -1,0 +1,226 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.Services;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Model;
+
+public partial class avertisments_archive : System.Web.UI.Page
+{
+	public int CurrentDateIndex = 0;
+    public DateTime CurrentDateTime;
+    protected static RentAdvertismentsList ResultsToShow = null;
+    protected int ResultsToShowCount = 0;
+
+    protected string ScrollCurrentDate = null;
+    protected List<string> ScrollDatesList = null;
+
+    protected int CellsInRow = 0;
+    protected int DateIndex = 0;
+
+    protected int SectionId = 1;
+    protected List<AdvertismentSection> AdvertismentSections = new List<AdvertismentSection>();
+
+    private const string SessionSavedConjecturedSubpurchases = "SavedConjecturedSubpurchases";
+
+    protected const int CountInRow = 5;
+    
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        var context = new Model.NedvijimostDBEntities();
+
+        LoadSections(context);
+
+        DateTime choosenDateTime = LoadScrollDates(context);
+
+        var advertismentsWorkflow = new AdvertismentsWorkflow(context);
+        AdvertismentsView adversitmentsView = null;
+            //advertismentsWorkflow.LoadAdversitments(
+            //    AdvertismentsState.NotSubpurchase, 
+            //    choosenDateTime.Date, 
+            //    choosenDateTime.Date.AddDays(1), SectionId);
+        if (adversitmentsView != null)
+        {
+            if (adversitmentsView.Advertisments == null || !adversitmentsView.Advertisments.Any())
+            {
+                //adversitmentsView = advertismentsWorkflow.LoadAdversitments(
+                //    AdvertismentsState.NotSubpurchase, 
+                //    choosenDateTime.AddDays(-1).Date, 
+                //    choosenDateTime.Date,
+                //    SectionId);
+            }
+
+            var rentWorkflow = new RentAdvertismentsWorkflow();
+            if (adversitmentsView.Advertisments != null)
+            {
+                ResultsToShow = rentWorkflow.SeparateTakeOffAndRentAdvertisments(ProcessResultsToShow(adversitmentsView.Advertisments));
+            }
+
+            if (ResultsToShow != null && ResultsToShow.RentAdvertisments != null && ResultsToShow.TakeOffAdvertisments != null)
+            {
+                ResultsToShowCount = ResultsToShow.RentAdvertisments.Count() +
+                                     ResultsToShow.TakeOffAdvertisments.Count();
+            }
+            else
+                ResultsToShowCount = 0;
+        }
+
+        if (ResultsToShow != null)
+        {
+            advertismentViewRent.ResultsToShow = ResultsToShow.RentAdvertisments;
+            advertismentViewTakeOff.ResultsToShow = ResultsToShow.TakeOffAdvertisments;
+        }
+    }
+
+    private void LoadSections(Model.NedvijimostDBEntities context)
+    {
+        if (!string.IsNullOrEmpty(Request["section"]))
+            int.TryParse(Request["section"], out SectionId);
+        //--- load advertisment sections
+        var advertismentSectionsWorkflow = new AdvertismentSectionsWorkflow(context);
+        AdvertismentSections = advertismentSectionsWorkflow.LoadSections();
+    }
+
+    private DateTime LoadScrollDates(Model.NedvijimostDBEntities context)
+    {
+        var searchResultsWorkflow = new SearchResultsWorkflow(context);
+        DateTime? requestDate = searchResultsWorkflow.GetDateFromRequest(Request["date"]);
+        List<DateTime> scrollDates = searchResultsWorkflow.GetSearchResultsDates(SectionId);
+
+        //-- set default
+        ScrollCurrentDate = Utils.GetUkranianDateTimeNow().ToString("dd_MM_yyyy");
+        CurrentDateTime = Utils.GetUkranianDateTimeNow();
+        CurrentDateIndex = 0;
+
+        DateTime choosenDateTime = Utils.GetUkranianDateTimeNow();
+        if (scrollDates.Count > 0)
+        {
+            //--- current choosen or last date
+            if (requestDate.HasValue)
+                choosenDateTime = requestDate.Value;
+            else
+                choosenDateTime = scrollDates.FirstOrDefault();
+
+            if (!scrollDates.Any(existingDate => existingDate.Year == choosenDateTime.Year
+                && existingDate.Month == choosenDateTime.Month
+                && existingDate.Day == choosenDateTime.Day))
+            {
+                choosenDateTime = scrollDates.FirstOrDefault();
+            }
+
+            ScrollCurrentDate = choosenDateTime.ToString("dd_MM_yyyy");
+            CurrentDateTime = choosenDateTime;
+
+            ScrollDatesList = new List<string>();
+            foreach (var existingDate in scrollDates)
+                ScrollDatesList.Add(existingDate.ToString("dd_MM_yyyy"));
+
+            if (ScrollDatesList != null)
+            {
+                int curDateIndex = ScrollDatesList.IndexOf(ScrollCurrentDate) + 1;
+                CurrentDateIndex = curDateIndex % CountInRow == 0 
+                    ? curDateIndex / CountInRow - 1 
+                    : curDateIndex / CountInRow;
+            }
+        }
+
+        return choosenDateTime;
+    }
+
+    //private Tuple<string, List<string>> LoadLastRentHouseResult(string date)
+    //{
+    //    var rentSearchResultsDataContext = new RentSearchResultsDataContext();
+    //    var results = from result in rentSearchResultsDataContext.RentSearchResults
+    //                  orderby result.createDate descending
+    //                  select result;
+    //    if (results.Count() > 0)
+    //    {
+    //        var datesList = new List<string>();
+    //        string currentChoosenFile = string.Empty;
+    //        foreach (var result in results)
+    //        {
+    //            string dateFromFileName = GetDateFromFileName(Path.GetFileNameWithoutExtension(result.filename));
+    //            if (dateFromFileName == date)
+    //                currentChoosenFile = result.filename;
+
+    //            datesList.Add(dateFromFileName);
+    //        }
+
+    //        return new Tuple<string, List<string>>(currentChoosenFile, datesList);
+    //    }
+    //    else return new Tuple<string, List<string>>(string.Empty, null);
+    //}
+    //private IEnumerable<AdversitmentsWithPhones> LoadAdvertisments(string filename)
+    //{
+    //    var advertismentsLoading = new AdvertismentsLoading();
+    //    return advertismentsLoading.LoadAdversitments(filename);
+    //}
+
+    protected List<Advertisment> ProcessResultsToShow(List<Advertisment> results)
+    {
+        List<Advertisment> filteredResults = results;//FilterFromSubpurchasesInDatabase(results);
+		
+		var resultsToShow = new List<Advertisment>();
+            
+		foreach (var result in filteredResults)
+		{
+            var phones = (from phone in result.AdvertismentPhones
+                            select phone.phone).ToList();
+			if (phones.Count > 0)
+				resultsToShow.Add(result);
+		}
+			
+		return resultsToShow.Distinct().ToList();
+    }
+
+    [WebMethod(EnableSession = true)]
+    public static bool MarkAsSubpurchase(string subpurchaseIndex, string rentOrTakeOff)
+    {
+        int valueIndex = 0;
+        if (int.TryParse(subpurchaseIndex, out valueIndex))
+        {
+            try
+            {
+                var conjecturedSubpurchase = rentOrTakeOff == "rent"
+                                                 ? ResultsToShow.RentAdvertisments[valueIndex]
+                                                 : ResultsToShow.TakeOffAdvertisments[valueIndex];
+                var phones = (from phone in conjecturedSubpurchase.AdvertismentPhones
+                              select phone.phone).ToList();
+
+                var subpurchasesWorkflow = new SubpurchasesWorkflow();
+                foreach (var phone in phones)
+                {
+                    subpurchasesWorkflow.AddSubpurchasePhone(phone, false);
+                }
+
+                AddConjecturedIntoSession(valueIndex);
+
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+        }
+        else return false;
+
+        return true;
+    }
+
+    private static void AddConjecturedIntoSession(int valueIndex)
+    {
+        var conjecturedSubpurchasesSession = HttpContext.Current.Session[SessionSavedConjecturedSubpurchases] as List<int> ?? new List<int>();
+        conjecturedSubpurchasesSession.Add(valueIndex);
+        HttpContext.Current.Session[SessionSavedConjecturedSubpurchases] = conjecturedSubpurchasesSession;
+    }
+
+    protected List<int> LoadConjecturedFromSession()
+    {
+        return HttpContext.Current.Session[SessionSavedConjecturedSubpurchases] as List<int> ?? new List<int>();
+    }
+    
+}

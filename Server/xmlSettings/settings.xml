@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<settings>
+
+  <phoneFormats>
+    <phoneFormat format="38-xxx-xxx-xx-xx">38-\d{3}-\d{3}-\d{2}-\d{2}</phoneFormat>
+	  <phoneFormat format="+38xxxxxxxxxx">\+38\d{10}</phoneFormat>
+	  <phoneFormat format="38xxxxxxxxxx">38\d{10}</phoneFormat>
+    <phoneFormat format="xxx-xx-x-xx-xx">\d{3}-\d{2}-\d{1}-\d{2}-\d{2}</phoneFormat>
+    <phoneFormat format="8-xxx-xxx-xx-xx">8-\d{3}-\d{3}-\d{2}-\d{2}</phoneFormat>
+    <phoneFormat format="8-xxx-xx-xx-xxx">8-\d{3}-\d{2}-\d{2}-\d{3}</phoneFormat>
+    <phoneFormat format="8xxxxxxxxxx">8\d{10}</phoneFormat>
+    <phoneFormat format="xxxxxxxxxx">\d{10}</phoneFormat>
+    <phoneFormat format="xxxxxxxxx">\d{9}</phoneFormat>
+    <phoneFormat format="xxx xxxxxxx">\d{3} \d{7}</phoneFormat>
+	  <phoneFormat format="xxx xxx xxxx">\d{3} \d{3} \d{4}</phoneFormat>
+    <phoneFormat format="xxx xx xxxx x">\d{3} \d{2} \d{4} \d{1}</phoneFormat>
+    <phoneFormat format="xxx xx xx xxx">\d{3} \d{2} \d{2} \d{3}</phoneFormat>
+    <phoneFormat format="xxx xxx xx xx">\d{3} \d{3} \d{2} \d{2}</phoneFormat>
+    <phoneFormat format="xxx xxx x xxx">\d{3} \d{3} \d{1} \d{3}</phoneFormat>
+    <phoneFormat format="xxx-xxx-xx-xx">\d{3}-\d{3}-\d{2}-\d{2}</phoneFormat>
+    <phoneFormat format="xxx-xx-xxx-xx">\d{3}-\d{2}-\d{3}-\d{2}</phoneFormat>
+    <phoneFormat format="xxx-x-xx-xx-xx">\d{3}-\d{1}-\d{2}-\d{2}-\d{2}</phoneFormat>
+    <phoneFormat format="xxx-xx-xxxx-x">\d{3}-\d{2}-\d{4}-\d{1}</phoneFormat>
+    <phoneFormat format="xxx-xx-xx-xxx">\d{3}-\d{2}-\d{2}-\d{3}</phoneFormat>
+    <phoneFormat format="xxx-xxx-x-xxx">\d{3}-\d{3}-\d{1}-\d{3}</phoneFormat>
+    <phoneFormat format="xxx-xxx-xxx-x">\d{3}-\d{3}-\d{3}-\d{1}</phoneFormat>
+    <phoneFormat format="xxx-x-xxx-xxx">\d{3}-\d{1}-\d{3}-\d{3}</phoneFormat>
+    <phoneFormat format="xxx-xxxx-xxx">\d{3}-\d{4}-\d{3}</phoneFormat>
+    <phoneFormat format="xxx-xxx-xxxx">\d{3}-\d{3}-\d{4}</phoneFormat>
+    <phoneFormat format="xxx-xxxxx-xx">\d{3}-\d{5}-\d{2}</phoneFormat>
+    <phoneFormat format="xxx-xxxxxxx">\d{3}-\d{7}</phoneFormat>
+    <phoneFormat format="xxx xxx-xx-xx">\d{3} \d{3}-\d{2}-\d{2}</phoneFormat>
+    <phoneFormat format="(xxx) xxx-xx-xx">\(\d{3}\) \d{3}-\d{2}-\d{2}</phoneFormat>
+    <phoneFormat format="(xxx)xxx-xx-xx">\(\d{3}\)\d{3}-\d{2}-\d{2}</phoneFormat>
+    <phoneFormat format="(xxx)xxxxxxx">\(\d{3}\)\d{7}</phoneFormat>
+    <phoneFormat format="(xxx) xxxxxxx">\(\d{3}\) \d{7}</phoneFormat>
+    <phoneFormat format="(xxx) xxx-xxxx">\(\d{3}\) \d{3}-\d{4}</phoneFormat>
+    <phoneFormat format="xxx-xx-xx">\d{3}-\d{2}-\d{2}</phoneFormat>
+    <phoneFormat format="xx-xx-xxx">\d{2}-\d{2}-\d{3}</phoneFormat>
+    <phoneFormat format="xx-xx-xx">\d{2}-\d{2}-\d{2}</phoneFormat>
+    <phoneFormat format="xxx-x-xxx">\d{3}-\d{1}-\d{3}</phoneFormat>
+    <phoneFormat format="x-xxx-xxx">\d{1}-\d{3}-\d{3}</phoneFormat>
+    <phoneFormat format="xx-xxx-xx">\d{2}-\d{3}-\d{2}</phoneFormat>
+  </phoneFormats>
+
+  <rentStopSearchWords>
+    <stopWord>квартира</stopWord>
+    <stopWord>квартиры</stopWord>
+    <stopWord>квартиру</stopWord>
+    <stopWord>комната</stopWord>
+    <stopWord>комнаты</stopWord>
+    <stopWord>комнату</stopWord>
+    <stopWord>комн</stopWord>
+    <stopWord>сниму</stopWord>
+    <stopWord>сдам</stopWord>
+    <stopWord>аренда</stopWord>
+    <stopWord>гостинку</stopWord>
+    <stopWord>недвижимость</stopWord>
+    <stopWord>сдается</stopWord>
+    <stopWord>сдать</stopWord>
+    <stopWord>малогобаритка</stopWord>
+    <stopWord>малогабаритка</stopWord>
+    <stopWord>малогабаритку</stopWord>
+    <stopWord>малогобаритку</stopWord>
+    <stopWord>архив газеты премьер</stopWord>
+    <stopWord>риелтер</stopWord>
+    <stopWord>риелтор</stopWord>
+  </rentStopSearchWords>
+
+  <saleStopSearchWords>
+    <stopWord>квартира</stopWord>
+    <stopWord>квартиры</stopWord>
+    <stopWord>квартиру</stopWord>
+    <stopWord>комната</stopWord>
+    <stopWord>комнаты</stopWord>
+    <stopWord>комнату</stopWord>
+    <stopWord>комн</stopWord>
+    <stopWord>куплю</stopWord>
+    <stopWord>продам</stopWord>
+    <stopWord>гостинку</stopWord>
+    <stopWord>недвижимость</stopWord>
+    <stopWord>продается</stopWord>
+    <stopWord>малогобаритка</stopWord>
+    <stopWord>малогабаритка</stopWord>
+    <stopWord>малогабаритку</stopWord>
+    <stopWord>малогобаритку</stopWord>
+    <stopWord>архив газеты премьер</stopWord>
+    <stopWord>риелтер</stopWord>
+    <stopWord>риелтор</stopWord>
+  </saleStopSearchWords>
+
+  <sale_commercialStopSearchWords>
+    <stopWord>квартира</stopWord>
+    <stopWord>квартиры</stopWord>
+    <stopWord>квартиру</stopWord>
+    <stopWord>куплю</stopWord>
+    <stopWord>продам</stopWord>
+    <stopWord>недвижимость</stopWord>
+    <stopWord>продается</stopWord>
+    <stopWord>архив газеты премьер</stopWord>
+    <stopWord>офис</stopWord>
+    <stopWord>риелтер</stopWord>
+    <stopWord>риелтор</stopWord>
+  </sale_commercialStopSearchWords>
+  
+  <rent>
+    <take_off_words>
+      <word>сниму</word>
+      <word>снимет</word>
+      <word>снимем</word>
+	    <word>снимит</word>
+      <word>снять</word>
+      <word>ищу</word>
+      <word>ищет</word>
+    </take_off_words>
+
+    <rent_words>
+      <word>сдам</word>
+      <word>сдаю</word>
+      <word>сдаст</word>
+      <word>сдается</word>
+      <word>сдаеться</word>
+    </rent_words>
+  </rent>
+  
+  <cottagesStopSearchWords>
+	  <stopWord>дом</stopWord>
+    <stopWord>дома</stopWord>
+    <stopWord>дача</stopWord>
+    <stopWord>участок</stopWord>
+    <stopWord>куплю</stopWord>
+    <stopWord>продам</stopWord>
+    <stopWord>недвижимость</stopWord>
+    <stopWord>продается</stopWord>
+    <stopWord>архив газеты премьер</stopWord>
+    <stopWord>риелтер</stopWord>
+    <stopWord>риелтор</stopWord>
+  </cottagesStopSearchWords>
+
+  <remove_images>
+    <remove_image>/Resources/images/without_photo02.jpg</remove_image>
+    <remove_image>/Resources/images/content/brd-shadow-small.png</remove_image>
+    <remove_image>/Resources/images/content/tel-act-ico.png</remove_image>
+    <remove_image>/Resources/images/content/email-ico.png</remove_image>
+    <remove_image>/Resources/images/content/link-ico.png</remove_image>
+    <remove_image>/Resources/images/content/email-act-ico.png</remove_image>
+    <remove_image>/images/noavatar.gif</remove_image>
+    <remove_image>/classes/estobjava-html/icon/region.png</remove_image>
+    <remove_image>/classes/estobjava-html/icon/street.png</remove_image>
+    <remove_image>/classes/estobjava-html/icon/metro-red.png</remove_image>
+    <remove_image>/Resources/images/content/link-act-ico.png</remove_image>
+  </remove_images>
+</settings>

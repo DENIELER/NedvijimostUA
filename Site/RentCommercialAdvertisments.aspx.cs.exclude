@@ -1,0 +1,185 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Model;
+
+public partial class RentCommercialAdvertisments : System.Web.UI.Page
+{
+    #region section variables
+    public enum RentCommercialAdvertismentsSubSection
+    {
+        ArendaOfisov
+    }
+
+    protected RentCommercialAdvertismentsSubSection Subsection { get; set; }
+    protected string SubsectionName { get; set; }
+
+    protected int RentSectionId = 4;
+    protected int[] additionalRentSectionIds = { 5 };
+
+    protected AdvertismentsState AdvertismentsMode { get; set; }
+    #endregion section variables
+
+    protected int AdvertismentsCount { get; set; }
+    protected int AdvertismentsFilteredCount { get; set; }
+    protected List<Advertisment> AdvertismentsToShow { get; set; }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        CapturePageRequestParameters();
+
+        var context = new NedvijimostDBEntities();
+
+        //--- load advertisments
+        var advertismentsView = LoadAdvertisments(context);
+        var additionalAdvertismentsView = LoadAdditionalAdvertisments(context);
+        AdvertismentsCount = advertismentsView.FullCount + additionalAdvertismentsView.FullCount;
+
+        AdvertismentsToShow = new List<Advertisment>();
+        AdvertismentsToShow = FilterAdvWithoutPhones(advertismentsView.Advertisments);
+        if (additionalAdvertismentsView != null)
+        {
+            AdvertismentsToShow.AddRange(FilterAdvWithoutPhones(
+                    SeparateAdditionalAdvertisments(Subsection, additionalAdvertismentsView.Advertisments)
+                ));
+        }
+        AdvertismentsFilteredCount = AdvertismentsToShow != null
+            ? AdvertismentsToShow.Count()
+            : 0;
+
+        AdvertismentsView.ResultsToShow = AdvertismentsToShow;
+    }
+
+    private List<Advertisment> SeparateAdditionalAdvertisments(RentCommercialAdvertismentsSubSection Subsection, List<Advertisment> advertisments)
+    {
+        var rentWorkflow = new RentAdvertismentsWorkflow();
+        var separateResult = rentWorkflow.SeparateSaleAndRentAdvertisments(advertisments);
+        if (separateResult != null
+            && separateResult.RentAdvertisments != null)
+        {
+            switch (Subsection)
+            {
+                case RentCommercialAdvertismentsSubSection.ArendaOfisov:
+                default:
+                    return separateResult.RentAdvertisments;
+            }
+        }
+        else
+            return null;        
+    }
+    private List<Advertisment> SeparateAdvertisments(RentCommercialAdvertismentsSubSection Subsection, List<Advertisment> advertisments)
+    {
+        return null;
+    }
+    private AdvertismentsView LoadAdvertisments(NedvijimostDBEntities context)
+    {
+        return null;
+
+        //var advertismentsWorkflow = new AdvertismentsWorkflow(context);
+        //var adversitmentsAndFullParsedCount = advertismentsWorkflow.LoadTodayAdversitments(
+        //    AdvertismentsMode,
+        //    RentSectionId);
+        //if (adversitmentsAndFullParsedCount == null
+        //    || (adversitmentsAndFullParsedCount != null && adversitmentsAndFullParsedCount.Advertisments != null && adversitmentsAndFullParsedCount.Advertisments.All(a => a.isSpecial)))
+        //{
+        //    adversitmentsAndFullParsedCount = advertismentsWorkflow.LoadYesterdayAdversitments(
+        //            AdvertismentsMode,
+        //            RentSectionId);
+        //}
+
+        //return adversitmentsAndFullParsedCount;
+    }
+    private AdvertismentsView LoadAdditionalAdvertisments(NedvijimostDBEntities context)
+    {
+        return null;
+
+        //var advertismentsWorkflow = new AdvertismentsWorkflow(context);
+        //AdvertismentsView view = null;
+        //foreach (var sectionId in additionalRentSectionIds)
+        //{
+        //    if (view == null)
+        //    {
+        //        view = advertismentsWorkflow.LoadTodayAdversitments(
+        //            AdvertismentsMode,
+        //            sectionId);
+        //    }
+        //    else
+        //    {
+        //        var nextView = advertismentsWorkflow.LoadTodayAdversitments(
+        //            AdvertismentsMode,
+        //            sectionId);
+
+        //        view.Advertisments.AddRange(nextView.Advertisments);
+        //        view.Date = view.Date > nextView.Date ? view.Date : nextView.Date;
+        //        view.FullCount += nextView.FullCount;
+        //    }
+        //}
+
+        //return view;
+    }
+    private void CapturePageRequestParameters()
+    {
+        string sectionName = null;
+        if (Page.RouteData.Values["sectionName"] != null)
+            sectionName = Page.RouteData.Values["sectionName"].ToString();
+
+        switch (sectionName)
+        {
+            case "Arenda-ofisov":
+            default:
+                Subsection = RentCommercialAdvertismentsSubSection.ArendaOfisov;
+                SubsectionName = "Аренда офисов";
+                break;
+        }
+
+        string advertismentsMode = null;
+        if (Page.RouteData.Values["SubpurchaseMode"] != null)
+            advertismentsMode = Page.RouteData.Values["SubpurchaseMode"].ToString();
+        switch (advertismentsMode)
+        {
+            case "Vkluchaya-posrednikov":
+                AdvertismentsMode = AdvertismentsState.SubpurchaseWithNotSubpurchase;
+                lnkWithSubpurchases.InnerText = Resources.Resource.WithSubpurchasesLinkText;
+                lnkWithSubpurchases.HRef = Page.GetRouteUrl("Route_RentCommercialSection", new System.Web.Routing.RouteValueDictionary()
+                {
+                    {"sectionName", sectionName},
+                    {"SubpurchaseMode", "Bez-posrednikov"}
+                });
+                //AdvertismentsView.NotShowSubpurchaseCheckbox = true;
+                break;
+            case "Bez-posrednikov":
+            default:
+                AdvertismentsMode = AdvertismentsState.NotSubpurchase;
+                lnkWithSubpurchases.InnerText = Resources.Resource.WithoutSubpurchasesLinkText;
+                lnkWithSubpurchases.HRef = Page.GetRouteUrl("Route_RentCommercialSection", new System.Web.Routing.RouteValueDictionary()
+                {
+                    {"sectionName", sectionName},
+                    {"SubpurchaseMode", "Vkluchaya-posrednikov"}
+                });
+                //AdvertismentsView.NotShowSubpurchaseCheckbox = false;
+                break;
+        }
+    }
+
+    private List<Advertisment> FilterAdvWithoutPhones(List<Advertisment> results)
+    {
+        if (results == null)
+            return null;
+
+        List<Advertisment> filteredResults = results;//FilterFromSubpurchasesInDatabase(results);
+        var resultsToShow = new List<Advertisment>();
+
+        foreach (var result in filteredResults)
+        {
+            var phones = (from phone in result.AdvertismentPhones
+                            select phone.phone).ToList();
+            if (phones.Count > 0)
+                resultsToShow.Add(result);
+        }
+
+        return resultsToShow.Distinct().ToList();
+    }
+}

@@ -1,0 +1,162 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="AdvertismentMaster.master.cs" Inherits="AdvertismentMaster" MasterPageFile="Site.master"%>
+
+<asp:Content runat="server" ContentPlaceHolderID="Title">
+    <asp:ContentPlaceHolder runat="server" ID="Title"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content runat="server" ContentPlaceHolderID="Head">
+    <asp:ContentPlaceHolder runat="server" ID="Head"></asp:ContentPlaceHolder>
+</asp:Content>
+
+
+<asp:Content runat="server" ContentPlaceHolderID="Body">
+    <div id="row-fluid">
+        <div class="span8">
+            <asp:ContentPlaceHolder runat="server" ID="Body"></asp:ContentPlaceHolder>
+        </div>
+            
+        <div class="span4">
+            <p>
+                Вы также можете добавить свое объявление об аренде или продаже недвижимости на наш сайт:
+            </p>
+            <div style="text-align: center;">
+                <a href="<%= ResolveUrl("~/add_advertisment.aspx") %>" class="add_advertisment_mainpage_button button orange">Добавить объявление</a>
+            </div>
+
+            <%--<h3 class="block_header" style="margin-top: 10px;">Сотрудничество<hr /></h3>
+            <p>
+                На специальных условиях мы готовы предоставлять отфильтрованные объявления и базы посредников агенствам недвижимости, 
+                для более подробной информации обращайтесь по электронной почте к нам: <a href="mailto:support@nedvijimost-ua.com">support@nedvijimost-ua.com</a>
+            </p>--%>
+            
+            <%--<div id="AdvertismentsBlock" class="advertisment" style="margin: 20px 0;">
+                <script type="text/javascript"><!--
+                    google_ad_client = "ca-pub-5891602113354577";
+                    /* Баннер на WithMe квадрат */
+                    google_ad_slot = "1289867380";
+                    google_ad_width = 336;
+                    google_ad_height = 280;
+                    //-->
+                </script>
+                <script type="text/javascript"
+                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                </script>
+            </div>--%>
+            <%--<div id="SomeNews" class="advertisment" style="margin: 20px 0; height:200px;">
+                <h3>Новости</h3>
+
+                <h5>Арендатор и арендодатель, проблемы при аренде квартиры</h5>
+                <p>
+                    <a href="/News/arendator-i-arendodatel-problemi-i-vzaimootnosheniya.aspx" title="Арендатор и арендодатель - проблемы и взаимоотношения при аренде квартиры">
+                        <img src="/img/uridicheskie-aspekti-arendi-kvartir.jpg" alt="Арендатор и арендодатель - проблемы и взаимоотношения при аренде квартиры" style="float:left; margin-bottom: 10px; margin-right: 10px; height: 100px;"/>
+                    </a>
+                    Узнай о проблемах, с которыми сталкиваются 
+                    арендодатель и арендатор при аренде квартиры в Украине. 
+                    <a href="/News/arendator-i-arendodatel-problemi-i-vzaimootnosheniya.aspx" title="Арендатор и арендодатель - проблемы и взаимоотношения при аренде квартиры">Читать дальше..</a>
+                </p>
+
+
+            </div>--%>
+
+            <%--<h3 class="block_header" style="margin-top: 10px;">Источники<hr /></h3>
+            <table id="SourcesBlock">
+                <tr>
+                    <td><img src="images/premier.ico" alt="Рекламно-информационный портал Премьер" width="16" height="16"/></td>
+                    <td><noindex><a rel="nofollow" href="http://premier.in.ua">Рекламно-информационный портал "Премьер"</a></noindex></td>
+                </tr>
+
+                <tr>
+                    <td><img src="images/xk5.ico" alt="Харьковский Курьер" width="16" height="16"/></td>
+                    <td><noindex><a rel="nofollow" href="http://xk5.com.ua/">Харьковский Курьер</a></noindex></td>
+                </tr>
+
+                <tr>
+                    <td><img src="images/xpeklama.ico" alt="Харьковская Реклама" width="16" height="16"/></td>
+                    <td><noindex><a rel="nofollow" href="http://xp.kharkov.ua/">Харьковская Реклама</a></noindex></td>
+                </tr>
+            </table>--%>
+
+            <%--<h3 class="block_header" style="margin-top: 10px;">Мы в Twitter<hr /></h3>--%>
+            <%--<script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
+            <script>
+                new TWTR.Widget({
+                    version: 2,
+                    type: 'profile',
+                    rpp: 7,
+                    interval: 30000,
+                    width: 336,
+                    height: 300,
+                    theme: {
+                        shell: {
+                            background: '#e3e3e3',
+                            color: '#8a8a8a'
+                        },
+                        tweets: {
+                            background: '#ffffff',
+                            color: '#333333',
+                            links: '#0f6894'
+                        }
+                    },
+                    features: {
+                        scrollbar: false,
+                        loop: false,
+                        live: true,
+                        behavior: 'all'
+                    }
+                }).render().setUser('WithMe_Houses').start();
+            </script>--%>
+
+            <asp:ContentPlaceHolder runat="server" ID="RightColumn"></asp:ContentPlaceHolder>
+
+            <div id="VkontakteNofityDiv"></div>
+            <h3 class="block_header" style="margin-top: 10px;" id="VkontakteGroupHeader">Группа Вконтакте<hr /></h3>
+            <div id="VkontakteGroupBlock">
+                <!-- VK Widget -->
+                <div id="vk_groups"></div>
+                <script type="text/javascript">
+                    VK.Widgets.Group("vk_groups", { mode: 2, width: "328", height: "350" }, 43123714);
+                </script>
+
+                <div id="VkontakteGroupBlockHiddenPart" style="visibility: hidden; text-align: center; margin-top: 30px;">
+                    <div style="width: 16px; margin: 0 auto;">
+                        <img src="/img/arrow_up.png" style="width: 16px; height:16px;" alt="Подписывайтесь"/>
+                    </div>
+                    <span style="color:red; font-family: 'Helvetica'; font-size: 1.2em;">Подписывайтесь на новости</span>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                $(window).scroll(function () {
+                    if ($(window).scrollTop() <= $('#VkontakteNofityDiv').offset().top) {
+                        $('#VkontakteGroupHeader').css({
+                            'position' : 'inherit'
+                        });
+
+                        $('#VkontakteGroupBlock').css({
+                            'position': 'inherit'
+                        });
+
+                        $('#VkontakteGroupBlockHiddenPart').css({
+                            'visibility': 'hidden'
+                        });
+                    } else {
+                        $('#VkontakteGroupHeader').css({
+                            'position': 'fixed',
+                            'top' : '10px'
+                        });
+
+                        $('#VkontakteGroupBlock').css({
+                            'position': 'fixed',
+                            'top': '90px'
+                        });
+
+                        $('#VkontakteGroupBlockHiddenPart').css({
+                            'visibility': 'visible'
+                        });
+                    }
+                });
+            </script>
+        </div>
+    </div>
+</asp:Content>
+

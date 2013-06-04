@@ -1,0 +1,82 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Threading;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class Processor_SaleHousesWebFilter : System.Web.UI.Page
+{
+    private const string AdvertismentSectionCode = "sale";
+
+    private Log _log;
+    private string _logFileName = @"~/Logs/salehousefilter.log";
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack
+            && !ProcessorController.IsSaleHousesWebFilterExecuted
+            && !string.IsNullOrWhiteSpace(Request["password"])
+            && Request["password"] == "gtycbz")
+        {
+            try
+            {
+                ProcessorController.IsSaleHousesWebFilterExecuted = true;
+
+                _log = new Log(_logFileName);
+
+                _log.WriteLog("---------------------------------------------------------------------------" +
+                             Environment.NewLine +
+                             "Start Sale Houses web filter processing.");
+                var Long = new LongRun(FilterAllSites);
+                var thread = new Thread(new ThreadStart(Long));
+
+                var jobHost = new JobHost();
+                jobHost.DoWork(thread.Start);
+                //IAsyncResult result = Long.BeginInvoke(Callback, null);
+
+            }
+            catch (Exception exc)
+            {
+                _log.WriteLog("Error! " + exc.Message);
+            }
+        }
+    }
+
+    private void Callback(IAsyncResult ar)
+    {
+        var Result = (AsyncResult)ar;
+        var Long = (LongRun)Result.AsyncDelegate;
+        Long.EndInvoke(Result);
+    }
+
+    public delegate void LongRun();
+
+    private void FilterAllSites()
+    {
+        try
+        {
+            var context = new Model.NedvijimostDBEntities();
+
+            var advertismentsWorkflow = new AdvertismentsWorkflow(context);
+            var adversitmentsView = advertismentsWorkflow.LoadTodayAdversitments(AdvertismentsState.JustParsed, AdvertismentSectionCode);
+            
+            if (adversitmentsView != null)
+            {
+                var advertsProcessing = new AdvertsProcessing(context);
+                advertsProcessing.Log = _log;
+                var adversitmentsWithoutSubpurchasers = advertsProcessing.FilterSubpurchasers(adversitmentsView.Advertisments, AdvertismentSectionCode);
+            }
+        }
+        catch (Exception e)
+        {
+            _log.WriteLog("Web Filter, Sale Houses Error! Common error. " + e.Message + ". Trace:" + e.StackTrace);
+        }
+        finally
+        {
+            ProcessorController.IsSaleHousesWebFilterExecuted = false;
+        }
+    }
+}

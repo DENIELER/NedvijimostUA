@@ -1,0 +1,216 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="avertisments_archive.aspx.cs" Inherits="avertisments_archive" MasterPageFile="AdvertismentMaster.master" %>
+
+<%@ Register tagPrefix="control" tagName="AdvertismentsViewControl" src="Controls/AdvertismentsViewControl.ascx" %>
+
+<asp:Content runat="server" ContentPlaceHolderID="Head">
+    <title>Недвижимость-UA - <%= CurrentDateTime.ToString("dd_MM_yyyy") %> Все объявления аренды квартир в Харькове без посредников</title>
+
+    <meta name="description" content="Полный каталог объявлений об аренде квартир в Харькове БЕЗ посредников за <%= CurrentDateTime.ToString("dd_MM_yyyy") %>. Только у нас вы найдете самые свежие объявления от хозяев квартир Харькова и снимите свою без участия посредников." />
+    <meta name="keywords" content="Весь каталог, объявления, сдам, сниму, квартира в Харькове, Харьков, аренда, квартир, без посредников" />
+    
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $.easing.custom = function (x, t, b, c, d) {
+                var s = 1.70158;
+                if ((t /= d / 2) < 1) return c / 2 * (t * t * (((s *= (0)) + 1) * t - s)) + b;
+                return c / 2 * ((t -= 2) * t * (((s *= (1.525)) + 1) * t + s) + 2) + b;
+            };
+
+            $("#divScrollWithDates").scrollable({ easing: 'custom', speed: 800, circular: false });
+
+            $("#divScrollWithDates").scrollable().seekTo(<%= CurrentDateIndex %>);
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        function checkboxIsSubpurchase(subpurchaseIndex, val, rentOrTakeOff) {
+            if (val.checked) {
+                if (confirm("Вы уверены, что данный пользователь является посредником?")) {
+                    val.disabled = true;
+
+                    $.ajax({
+                        type: "POST",
+                        url: "avertisments_archive.aspx/MarkAsSubpurchase",
+                        data: "{'subpurchaseIndex': '" + subpurchaseIndex + "', rentOrTakeOff: '" + rentOrTakeOff + "'}",
+                        contentType: "application/json;charset=urf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            if (result) {
+                                $("#advertisment_" + rentOrTakeOff + "_" + subpurchaseIndex).fadeOut(1500);
+                            } else {
+                                $("#advertisment_" + rentOrTakeOff + "_" + subpurchaseIndex + ".phonesDiv").html("<span style=\"color:red;\">Извините, произошла ошибка. Попробуйте еще раз.</span>");
+                            }
+                        }
+                    });
+                } else {
+                    val.checked = false;
+                }
+            }
+        }
+    </script>
+</asp:Content>
+
+<asp:Content runat="server" ContentPlaceHolderID="Body">
+    <form id="MainForm" runat="server">
+        <div class="row-fluid">
+            <ul class="nav nav-pills">
+                <%
+                    foreach (var section in AdvertismentSections)
+                    {
+                        string paramSeparatorUrl = string.Empty;
+                        if(string.IsNullOrEmpty(Request.Url.Query))
+                            paramSeparatorUrl = "section=" + section.Id;
+                        else
+                        {
+                            NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(Request.Url.Query);
+                            if (!string.IsNullOrEmpty(queryString["section"]))
+                            {
+                                queryString["section"] = section.Id.ToString();
+                            }
+                            else
+                                queryString.Add("section", section.Id.ToString());
+
+                            paramSeparatorUrl = queryString.ToString();
+                        }                            
+                            
+                        if (section.Id == SectionId)
+                        {
+                        %><li class="active"><a href="<%= Request.Url.AbsolutePath + "?" + paramSeparatorUrl %>"><%= section.displayName %></a></li><%   
+                        }else
+                        {
+                        %><li><a href="<%= Request.Url.AbsolutePath + "?" + paramSeparatorUrl %>"><%= section.displayName %></a></li><%
+                        }
+                    }
+                %>
+            </ul>
+        </div>
+
+        <div runat="server" id="pnlSites">
+            <h2 class="block_header">Весь архив объявлений <hr/></h2>
+            <p>
+                Вашему вниманию представлен полный архив объявлений аренды квартир и недвижимости в городе Харькове БЕЗ посредников. 
+                Советуем вам выбирать наиболее свежие объявления (1-2 дня) в связи с динамичностью рынка аренды квартир и недвижимости 
+                в Харькове. Желаем вам найти свой уютный уголок наиболее выгодно и удобно.
+            </p>
+
+            <div id="DatesScroll">
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="width: 35px;text-align: left;">
+                            <a class="prev"><img src="images/site/scroll_arrow_left.png" alt="Крутить влево"/></a>
+                        </td>
+                        
+                        <td>
+                            <div id="divScrollWithDates">
+                                <div class="scroll_items" runat="server" id="pnlScrollDateLinks">
+                                    <!-- Ссылки на даты объявлений -->
+                                    <% if(ScrollDatesList != null)
+                                       foreach (var date in ScrollDatesList)
+                                       {
+                                            DateIndex++;
+                                                                            
+                                            if (CellsInRow == 0)
+                                            { %>
+                                        <div class="scroll_item">
+                                            <% }
+
+                                           string paramSeparatorUrl = string.Empty;
+                                           if (string.IsNullOrEmpty(Request.Url.Query))
+                                               paramSeparatorUrl = "date=" + date;
+                                           else
+                                           {
+                                               NameValueCollection queryString = System.Web.HttpUtility.ParseQueryString(Request.Url.Query);
+                                               if (!string.IsNullOrEmpty(queryString["date"]))
+                                               {
+                                                   queryString["date"] = date;
+                                               }
+                                               else
+                                                   queryString.Add("date", date);
+
+                                               paramSeparatorUrl = queryString.ToString();
+                                           }                           
+                                                                         
+                                            if (ScrollCurrentDate == date)
+                                                {%>
+                                            <a class="choosen" href="<%= ResolveUrl("/avertisments_archive.aspx?" + paramSeparatorUrl) %>"><%= date %></a>
+                                                <%}else{ 
+                                                %>
+                                            <a href="<%= ResolveUrl("/avertisments_archive.aspx?" + paramSeparatorUrl) %>"><%= date %></a>
+                                                <% }
+                                                CellsInRow++;
+                                                if(CountInRow == CellsInRow || ScrollDatesList[ScrollDatesList.Count - 1] == date)
+                                                {
+                                                    CellsInRow = 0;
+                                                %>
+                                        </div>
+                                                <%} 
+                                        }%>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td style="width: 35px;text-align: right;">
+                                <a class="next"><img src="images/site/scroll_arrow_right.png" alt="Крутить вправо"/></a>
+                            </td>
+                        </tr>
+                </table>
+            </div>
+
+            <div>
+                <div class="row-fluid" style="margin-top: 20px">
+                    <div class="span4">
+                        <div>Количество объявлений: </div>
+                    </div>
+                    <div class="span5">
+                        <div><%= ResultsToShowCount %></div>
+                    </div>
+                </div>
+            </div>
+            
+            <% if(SectionId == 1)
+               { %>
+            <ul class="nav nav-tabs" id="advertismentsTab" style="margin-top: 20px;">
+                <li class="active"><a href="#rent" data-toggle="tab">Сдам</a></li>
+                <li><a href="#takeoff" data-toggle="tab">Сниму</a></li>
+            </ul>
+            <% } %>
+                                            
+            <div class="tab-content">
+                <div class="tab-pane active" id="rent">
+                    <control:AdvertismentsViewControl runat="server" ID="advertismentViewRent"  />
+                </div>    
+               
+                <% if(SectionId == 1)
+               { %>                             
+                <div class="tab-pane" id="takeoff">
+                    <control:AdvertismentsViewControl runat="server" ID="advertismentViewTakeOff" SectionId="1" />
+                </div>   
+                <% } %>
+            </div>
+                                        
+            <script>
+                $(function () {
+                    $('#advertismentsTab a:first').tab('show');
+                })
+            </script>
+        </div>    
+    </form>
+    
+    <!-- modal-gallery is the modal dialog used for the image gallery -->
+    <div id="modal-gallery" class="modal modal-gallery hide fade">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h3 class="modal-title"></h3>
+        </div>
+        <div class="modal-body"><div class="modal-image"></div></div>
+        <div class="modal-footer">
+            <a class="btn btn-info modal-prev"><i class="icon-arrow-left icon-white"></i> Назад</a>
+            <a class="btn btn-primary modal-next">Дальше <i class="icon-arrow-right icon-white"></i></a>
+        </div>
+    </div>
+    
+    <script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
+    <script src="/js/bootstrap-image-gallery.min.js"></script>
+</asp:Content>

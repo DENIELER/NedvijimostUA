@@ -1,0 +1,749 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NedvijimostDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="NedvijimostDBModelStoreContainer">
+    <EntitySet Name="SubPurchasesList" EntityType="NedvijimostDBModel.Store.SubPurchasesList" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Advertisments" EntityType="NedvijimostDBModel.Store.Advertisments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AdvertismentsPhotoes" EntityType="NedvijimostDBModel.Store.AdvertismentsPhotoes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AdvertismentSections" EntityType="NedvijimostDBModel.Store.AdvertismentSections" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AdvertismentPhones" EntityType="NedvijimostDBModel.Store.AdvertismentPhones" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SearchResults" EntityType="NedvijimostDBModel.Store.SearchResults" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="WebSearchFilterAdvertisments" EntityType="NedvijimostDBModel.Store.WebSearchFilterAdvertisments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SubPurchases" EntityType="NedvijimostDBModel.Store.SubPurchases" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SubPurchasePhones" EntityType="NedvijimostDBModel.Store.SubPurchasePhones" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="viewAdvertismentPhotos" EntityType="NedvijimostDBModel.Store.viewAdvertismentPhotos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Articles" EntityType="NedvijimostDBModel.Store.Articles" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="AdvertismentAdvertismentsPhoto" Association="NedvijimostDBModel.Store.AdvertismentAdvertismentsPhoto">
+      <End Role="Advertisment" EntitySet="Advertisments" />
+      <End Role="AdvertismentsPhoto" EntitySet="AdvertismentsPhotoes" />
+    </AssociationSet>
+    <AssociationSet Name="AdvertismentAdvertismentSection" Association="NedvijimostDBModel.Store.AdvertismentAdvertismentSection">
+      <End Role="Advertisment" EntitySet="Advertisments" />
+      <End Role="AdvertismentSection" EntitySet="AdvertismentSections" />
+    </AssociationSet>
+    <AssociationSet Name="AdvertismentAdvertismentPhone" Association="NedvijimostDBModel.Store.AdvertismentAdvertismentPhone">
+      <End Role="Advertisment" EntitySet="Advertisments" />
+      <End Role="AdvertismentPhone" EntitySet="AdvertismentPhones" />
+    </AssociationSet>
+    <AssociationSet Name="SearchResultAdvertisment" Association="NedvijimostDBModel.Store.SearchResultAdvertisment">
+      <End Role="SearchResult" EntitySet="SearchResults" />
+      <End Role="Advertisment" EntitySet="Advertisments" />
+    </AssociationSet>
+    <AssociationSet Name="SearchResultAdvertismentSection" Association="NedvijimostDBModel.Store.SearchResultAdvertismentSection">
+      <End Role="SearchResult" EntitySet="SearchResults" />
+      <End Role="AdvertismentSection" EntitySet="AdvertismentSections" />
+    </AssociationSet>
+    <AssociationSet Name="SubPurchaseSubPurchasePhone" Association="NedvijimostDBModel.Store.SubPurchaseSubPurchasePhone">
+      <End Role="SubPurchase" EntitySet="SubPurchases" />
+      <End Role="SubPurchasePhone" EntitySet="SubPurchasePhones" />
+    </AssociationSet>
+    <AssociationSet Name="AdvertismentSubPurchase" Association="NedvijimostDBModel.Store.AdvertismentSubPurchase">
+      <End Role="Advertisment" EntitySet="Advertisments" />
+      <End Role="SubPurchase" EntitySet="SubPurchases" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="SubPurchasesList">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="phone" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="name" Type="varchar" Nullable="true" MaxLength="30" />
+    <Property Name="surname" Type="varchar" Nullable="true" MaxLength="30" />
+    <Property Name="not_checked" Type="bit" Nullable="true" />
+    <Property Name="createDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Advertisments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="text" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="createDate" Type="datetime" Nullable="false" />
+    <Property Name="modifyDate" Type="datetime" Nullable="false" />
+    <Property Name="searchresult_id" Type="int" Nullable="true" />
+    <Property Name="link" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="siteName" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="subpurchaseAdvertisment" Type="bit" Nullable="false" DefaultValue="true" />
+    <Property Name="not_realestate" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="not_show_advertisment" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="isSpecial" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="isSpecialDateTime" Type="datetime" Nullable="true" />
+    <Property Name="AdvertismentSection_Id" Type="int" Nullable="false" />
+    <Property Name="SubPurchase_Id" Type="uniqueidentifier" Nullable="true" />
+  </EntityType>
+  <EntityType Name="AdvertismentsPhotoes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="filename" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="createDate" Type="datetime" Nullable="false" />
+    <Property Name="Advertisment_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AdvertismentSections">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="code" Type="nvarchar" Nullable="false" MaxLength="30" />
+    <Property Name="displayName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="friendlyUrl" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="AdvertismentPhones">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="phone" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="AdvertismentId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SearchResults">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="createDate" Type="datetime" Nullable="false" />
+    <Property Name="allParsedAdvertismentsCount" Type="int" Nullable="false" />
+    <Property Name="modifyDate" Type="datetime" Nullable="false" />
+    <Property Name="AdvertismentSection_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WebSearchFilterAdvertisments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="text" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="title" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="createDate" Type="datetime" Nullable="false" />
+    <Property Name="subPurchasePhone" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubPurchases">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="name" Type="nvarchar" Nullable="true" MaxLength="30" />
+    <Property Name="surname" Type="nvarchar" Nullable="true" MaxLength="30" />
+    <Property Name="not_checked" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="createDate" Type="datetime" Nullable="false" />
+    <Property Name="modifyDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubPurchasePhones">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="phone" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="SubPurchaseId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="createDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="viewAdvertismentPhotos">
+    <Key>
+      <PropertyRef Name="PhotoId" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="text" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="createDate" Type="datetime" Nullable="false" />
+    <Property Name="link" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="siteName" Type="nvarchar" Nullable="true" MaxLength="100" />
+    <Property Name="subpurchaseAdvertisment" Type="bit" Nullable="false" />
+    <Property Name="SubPurchase_Id" Type="uniqueidentifier" Nullable="true" />
+    <Property Name="PhotoId" Type="int" Nullable="false" />
+    <Property Name="PhotoFileName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PhotoCreateDate" Type="datetime" Nullable="true" />
+    <Property Name="SectionCode" Type="nvarchar" Nullable="false" MaxLength="30" />
+    <Property Name="SectionDisplayName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SectionFriendlyUrl" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Articles">
+    <Key>
+      <PropertyRef Name="article_id" />
+    </Key>
+    <Property Name="article_id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="header" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="text" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="createDate" Type="datetime" Nullable="false" />
+    <Property Name="author" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="link" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="keywords" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="AdvertismentAdvertismentsPhoto">
+    <End Role="Advertisment" Type="NedvijimostDBModel.Store.Advertisments" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AdvertismentsPhoto" Type="NedvijimostDBModel.Store.AdvertismentsPhotoes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Advertisment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AdvertismentsPhoto">
+        <PropertyRef Name="Advertisment_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AdvertismentAdvertismentSection">
+    <End Role="Advertisment" Type="NedvijimostDBModel.Store.Advertisments" Multiplicity="*" />
+    <End Role="AdvertismentSection" Type="NedvijimostDBModel.Store.AdvertismentSections" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="AdvertismentSection">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Advertisment">
+        <PropertyRef Name="AdvertismentSection_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AdvertismentAdvertismentPhone">
+    <End Role="Advertisment" Type="NedvijimostDBModel.Store.Advertisments" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AdvertismentPhone" Type="NedvijimostDBModel.Store.AdvertismentPhones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Advertisment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AdvertismentPhone">
+        <PropertyRef Name="AdvertismentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SearchResultAdvertisment">
+    <End Role="SearchResult" Type="NedvijimostDBModel.Store.SearchResults" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Advertisment" Type="NedvijimostDBModel.Store.Advertisments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SearchResult">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Advertisment">
+        <PropertyRef Name="searchresult_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SearchResultAdvertismentSection">
+    <End Role="SearchResult" Type="NedvijimostDBModel.Store.SearchResults" Multiplicity="*" />
+    <End Role="AdvertismentSection" Type="NedvijimostDBModel.Store.AdvertismentSections" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="AdvertismentSection">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SearchResult">
+        <PropertyRef Name="AdvertismentSection_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SubPurchaseSubPurchasePhone">
+    <End Role="SubPurchase" Type="NedvijimostDBModel.Store.SubPurchases" Multiplicity="1" />
+    <End Role="SubPurchasePhone" Type="NedvijimostDBModel.Store.SubPurchasePhones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubPurchase">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SubPurchasePhone">
+        <PropertyRef Name="SubPurchaseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AdvertismentSubPurchase">
+    <End Role="Advertisment" Type="NedvijimostDBModel.Store.Advertisments" Multiplicity="*" />
+    <End Role="SubPurchase" Type="NedvijimostDBModel.Store.SubPurchases" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="SubPurchase">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Advertisment">
+        <PropertyRef Name="SubPurchase_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NedvijimostDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="NedvijimostDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="SubPurchasesList" EntityType="NedvijimostDBModel.SubPurchaseses" />
+          <EntitySet Name="Advertisments" EntityType="NedvijimostDBModel.Advertisment" />
+          <EntitySet Name="AdvertismentsPhotoes" EntityType="NedvijimostDBModel.AdvertismentsPhoto" />
+          <AssociationSet Name="AdvertismentAdvertismentsPhoto" Association="NedvijimostDBModel.AdvertismentAdvertismentsPhoto">
+            <End Role="Advertisment" EntitySet="Advertisments" />
+            <End Role="AdvertismentsPhoto" EntitySet="AdvertismentsPhotoes" />
+          </AssociationSet>
+          <EntitySet Name="AdvertismentSections" EntityType="NedvijimostDBModel.AdvertismentSection" />
+          <AssociationSet Name="AdvertismentAdvertismentSection" Association="NedvijimostDBModel.AdvertismentAdvertismentSection">
+            <End Role="Advertisment" EntitySet="Advertisments" />
+            <End Role="AdvertismentSection" EntitySet="AdvertismentSections" />
+          </AssociationSet>
+          <EntitySet Name="AdvertismentPhones" EntityType="NedvijimostDBModel.AdvertismentPhone" />
+          <AssociationSet Name="AdvertismentAdvertismentPhone" Association="NedvijimostDBModel.AdvertismentAdvertismentPhone">
+            <End Role="Advertisment" EntitySet="Advertisments" />
+            <End Role="AdvertismentPhone" EntitySet="AdvertismentPhones" />
+          </AssociationSet>
+          <EntitySet Name="SearchResults" EntityType="NedvijimostDBModel.SearchResult" />
+          <AssociationSet Name="SearchResultAdvertisment" Association="NedvijimostDBModel.SearchResultAdvertisment">
+            <End Role="SearchResult" EntitySet="SearchResults" />
+            <End Role="Advertisment" EntitySet="Advertisments" />
+          </AssociationSet>
+          <AssociationSet Name="SearchResultAdvertismentSection" Association="NedvijimostDBModel.SearchResultAdvertismentSection">
+            <End Role="SearchResult" EntitySet="SearchResults" />
+            <End Role="AdvertismentSection" EntitySet="AdvertismentSections" />
+          </AssociationSet>
+          <EntitySet Name="WebSearchFilterAdvertisments" EntityType="NedvijimostDBModel.WebSearchFilterAdvertisments" />
+          <EntitySet Name="SubPurchases" EntityType="NedvijimostDBModel.SubPurchase" />
+          <EntitySet Name="SubPurchasePhones" EntityType="NedvijimostDBModel.SubPurchasePhone" />
+          <AssociationSet Name="SubPurchaseSubPurchasePhone" Association="NedvijimostDBModel.SubPurchaseSubPurchasePhone">
+            <End Role="SubPurchase" EntitySet="SubPurchases" />
+            <End Role="SubPurchasePhone" EntitySet="SubPurchasePhones" />
+          </AssociationSet>
+          <AssociationSet Name="AdvertismentSubPurchase" Association="NedvijimostDBModel.AdvertismentSubPurchase">
+            <End Role="Advertisment" EntitySet="Advertisments" />
+            <End Role="SubPurchase" EntitySet="SubPurchases" />
+          </AssociationSet>
+          <EntitySet Name="viewAdvertismentPhotos" EntityType="NedvijimostDBModel.viewAdvertismentPhotos" />
+          <EntitySet Name="Articles" EntityType="NedvijimostDBModel.Article" />
+        </EntityContainer>
+        <EntityType Name="SubPurchaseses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="phone" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="name" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="surname" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="not_checked" Type="Boolean" />
+          <Property Type="DateTime" Name="createDate" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Advertisment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="text" Nullable="false" />
+          <NavigationProperty Name="AdvertismentsPhotos" Relationship="NedvijimostDBModel.AdvertismentAdvertismentsPhoto" FromRole="Advertisment" ToRole="AdvertismentsPhoto" />
+          <Property Type="DateTime" Name="createDate" Nullable="false" />
+          <Property Type="DateTime" Name="modifyDate" Nullable="false" />
+          <NavigationProperty Name="AdvertismentSection" Relationship="NedvijimostDBModel.AdvertismentAdvertismentSection" FromRole="Advertisment" ToRole="AdvertismentSection" />
+          <NavigationProperty Name="AdvertismentPhones" Relationship="NedvijimostDBModel.AdvertismentAdvertismentPhone" FromRole="Advertisment" ToRole="AdvertismentPhone" />
+          <NavigationProperty Name="SearchResult" Relationship="NedvijimostDBModel.SearchResultAdvertisment" FromRole="Advertisment" ToRole="SearchResult" />
+          <Property Type="Int32" Name="searchresult_id" Nullable="true" />
+          <Property Type="String" Name="link" Nullable="true" />
+          <Property Type="String" Name="siteName" Nullable="true" />
+          <Property Type="Boolean" Name="subpurchaseAdvertisment" Nullable="false" DefaultValue="True" />
+          <NavigationProperty Name="SubPurchase" Relationship="NedvijimostDBModel.AdvertismentSubPurchase" FromRole="Advertisment" ToRole="SubPurchase" />
+          <Property Type="Boolean" Name="not_realestate" Nullable="false" DefaultValue="False" />
+          <Property Type="Boolean" Name="not_show_advertisment" Nullable="false" DefaultValue="False" />
+          <Property Type="Boolean" Name="isSpecial" Nullable="false" DefaultValue="False" />
+          <Property Type="DateTime" Name="isSpecialDateTime" Nullable="true" />
+        </EntityType>
+        <EntityType Name="AdvertismentsPhoto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Advertisment" Relationship="NedvijimostDBModel.AdvertismentAdvertismentsPhoto" FromRole="AdvertismentsPhoto" ToRole="Advertisment" />
+          <Property Type="String" Name="filename" Nullable="false" />
+          <Property Type="DateTime" Name="createDate" Nullable="false" />
+        </EntityType>
+        <Association Name="AdvertismentAdvertismentsPhoto">
+          <End Type="NedvijimostDBModel.Advertisment" Role="Advertisment" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="NedvijimostDBModel.AdvertismentsPhoto" Role="AdvertismentsPhoto" Multiplicity="*" />
+        </Association>
+        <EntityType Name="AdvertismentSection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="code" Nullable="false" MaxLength="30" />
+          <NavigationProperty Name="Advertisments" Relationship="NedvijimostDBModel.AdvertismentAdvertismentSection" FromRole="AdvertismentSection" ToRole="Advertisment" />
+          <NavigationProperty Name="SearchResults" Relationship="NedvijimostDBModel.SearchResultAdvertismentSection" FromRole="AdvertismentSection" ToRole="SearchResult" />
+          <Property Type="String" Name="displayName" Nullable="false" />
+          <Property Type="String" Name="friendlyUrl" Nullable="true" />
+        </EntityType>
+        <Association Name="AdvertismentAdvertismentSection">
+          <End Type="NedvijimostDBModel.Advertisment" Role="Advertisment" Multiplicity="*" >
+          </End>
+          <End Type="NedvijimostDBModel.AdvertismentSection" Role="AdvertismentSection" Multiplicity="1" />
+        </Association>
+        <EntityType Name="AdvertismentPhone">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="phone" Nullable="false" MaxLength="20" />
+          <NavigationProperty Name="Advertisment" Relationship="NedvijimostDBModel.AdvertismentAdvertismentPhone" FromRole="AdvertismentPhone" ToRole="Advertisment" />
+          <Property Type="Int32" Name="AdvertismentId" Nullable="false" />
+        </EntityType>
+        <Association Name="AdvertismentAdvertismentPhone">
+          <End Type="NedvijimostDBModel.Advertisment" Role="Advertisment" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="NedvijimostDBModel.AdvertismentPhone" Role="AdvertismentPhone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Advertisment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AdvertismentPhone">
+              <PropertyRef Name="AdvertismentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SearchResult">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="createDate" Nullable="false" />
+          <NavigationProperty Name="Advertisments" Relationship="NedvijimostDBModel.SearchResultAdvertisment" FromRole="SearchResult" ToRole="Advertisment" />
+          <NavigationProperty Name="AdvertismentSection" Relationship="NedvijimostDBModel.SearchResultAdvertismentSection" FromRole="SearchResult" ToRole="AdvertismentSection" />
+          <Property Type="Int32" Name="allParsedAdvertismentsCount" Nullable="false" />
+          <Property Type="DateTime" Name="modifyDate" Nullable="false" />
+        </EntityType>
+        <Association Name="SearchResultAdvertisment">
+          <End Type="NedvijimostDBModel.SearchResult" Role="SearchResult" Multiplicity="0..1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="NedvijimostDBModel.Advertisment" Role="Advertisment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SearchResult">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Advertisment">
+              <PropertyRef Name="searchresult_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SearchResultAdvertismentSection">
+          <End Type="NedvijimostDBModel.SearchResult" Role="SearchResult" Multiplicity="*" >
+          </End>
+          <End Type="NedvijimostDBModel.AdvertismentSection" Role="AdvertismentSection" Multiplicity="1" />
+        </Association>
+        <EntityType Name="WebSearchFilterAdvertisments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="text" Nullable="true" />
+          <Property Type="String" Name="title" Nullable="true" />
+          <Property Type="DateTime" Name="createDate" Nullable="false" />
+          <Property Type="String" Name="subPurchasePhone" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubPurchase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="surname" Nullable="true" MaxLength="30" />
+          <Property Type="Boolean" Name="not_checked" Nullable="false" DefaultValue="False" />
+          <NavigationProperty Name="SubPurchasePhones" Relationship="NedvijimostDBModel.SubPurchaseSubPurchasePhone" FromRole="SubPurchase" ToRole="SubPurchasePhone" />
+          <Property Type="DateTime" Name="createDate" Nullable="false" />
+          <Property Type="DateTime" Name="modifyDate" Nullable="false" />
+          <NavigationProperty Name="Advertisment" Relationship="NedvijimostDBModel.AdvertismentSubPurchase" FromRole="SubPurchase" ToRole="Advertisment" />
+        </EntityType>
+        <EntityType Name="SubPurchasePhone">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="String" Name="phone" Nullable="false" MaxLength="20" />
+          <NavigationProperty Name="SubPurchase" Relationship="NedvijimostDBModel.SubPurchaseSubPurchasePhone" FromRole="SubPurchasePhone" ToRole="SubPurchase" />
+          <Property Type="Guid" Name="SubPurchaseId" Nullable="false" />
+          <Property Type="DateTime" Name="createDate" Nullable="false" />
+        </EntityType>
+        <Association Name="SubPurchaseSubPurchasePhone">
+          <End Type="NedvijimostDBModel.SubPurchase" Role="SubPurchase" Multiplicity="1" />
+          <End Type="NedvijimostDBModel.SubPurchasePhone" Role="SubPurchasePhone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubPurchase">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubPurchasePhone">
+              <PropertyRef Name="SubPurchaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AdvertismentSubPurchase">
+          <End Type="NedvijimostDBModel.Advertisment" Role="Advertisment" Multiplicity="*" />
+          <End Type="NedvijimostDBModel.SubPurchase" Role="SubPurchase" Multiplicity="0..1" />
+        </Association>
+        <EntityType Name="viewAdvertismentPhotos" >
+          <Key>
+            <PropertyRef Name="PhotoId" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="text" Nullable="false" />
+          <Property Type="DateTime" Name="createDate" Nullable="false" />
+          <Property Type="String" Name="link" Nullable="true" />
+          <Property Type="String" Name="siteName" Nullable="true" MaxLength="100" />
+          <Property Type="Boolean" Name="subpurchaseAdvertisment" Nullable="false" />
+          <Property Type="Guid" Name="SubPurchase_Id" Nullable="true" />
+          <Property Type="Int32" Name="PhotoId" Nullable="false" />
+          <Property Type="String" Name="PhotoFileName" Nullable="false" />
+          <Property Type="DateTime" Name="PhotoCreateDate" Nullable="true" />
+          <Property Type="String" Name="SectionCode" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="SectionDisplayName" Nullable="false" />
+          <Property Type="String" Name="SectionFriendlyUrl" Nullable="true" />
+        </EntityType>
+        <EntityType Name="Article" >
+          <Key>
+            <PropertyRef Name="article_id" />
+          </Key>
+          <Property Type="Guid" Name="article_id" Nullable="false" />
+          <Property Type="String" Name="header" Nullable="false" />
+          <Property Type="String" Name="text" Nullable="false" />
+          <Property Type="DateTime" Name="createDate" Nullable="false" />
+          <Property Type="String" Name="author" Nullable="true" />
+          <Property Type="String" Name="link" Nullable="false" />
+          <Property Type="String" Name="description" Nullable="false" />
+          <Property Type="String" Name="title" Nullable="false" />
+          <Property Type="String" Name="keywords" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="NedvijimostDBModelStoreContainer" CdmEntityContainer="NedvijimostDBEntities">
+    <EntitySetMapping Name="SubPurchasesList">
+      <EntityTypeMapping TypeName="IsTypeOf(NedvijimostDBModel.SubPurchaseses)">
+        <MappingFragment StoreEntitySet="SubPurchasesList">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="not_checked" ColumnName="not_checked" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Advertisments">
+      <EntityTypeMapping TypeName="IsTypeOf(NedvijimostDBModel.Advertisment)">
+        <MappingFragment StoreEntitySet="Advertisments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="text" ColumnName="text" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="modifyDate" ColumnName="modifyDate" />
+          <ScalarProperty Name="searchresult_id" ColumnName="searchresult_id" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="siteName" ColumnName="siteName" />
+          <ScalarProperty Name="subpurchaseAdvertisment" ColumnName="subpurchaseAdvertisment" />
+          <ScalarProperty Name="not_realestate" ColumnName="not_realestate" />
+          <ScalarProperty Name="not_show_advertisment" ColumnName="not_show_advertisment" />
+          <ScalarProperty Name="isSpecial" ColumnName="isSpecial" />
+          <ScalarProperty Name="isSpecialDateTime" ColumnName="isSpecialDateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AdvertismentsPhotoes">
+      <EntityTypeMapping TypeName="IsTypeOf(NedvijimostDBModel.AdvertismentsPhoto)">
+        <MappingFragment StoreEntitySet="AdvertismentsPhotoes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="filename" ColumnName="filename" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AdvertismentSections">
+      <EntityTypeMapping TypeName="IsTypeOf(NedvijimostDBModel.AdvertismentSection)">
+        <MappingFragment StoreEntitySet="AdvertismentSections">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="displayName" ColumnName="displayName" />
+          <ScalarProperty Name="friendlyUrl" ColumnName="friendlyUrl" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AdvertismentPhones">
+      <EntityTypeMapping TypeName="IsTypeOf(NedvijimostDBModel.AdvertismentPhone)">
+        <MappingFragment StoreEntitySet="AdvertismentPhones">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="AdvertismentId" ColumnName="AdvertismentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SearchResults">
+      <EntityTypeMapping TypeName="IsTypeOf(NedvijimostDBModel.SearchResult)">
+        <MappingFragment StoreEntitySet="SearchResults">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="allParsedAdvertismentsCount" ColumnName="allParsedAdvertismentsCount" />
+          <ScalarProperty Name="modifyDate" ColumnName="modifyDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WebSearchFilterAdvertisments">
+      <EntityTypeMapping TypeName="IsTypeOf(NedvijimostDBModel.WebSearchFilterAdvertisments)">
+        <MappingFragment StoreEntitySet="WebSearchFilterAdvertisments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="text" ColumnName="text" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="subPurchasePhone" ColumnName="subPurchasePhone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubPurchases">
+      <EntityTypeMapping TypeName="IsTypeOf(NedvijimostDBModel.SubPurchase)">
+        <MappingFragment StoreEntitySet="SubPurchases">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="not_checked" ColumnName="not_checked" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="modifyDate" ColumnName="modifyDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubPurchasePhones">
+      <EntityTypeMapping TypeName="IsTypeOf(NedvijimostDBModel.SubPurchasePhone)">
+        <MappingFragment StoreEntitySet="SubPurchasePhones">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="SubPurchaseId" ColumnName="SubPurchaseId" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="viewAdvertismentPhotos">
+      <EntityTypeMapping TypeName="IsTypeOf(NedvijimostDBModel.viewAdvertismentPhotos)">
+        <MappingFragment StoreEntitySet="viewAdvertismentPhotos">
+          <ScalarProperty Name="PhotoId" ColumnName="PhotoId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="text" ColumnName="text" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="siteName" ColumnName="siteName" />
+          <ScalarProperty Name="subpurchaseAdvertisment" ColumnName="subpurchaseAdvertisment" />
+          <ScalarProperty Name="SubPurchase_Id" ColumnName="SubPurchase_Id" />
+          <ScalarProperty Name="PhotoFileName" ColumnName="PhotoFileName" />
+          <ScalarProperty Name="PhotoCreateDate" ColumnName="PhotoCreateDate" />
+          <ScalarProperty Name="SectionCode" ColumnName="SectionCode" />
+          <ScalarProperty Name="SectionDisplayName" ColumnName="SectionDisplayName" />
+          <ScalarProperty Name="SectionFriendlyUrl" ColumnName="SectionFriendlyUrl" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Articles">
+      <EntityTypeMapping TypeName="IsTypeOf(NedvijimostDBModel.Article)">
+        <MappingFragment StoreEntitySet="Articles">
+          <ScalarProperty Name="article_id" ColumnName="article_id" />
+          <ScalarProperty Name="header" ColumnName="header" />
+          <ScalarProperty Name="text" ColumnName="text" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="author" ColumnName="author" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="keywords" ColumnName="keywords" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AdvertismentAdvertismentsPhoto" TypeName="NedvijimostDBModel.AdvertismentAdvertismentsPhoto" StoreEntitySet="AdvertismentsPhotoes">
+      <EndProperty Name="Advertisment">
+        <ScalarProperty Name="Id" ColumnName="Advertisment_Id" />
+      </EndProperty>
+      <EndProperty Name="AdvertismentsPhoto">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AdvertismentAdvertismentSection" TypeName="NedvijimostDBModel.AdvertismentAdvertismentSection" StoreEntitySet="Advertisments">
+      <EndProperty Name="AdvertismentSection">
+        <ScalarProperty Name="Id" ColumnName="AdvertismentSection_Id" />
+      </EndProperty>
+      <EndProperty Name="Advertisment">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SearchResultAdvertismentSection" TypeName="NedvijimostDBModel.SearchResultAdvertismentSection" StoreEntitySet="SearchResults">
+      <EndProperty Name="AdvertismentSection">
+        <ScalarProperty Name="Id" ColumnName="AdvertismentSection_Id" />
+      </EndProperty>
+      <EndProperty Name="SearchResult">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AdvertismentSubPurchase" TypeName="NedvijimostDBModel.AdvertismentSubPurchase" StoreEntitySet="Advertisments">
+      <EndProperty Name="SubPurchase">
+        <ScalarProperty Name="Id" ColumnName="SubPurchase_Id" />
+      </EndProperty>
+      <EndProperty Name="Advertisment">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="SubPurchase_Id" IsNull="false" />
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="RealEstateSaleSearchResult">
+        <EntityTypeShape EntityType="NedvijimostDBModel.SubPurchaseses" Width="2.625" PointX="10.25" PointY="4.75" Height="2.172587890625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NedvijimostDBModel.Advertisment" Width="2.25" PointX="3.375" PointY="0.75" Height="3.0714322916666661" />
+        <EntityTypeShape EntityType="NedvijimostDBModel.AdvertismentsPhoto" Width="2.625" PointX="7" PointY="0.75" Height="1.787985026041667" />
+        <AssociationConnector Association="NedvijimostDBModel.AdvertismentAdvertismentsPhoto">
+          <ConnectorPoint PointX="5.625" PointY="1.5461531575520835" />
+          <ConnectorPoint PointX="7" PointY="1.5461531575520835" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NedvijimostDBModel.AdvertismentSection" Width="2.25" PointX="3.375" PointY="6.375" Height="1.9802864583333326" />
+        <AssociationConnector Association="NedvijimostDBModel.AdvertismentAdvertismentSection">
+          <ConnectorPoint PointX="4.4687475" PointY="3.8214322916666661" />
+          <ConnectorPoint PointX="4.4687475" PointY="6.375" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NedvijimostDBModel.AdvertismentPhone" Width="2.625" PointX="7" PointY="2.625" Height="1.7879850260416665" />
+        <AssociationConnector Association="NedvijimostDBModel.AdvertismentAdvertismentPhone">
+          <ConnectorPoint PointX="5.625" PointY="3.2232161458333328" />
+          <ConnectorPoint PointX="7" PointY="3.2232161458333328" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NedvijimostDBModel.SearchResult" Width="2.375" PointX="0.5" PointY="0.75" Height="2.172587890625" />
+        <AssociationConnector Association="NedvijimostDBModel.SearchResultAdvertisment">
+          <ConnectorPoint PointX="2.875" PointY="1.7105004882812502" />
+          <ConnectorPoint PointX="3.375" PointY="1.7105004882812502" />
+        </AssociationConnector>
+        <AssociationConnector Association="NedvijimostDBModel.SearchResultAdvertismentSection">
+          <ConnectorPoint PointX="1.25" PointY="2.922587890625" />
+          <ConnectorPoint PointX="1.25" PointY="4.9901432291666659" />
+          <ConnectorPoint PointX="2.625" PointY="4.9901432291666659" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NedvijimostDBModel.WebSearchFilterAdvertisments" Width="2.625" PointX="10" PointY="0.75" />
+        <EntityTypeShape EntityType="NedvijimostDBModel.SubPurchase" Width="2.625" PointX="7" PointY="4.75" Height="2.0853483072916665" />
+        <EntityTypeShape EntityType="NedvijimostDBModel.SubPurchasePhone" Width="2.625" PointX="7" PointY="7.5" Height="1.7566536458333317" />
+        <AssociationConnector Association="NedvijimostDBModel.SubPurchaseSubPurchasePhone" >
+          <ConnectorPoint PointX="8.3125" PointY="6.8353483072916665" />
+          <ConnectorPoint PointX="8.3125" PointY="7.5" />
+        </AssociationConnector>
+        <AssociationConnector Association="NedvijimostDBModel.AdvertismentSubPurchase">
+          <ConnectorPoint PointX="5.625" PointY="3.8214322916666661" />
+          <ConnectorPoint PointX="6" PointY="4.1964322916666656" />
+          <ConnectorPoint PointX="6" PointY="5.8748478190104159" />
+          <ConnectorPoint PointX="7" PointY="5.8748478190104159" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NedvijimostDBModel.viewAdvertismentPhotos" Width="2.625" PointX="0.5" PointY="8.5" />
+        <EntityTypeShape EntityType="NedvijimostDBModel.Article" Width="2.625" PointX="7" PointY="9.625" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
