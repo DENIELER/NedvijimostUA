@@ -13,6 +13,9 @@
         <asp:ContentPlaceHolder runat="server" ID="Title"></asp:ContentPlaceHolder>
     </title>
 
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
     <script type="text/javascript" src="/Scripts/jquery-2.0.0.js"></script>
     <script type="text/javascript" src="/Scripts/jquery.tools.min.js"></script>
     
