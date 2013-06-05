@@ -262,7 +262,7 @@
     function prepairAdvertisments(view) {
         var advertismentDivs = '';
 
-        isAuthorizedUserAsAdmin = '<%= Authorization.Authorization.CurrentUser_IsAdmin() %>';
+        isAuthorizedUserAsAdmin = '<%= Authorization.Authorization.CurrentUser_IsAdmin() %>'.toLocaleLowerCase() === 'true';
         
         var advertisments = view.Advertisments;
         
