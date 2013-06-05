@@ -210,18 +210,63 @@ public class SiteParser
                     || image.Attributes["src"].Value.Contains(".gif")))
                 continue;
 
+            string sourceImageUrl;
             if (!image.Attributes["src"].Value.Contains("http://")
                 && !string.IsNullOrEmpty(CurrentSiteSetting.containerListCurrentAdvUrlHost))
             {
-                imageUrls.Add(CurrentSiteSetting.containerListCurrentAdvUrlHost + image.Attributes["src"].Value);
+                sourceImageUrl = CurrentSiteSetting.containerListCurrentAdvUrlHost + image.Attributes["src"].Value;
             }
             else
             {
-                imageUrls.Add(image.Attributes["src"].Value);
+                sourceImageUrl = image.Attributes["src"].Value;
             }
+
+            string siteImageUrl = SavePhotoToFTP(sourceImageUrl);
+            image.Attributes["src"].Value = siteImageUrl;
+            imageUrls.Add(siteImageUrl);
         }
 
         return imageUrls;
+    }
+
+    private string SavePhotoToFTP(string imageUrl)
+    {
+        string ftpUrl = "lilac.arvixe.com/nedvijimost-ua.com/wwwroot";
+        string filePath = "/files";
+
+        string ftpusername = "denieler";
+        string ftppassword = "gtycbz1990";
+
+        Uri uri = new Uri(imageUrl);
+        var filename = Path.GetFileName(uri.LocalPath);
+        FtpWebRequest ftpClient = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpUrl + filePath + "/" + filename));
+        ftpClient.Credentials = new System.Net.NetworkCredential(ftpusername, ftppassword);
+        ftpClient.Method = System.Net.WebRequestMethods.Ftp.UploadFile;
+        ftpClient.UseBinary = true;
+        ftpClient.KeepAlive = true;
+
+        System.IO.FileInfo fi = new System.IO.FileInfo(imageUrl);
+        ftpClient.ContentLength = fi.Length;
+        byte[] buffer = new byte[4097];
+        int bytes = 0;
+        int total_bytes = (int)fi.Length;
+        System.IO.FileStream fs = fi.OpenRead();
+        System.IO.Stream rs = ftpClient.GetRequestStream();
+        while (total_bytes > 0)
+        {
+            bytes = fs.Read(buffer, 0, buffer.Length);
+            rs.Write(buffer, 0, bytes);
+            total_bytes = total_bytes - bytes;
+        }
+        //fs.Flush();
+        fs.Close();
+        rs.Close();
+
+        FtpWebResponse uploadResponse = (FtpWebResponse)ftpClient.GetResponse();
+        //var value = uploadResponse.StatusDescription;
+        uploadResponse.Close();
+
+        return filePath + "/" + filename;
     }
 
     private List<string> SeparatePhones(HtmlNode container, string advText)
