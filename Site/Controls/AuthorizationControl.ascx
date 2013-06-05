@@ -24,7 +24,7 @@
         Здравствуйте, <strong><%= Authorization.Authorization.CurrentUser_Login() %></strong>!
     </div>
     <% if(!Authorization.Authorization.CurrentUser_IsAdmin()) { %>
-    <div style="margin: 20px 0;">Ваш телефон: <%= Authorization.Authorization.CurrentUser_Phone() ?? "еще не указан" %></div>
+    <div style="margin: 20px 0;">Ваш телефон: <%= !string.IsNullOrEmpty(Authorization.Authorization.CurrentUser_Phone()) ? Authorization.Authorization.CurrentUser_Phone() : "не указан" %></div>
     <% }else{ %>
     <div style="margin-top: 14px;">
         <a href="/Admin/SubPurchases.aspx" style="font-size: 0.8em;">Добавить посредника(ов)</a>
