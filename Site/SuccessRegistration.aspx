@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SuccessRegistration.aspx.cs" Inherits="FailedAuthorization" MasterPageFile="~/AdvertismentMaster.master"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SuccessRegistration.aspx.cs" Inherits="SuccessRegistration" MasterPageFile="~/AdvertismentMaster.master"%>
 
 <asp:Content runat="server" ContentPlaceHolderID="Title">
     Успешная регистрация | Недвижимость-UA

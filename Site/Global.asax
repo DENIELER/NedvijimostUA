@@ -52,6 +52,7 @@
         routeCollection.MapPageRoute("Route_Register", "register", "~/Registration.aspx");
         routeCollection.MapPageRoute("Route_RegisterSuccess", "success-registration", "~/SuccessRegistration.aspx");
         routeCollection.MapPageRoute("Route_RegisterFailed", "failed-registration", "~/FailedRegistration.aspx");
+        routeCollection.MapPageRoute("Route_UserOptions", "user-options", "~/AuthorizedUserOptions.aspx");
     }
     
     void Application_End(object sender, EventArgs e) 

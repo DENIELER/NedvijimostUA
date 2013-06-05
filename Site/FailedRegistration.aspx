@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="FailedRegistration.aspx.cs" Inherits="FailedAuthorization" MasterPageFile="~/AdvertismentMaster.master"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="FailedRegistration.aspx.cs" Inherits="FailedRegistration" MasterPageFile="~/AdvertismentMaster.master"%>
 
 <asp:Content runat="server" ContentPlaceHolderID="Title">
     Не удачная регистрация | Недвижимость-UA
