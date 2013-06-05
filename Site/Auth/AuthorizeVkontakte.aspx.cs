@@ -21,9 +21,9 @@ public partial class Auth_AuthorizeVkontakte : System.Web.UI.Page
             string photo_rec = Request["photo_rec"];
             string hash = Request["hash"];
 
-            if (Request["hash"] == CalculateMD5Hash("3111027" + uid + "FSApuxGl1jU3CpgG1Fra"))
+            if (Request["hash"] == Utils.CalculateMD5Hash("3111027" + uid + "FSApuxGl1jU3CpgG1Fra"))
             {
-                var authorization = new Authorization();
+                var authorization = new Authorization.Authorization();
                 if (!authorization.AuthorizeVkontakteUser(uid, first_name, last_name, photo, photo_rec, hash))
                     Response.Redirect("AuthorizationVkontakteFailed.aspx", true);
             }
@@ -63,7 +63,7 @@ public partial class Auth_AuthorizeVkontakte : System.Web.UI.Page
     [WebMethod(EnableSession=true)]
     public static bool LogOff()
     {
-        var authorization = new Authorization();
+        var authorization = new Authorization.Authorization();
         authorization.LogoffVkontakteUser();
         return true;
     }

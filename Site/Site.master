@@ -1,6 +1,7 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" %>
 
-<%@ Register Src="~/Controls/OpenIDAuthentication.ascx" TagName="OpenIdAuthentication" TagPrefix="control" %>
+<%--<%@ Register Src="~/Controls/OpenIDAuthentication.ascx" TagName="OpenIdAuthentication" TagPrefix="control" %>--%>
+<%@ Register Src="~/Controls/AuthorizationControl.ascx" TagName="AuthorizationControl" TagPrefix="control" %>
 
 <!DOCTYPE html>
 
@@ -44,7 +45,7 @@
 
                     <div style="float:left; width: 675px;height: 223px;">
                         <div class="row-fluid" style="height: 223px;">
-                            <div class="span8">
+                            <div class="span7">
                                 <div style="height: 120px;">
                                     <h1 style="color: #b8b8b8;position: relative; top: 20px; left: 10px;">Недвижимость</h1>
                                     <h2 style="color: #dbdbdb;position: relative; top: 20px; left: 130px; font-size: 16px; width: 330px;">Каталог без посредников</h2>
@@ -56,10 +57,11 @@
                                 </div>
                             </div>
 
-                            <div class="span4" style="height: 223px;">
-                                <div style="width: 200px; background-color: #dbdbdb; height: 223px;">
+                            <div class="span5" style="height: 223px;">
+                                <div style="width: 220px; background-color: #dbdbdb; height: 223px;">
                                     <div style="padding-top: 10px;">
-                                        <control:OpenIdAuthentication runat="server" />
+                                        <%--<control:OpenIdAuthentication runat="server" />--%>
+                                        <control:AuthorizationControl runat="server" ID="Authorization" />
                                     </div>
 
                                     <div>

@@ -15,11 +15,11 @@ public partial class Controls_OpenIDAuthentication : System.Web.UI.UserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Authorization.IsUserVkontakteAuthorized())
+        if (Authorization.Authorization.IsUserVkontakteAuthorized())
         {
-            LoginName = Authorization.GetVkontakteUserName();
-            Photo = Authorization.GetVkontakteUserSmallPhoto();
-            UserUid = Authorization.GetVkontakteUserUid();
+            LoginName = Authorization.Authorization.GetVkontakteUserName();
+            Photo = Authorization.Authorization.GetVkontakteUserSmallPhoto();
+            UserUid = Authorization.Authorization.GetVkontakteUserUid();
         }
     }
 }

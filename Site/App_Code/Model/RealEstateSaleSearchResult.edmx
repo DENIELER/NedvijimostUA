@@ -18,6 +18,7 @@
     <EntitySet Name="viewAdvertismentPhotos" EntityType="NedvijimostDBModel.Store.viewAdvertismentPhotos" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Articles" EntityType="NedvijimostDBModel.Store.Articles" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AdvertismentSubSection" EntityType="NedvijimostDBModel.Store.AdvertismentSubSection" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="NedvijimostDBModel.Store.Users" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="AdvertismentAdvertismentsPhoto" Association="NedvijimostDBModel.Store.AdvertismentAdvertismentsPhoto">
       <End Role="Advertisment" EntitySet="Advertisments" />
       <End Role="AdvertismentsPhoto" EntitySet="AdvertismentsPhotoes" />
@@ -194,6 +195,22 @@
     <Property Name="friendlyUrl" Type="nvarchar(max)" Nullable="true" />
     <Property Name="AdvertismentSection_Id" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="VkontakteID" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="IsSubPurchase" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="SubPurchaseID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Login" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="IsAdmin" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
   <Association Name="AdvertismentAdvertismentsPhoto">
     <End Role="Advertisment" Type="NedvijimostDBModel.Store.Advertisments" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -361,6 +378,7 @@
             <End Role="Advertisment" EntitySet="Advertisments" />
             <End Role="AdvertismentSubSection" EntitySet="AdvertismentSubSection" />
           </AssociationSet>
+          <EntitySet Name="Users" EntityType="NedvijimostDBModel.User" />
         </EntityContainer>
         <EntityType Name="SubPurchaseses">
           <Key>
@@ -576,6 +594,22 @@
           <End Type="NedvijimostDBModel.Advertisment" Role="Advertisment" Multiplicity="*" />
           <End Type="NedvijimostDBModel.AdvertismentSubSection" Role="AdvertismentSubSection" Multiplicity="0..1" />
         </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Type="Int32" Name="UserId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Email" Nullable="true" />
+          <Property Type="String" Name="Password" Nullable="true" />
+          <Property Type="String" Name="FirstName" Nullable="true" />
+          <Property Type="String" Name="LastName" Nullable="true" />
+          <Property Type="String" Name="VkontakteID" Nullable="true" />
+          <Property Type="Boolean" Name="IsSubPurchase" Nullable="false" DefaultValue="False" />
+          <Property Type="Guid" Name="SubPurchaseID" Nullable="false" />
+          <Property Type="String" Name="Login" Nullable="true" />
+          <Property Type="Boolean" Name="IsAdmin" Nullable="false" DefaultValue="False" />
+          <Property Type="String" Name="Phone" Nullable="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -727,6 +761,23 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(NedvijimostDBModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="VkontakteID" ColumnName="VkontakteID" />
+          <ScalarProperty Name="IsSubPurchase" ColumnName="IsSubPurchase" />
+          <ScalarProperty Name="SubPurchaseID" ColumnName="SubPurchaseID" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="AdvertismentAdvertismentsPhoto" TypeName="NedvijimostDBModel.AdvertismentAdvertismentsPhoto" StoreEntitySet="AdvertismentsPhotoes">
       <EndProperty Name="Advertisment">
         <ScalarProperty Name="Id" ColumnName="Advertisment_Id" />
@@ -842,6 +893,7 @@
         <EntityTypeShape EntityType="NedvijimostDBModel.AdvertismentSubSection" Width="2.25" PointX="3.375" PointY="9" />
         <AssociationConnector Association="NedvijimostDBModel.AdvertismentSubSectionAdvertismentSection" />
         <AssociationConnector Association="NedvijimostDBModel.AdvertismentAdvertismentSubSection" />
+        <EntityTypeShape EntityType="NedvijimostDBModel.User" Width="2.25" PointX="12.875" PointY="0.75" />
       </Diagram>
     </Diagrams>
   </Designer>

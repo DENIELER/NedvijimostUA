@@ -46,6 +46,12 @@
         routeCollection.MapPageRoute("Route_HowToMarkSpecial", "Kak-videlit-obyavlenie", "~/Payments/MakeAdvertismentSpecial.aspx");
 
         routeCollection.MapPageRoute("Route_Article", "News/{article_link}", "~/News/Article.aspx");
+
+        routeCollection.MapPageRoute("Route_Authorization", "authorization", "~/AuthorizationPage.aspx");
+        routeCollection.MapPageRoute("Route_AuthorizationFailed", "failed-authorization", "~/FailedAuthorization.aspx");
+        routeCollection.MapPageRoute("Route_Register", "register", "~/Registration.aspx");
+        routeCollection.MapPageRoute("Route_RegisterSuccess", "success-registration", "~/SuccessRegistration.aspx");
+        routeCollection.MapPageRoute("Route_RegisterFailed", "failed-registration", "~/FailedRegistration.aspx");
     }
     
     void Application_End(object sender, EventArgs e) 

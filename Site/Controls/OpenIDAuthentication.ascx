@@ -30,7 +30,7 @@
 </script>
 
 <div id="AuthorizedUser">
-    <% if(Authorization.IsUserVkontakteAuthorized())
+    <% if (Authorization.Authorization.IsUserVkontakteAuthorized())
        { %>
         <div style="background-color: white; padding: 10px 0;">
             <div class="row-fluid">
@@ -44,7 +44,8 @@
                         <span class="label label-info pull-right"><%= LoginName %></span>
                     </div>
 
-                    <% if(Authorization.IsAdmin(Authorization.GetVkontakteUserUid())){ %>
+                    <% if (Authorization.Authorization.IsAdmin(Authorization.Authorization.GetVkontakteUserUid()))
+                       { %>
                     <div>
                         <a href="../Admin/SubPurchases.aspx" style="font-size: 0.8em;">Добавить посредника(ов)</a>
                     </div>

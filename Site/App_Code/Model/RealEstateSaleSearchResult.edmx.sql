@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 05/16/2013 10:27:52
--- Generated from EDMX file: F:\Projects\Nedvijimost-ua\Server\App_Code\Model\RealEstateSaleSearchResult.edmx
+-- Date Created: 06/05/2013 23:06:15
+-- Generated from EDMX file: E:\Projects\Nedvijimost-ua\Site\App_Code\Model\RealEstateSaleSearchResult.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -84,6 +84,9 @@ IF OBJECT_ID(N'[dbo].[Articles]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[AdvertismentSubSection]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AdvertismentSubSection];
+GO
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
 GO
 
 -- --------------------------------------------------
@@ -229,6 +232,22 @@ CREATE TABLE [dbo].[AdvertismentSubSection] (
 );
 GO
 
+-- Creating table 'Users'
+CREATE TABLE [dbo].[Users] (
+    [UserId] int IDENTITY(1,1) NOT NULL,
+    [Email] nvarchar(max)  NULL,
+    [Password] nvarchar(max)  NULL,
+    [FirstName] nvarchar(max)  NULL,
+    [LastName] nvarchar(max)  NULL,
+    [VkontakteID] nvarchar(max)  NULL,
+    [IsSubPurchase] bit  NOT NULL,
+    [SubPurchaseID] uniqueidentifier  NOT NULL,
+    [Login] nvarchar(max)  NULL,
+    [IsAdmin] bit  NOT NULL,
+    [Phone] nvarchar(max)  NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -303,6 +322,12 @@ GO
 ALTER TABLE [dbo].[AdvertismentSubSection]
 ADD CONSTRAINT [PK_AdvertismentSubSection]
     PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [UserId] in table 'Users'
+ALTER TABLE [dbo].[Users]
+ADD CONSTRAINT [PK_Users]
+    PRIMARY KEY CLUSTERED ([UserId] ASC);
 GO
 
 -- --------------------------------------------------

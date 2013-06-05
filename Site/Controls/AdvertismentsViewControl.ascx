@@ -262,14 +262,8 @@
     function prepairAdvertisments(view) {
         var advertismentDivs = '';
 
-        VK.Auth.getLoginStatus(function (response) {
-            if (response.session) {
-                if (response.session.mid == '106154673') {
-                    isAuthorizedUserAsAdmin = true;
-                }
-            }
-        });
-
+        isAuthorizedUserAsAdmin = '<%= Authorization.Authorization.CurrentUser_IsAdmin() %>';
+        
         var advertisments = view.Advertisments;
         
         for (var i = 0; i < advertisments.length; i++) {

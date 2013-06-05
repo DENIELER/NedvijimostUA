@@ -26,7 +26,7 @@ public class AdvertismentsService : System.Web.Services.WebService {
     {
         try
         {
-            if (Authorization.IsAdmin(Authorization.GetVkontakteUserUid()))
+            if (Authorization.Authorization.CurrentUser_IsAdmin())
             {
                 var advertismentsWorkflow = new AdvertismentsWorkflow();
                 advertismentsWorkflow.MarkNotByTheme(advertisment_id);
@@ -72,7 +72,7 @@ public class AdvertismentsService : System.Web.Services.WebService {
     {
         try
         {
-            if (Authorization.IsAdmin(Authorization.GetVkontakteUserUid()))
+            if (Authorization.Authorization.CurrentUser_IsAdmin())
             {
                 var advertismentsWorkflow = new AdvertismentsWorkflow();
                 advertismentsWorkflow.HideAdvertisment(advertisment_id);

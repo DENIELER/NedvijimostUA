@@ -10,7 +10,7 @@ public partial class Admin_SubPurchases : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!Authorization.IsAdmin(Authorization.GetVkontakteUserUid()))
+        if (!Authorization.Authorization.CurrentUser_IsAdmin())
             Response.Redirect("/", true);
     }
 
