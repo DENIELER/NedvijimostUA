@@ -23,7 +23,16 @@
     <div>
         Здравствуйте, <strong><%= Authorization.Authorization.CurrentUser_Login() %></strong>!
     </div>
+    <% if(!Authorization.Authorization.CurrentUser_IsAdmin()) { %>
     <div style="margin: 20px 0;">Ваш телефон: <%= Authorization.Authorization.CurrentUser_Phone() ?? "еще не указан" %></div>
+    <% }else{ %>
+    <div style="margin-top: 14px;">
+        <a href="/Admin/SubPurchases.aspx" style="font-size: 0.8em;">Добавить посредника(ов)</a>
+    </div>
+    <div style="margin-bottom: 14px;">
+        <a href="/Admin/CheckSubPurchases.aspx" style="font-size: 0.8em;">Отмеченные посредники</a>
+    </div>
+    <% } %>
     <div style="clear:both;">
         <a href="/user-options">Настройки</a>
         <a href="/authorization" style="float:right;">Выйти</a>

@@ -26,7 +26,7 @@ namespace Authorization
 
             if (currentUser != null)
             {
-                string userData = currentUser.IsAdmin + "|" + currentUser.Phone + "|";
+                string userData = currentUser.IsAdmin + "|" + currentUser.Phone + "|" + currentUser.UserId + "|";
 
                 // Create forms authentication ticket
                 FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
@@ -115,6 +115,24 @@ namespace Authorization
                 return null;
 
             return data[1];
+        }
+
+        public static int? CurrentUser_UserID()
+        {
+            var authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (authCookie == null || string.IsNullOrEmpty(authCookie.Value))
+                return null;
+
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+            string userData = ticket.UserData;
+            string[] data = userData.Split('|');
+            if (data == null || data.Count() < 3)
+                return null;
+
+            int userID;
+            if (int.TryParse(data[2], out userID))
+                return userID;
+            return null;
         }
 
         #region Vkontakte
