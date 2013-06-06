@@ -243,6 +243,23 @@ public class AdvertismentsWorkflow
         return string.Empty;
     }
 
+    public bool ExistsAdvertisment(int advID, int? userID)
+    {
+        if (userID == null)
+            return false;
+
+        if (Context != null)
+        {
+            var adv = Context.Advertisments.FirstOrDefault(a => a.Id == advID && a.UserID == userID.Value);
+            if (adv != null)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     #endregion Methods
 }
 

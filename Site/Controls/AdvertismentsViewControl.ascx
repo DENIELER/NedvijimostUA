@@ -43,7 +43,18 @@
     
     <div id="advertisments">
         <div class="loading_container">
+            <div style="margin-top: 20px;">
+                Идет загрузка объявлений.. 
+            </div>
             <div class="loading"></div>
+
+            <div class="muted">
+                <small>
+                    Если объявления не были загружены - пожалуйста попробуйте перезагрузить страницу 
+                    или обратиться к нам в тех. поддержку 
+                    <a href="mailto:support@nedvijimost-ua.com">support@nedvijimost-ua.com</a>.
+                </small>
+            </div>
         </div>
     </div>
 

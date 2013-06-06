@@ -2,6 +2,7 @@
 
 <%--<%@ Register Src="~/Controls/OpenIDAuthentication.ascx" TagName="OpenIdAuthentication" TagPrefix="control" %>--%>
 <%@ Register Src="~/Controls/AuthorizationControl.ascx" TagName="AuthorizationControl" TagPrefix="control" %>
+<%@ Register Src="~/Controls/UserTopPanel.ascx" TagName="UserTopPanel" TagPrefix="control" %>
 
 <!DOCTYPE html>
 
@@ -37,6 +38,7 @@
     <link rel="stylesheet" href="Scripts/tufte-graph/tufte-graph.css" type="text/css" />
 </head>
 <body>
+    <control:UserTopPanel runat="server" ID="TopUserPanel" />
     <div class="container" style="width: 1170px;">
             
             <div class="container" style="width: 1060px;">

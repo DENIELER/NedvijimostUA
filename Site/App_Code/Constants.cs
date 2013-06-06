@@ -8,5 +8,5 @@ using System.Web;
 /// </summary>
 public class Constants
 {
-    public const int Max_Advertisments_View_Count = 50;
+    public const int Max_Advertisments_View_Count = 10;
 }
