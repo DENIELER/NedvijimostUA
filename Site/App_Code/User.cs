@@ -17,13 +17,15 @@ namespace Authorization
         {
         }
 
-        public static bool RegisterUser(string email, string password, string phone)
+        public static bool RegisterUser(string email, string login, string password, string phone, bool isSubpurchase)
         {
             var dataModel = new NedvijimostDBEntities();
             var user = new Model.User();
             user.Email = email;
+            user.Login = login;
             user.Password = Utils.CalculateMD5Hash(password);
             user.Phone = phone;
+            user.IsSubPurchase = isSubpurchase;
 
             dataModel.AddToUsers(user);
             dataModel.SaveChanges();

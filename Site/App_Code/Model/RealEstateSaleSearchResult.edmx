@@ -83,6 +83,7 @@
     <Property Name="not_show_advertisment" Type="bit" Nullable="false" DefaultValue="false" />
     <Property Name="isSpecial" Type="bit" Nullable="false" DefaultValue="false" />
     <Property Name="isSpecialDateTime" Type="datetime" Nullable="true" />
+    <Property Name="UserID" Type="int" Nullable="true" />
     <Property Name="AdvertismentSection_Id" Type="int" Nullable="false" />
     <Property Name="SubPurchase_Id" Type="uniqueidentifier" Nullable="true" />
     <Property Name="AdvertismentSubSection_Id" Type="int" Nullable="true" />
@@ -413,6 +414,7 @@
           <Property Type="Boolean" Name="isSpecial" Nullable="false" DefaultValue="False" />
           <Property Type="DateTime" Name="isSpecialDateTime" Nullable="true" />
           <NavigationProperty Name="AdvertismentSubSection" Relationship="NedvijimostDBModel.AdvertismentAdvertismentSubSection" FromRole="Advertisment" ToRole="AdvertismentSubSection" />
+          <Property Type="Int32" Name="UserID" Nullable="true" />
         </EntityType>
         <EntityType Name="AdvertismentsPhoto">
           <Key>
@@ -643,6 +645,7 @@
           <ScalarProperty Name="not_show_advertisment" ColumnName="not_show_advertisment" />
           <ScalarProperty Name="isSpecial" ColumnName="isSpecial" />
           <ScalarProperty Name="isSpecialDateTime" ColumnName="isSpecialDateTime" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

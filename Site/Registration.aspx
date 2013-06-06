@@ -9,9 +9,29 @@
     
     <form runat="server" class="form-horizontal">
       <div class="control-group">
-        <label class="control-label">Email/Логин*</label>
+        <label class="control-label">Email*</label>
         <div class="controls">
-            <asp:TextBox runat="server" ID="txtEmailLogin" placeholder="Email/Логин"></asp:TextBox>
+            <asp:TextBox runat="server" ID="txtEmail" placeholder="Email"></asp:TextBox>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Логин</label>
+        <div class="controls">
+            <asp:TextBox runat="server" ID="txtLogin" placeholder="Логин"></asp:TextBox>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls" style="line-height: 20px;">
+            <label class="checkbox">
+                <asp:CheckBox runat="server" ID="chkSubpurchase" />  
+                <small>
+                    Являетесь ли Вы представителем агенства недвижимости или частным агентом?
+                </small>
+            </label>
+            <br />
+            <small class="muted">
+                Для агенств недвижимости и частных агентов предоставляются специализированные сервисы и услуги.
+            </small>
         </div>
       </div>
       <div class="control-group">
@@ -34,9 +54,12 @@
       </div>
       <div class="control-group">
         <div class="controls" style="line-height: 42px;">
-            <asp:RequiredFieldValidator CssClass="alert alert-error" runat="server" ControlToValidate="txtEmailLogin" Display="Dynamic" ErrorMessage="Введите Email или Логин пользователя<br/>"></asp:RequiredFieldValidator>
-            <asp:RequiredFieldValidator CssClass="alert alert-error" runat="server" ControlToValidate="txtPassword" Display="Dynamic" ErrorMessage="Введите пароль пользователя<br/>"></asp:RequiredFieldValidator>
-            <asp:CompareValidator CssClass="alert alert-error" runat="server" ControlToValidate="txtPassword" ControlToCompare="txtRepeatPassword" Display="Dynamic" ErrorMessage="Введенные пароли не совпадают<br/>"></asp:CompareValidator>
+            <asp:RequiredFieldValidator CssClass="alert alert-error" runat="server" ControlToValidate="txtEmail" Display="None" ErrorMessage="Введите Email пользователя"></asp:RequiredFieldValidator>
+            <asp:RegularExpressionValidator CssClass="alert alert-error" runat="server" Display="None" ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ControlToValidate="txtEmail" ErrorMessage="Email имеет не правильный формат"></asp:RegularExpressionValidator>
+            <asp:RequiredFieldValidator CssClass="alert alert-error" runat="server" ControlToValidate="txtPassword" Display="None" ErrorMessage="Введите пароль пользователя"></asp:RequiredFieldValidator>
+            <asp:CompareValidator CssClass="alert alert-error" runat="server" ControlToValidate="txtPassword" ControlToCompare="txtRepeatPassword" Display="None" ErrorMessage="Введенные пароли не совпадают"></asp:CompareValidator>
+
+            <asp:ValidationSummary ID="ValidationSummary" runat="server" CssClass="alert alert-error"/>
         </div>
       </div>
       <div class="control-group">

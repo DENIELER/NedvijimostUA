@@ -13,7 +13,7 @@ public partial class Registration : System.Web.UI.Page
     }
     protected void btnRegister_Click(object sender, EventArgs e)
     {
-        if (Authorization.User.RegisterUser(txtEmailLogin.Text, txtPassword.Text, txtPhone.Text))
+        if (Authorization.User.RegisterUser(txtEmail.Text, txtLogin.Text, txtPassword.Text, txtPhone.Text, chkSubpurchase.Checked))
             Response.Redirect("~/success-registration");
         else Response.Redirect("~/failed-registration");
     }

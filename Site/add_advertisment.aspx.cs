@@ -89,10 +89,12 @@ public partial class add_advertisment : System.Web.UI.Page
             photosList = photosListObject as List<PhotoResponse>;
         }
 
-        SaveAdvertismentInfoDB(sectionID, subsectionID, address, phone, text, photosList);
+        int? userID = Authorization.Authorization.CurrentUser_UserID();
+
+        SaveAdvertismentInfoDB(sectionID, subsectionID, address, phone, text, userID, photosList);
     }
 
-    private void SaveAdvertismentInfoDB(int sectionID, int? subsectionID, string address, string phone, string text, List<PhotoResponse> photosList)
+    private void SaveAdvertismentInfoDB(int sectionID, int? subsectionID, string address, string phone, string text, int? userID, List<PhotoResponse> photosList)
     {
         var context = new NedvijimostDBEntities();
 
@@ -106,6 +108,7 @@ public partial class add_advertisment : System.Web.UI.Page
         advertisment.siteName = "Nedvijimost-UA";
         advertisment.SubPurchase = null;
         advertisment.subpurchaseAdvertisment = false;
+        advertisment.UserID = userID;
         context.AddToAdvertisments(advertisment);
         context.SaveChanges();
 

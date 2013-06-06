@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 06/05/2013 23:06:15
+-- Date Created: 06/06/2013 10:00:01
 -- Generated from EDMX file: E:\Projects\Nedvijimost-ua\Site\App_Code\Model\RealEstateSaleSearchResult.edmx
 -- --------------------------------------------------
 
@@ -118,6 +118,7 @@ CREATE TABLE [dbo].[Advertisments] (
     [not_show_advertisment] bit  NOT NULL,
     [isSpecial] bit  NOT NULL,
     [isSpecialDateTime] datetime  NULL,
+    [UserID] int  NULL,
     [AdvertismentSection_Id] int  NOT NULL,
     [SubPurchase_Id] uniqueidentifier  NULL,
     [AdvertismentSubSection_Id] int  NULL
