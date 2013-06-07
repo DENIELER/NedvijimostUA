@@ -24,9 +24,26 @@
                     <ItemTemplate>
                         <div class="advertisment_block row-fluid">
                             <div class="span8">
-                                <strong>Текст:</strong>
-                                <div style="padding: 10px;">
-                                    <%# Eval("text") %>
+                                <div>
+                                    <strong>Текст:</strong>
+                                    <div style="padding: 10px;">
+                                        <%# Eval("text") %>
+                                    </div>
+                                </div>
+                                <div>
+                                    <strong>Телефоны:</strong>
+                                    <div style="padding: 10px;">
+                                         <asp:ListView runat="server" DataSource='<%# Eval("AdvertismentPhones") %>'>
+                                            <ItemTemplate>
+                                                <div>
+                                                    <label><%# Eval("phone") %></label>
+                                                </div>
+                                            </ItemTemplate>
+                                            <EmptyDataTemplate>
+                                                 <label>Нет телефонов</label>
+                                            </EmptyDataTemplate>
+                                        </asp:ListView>
+                                    </div>
                                 </div>
                             </div>
                             <div class="span2" style="text-align: center;">
@@ -40,7 +57,7 @@
                             <div class="span2" style="text-align: center;">
                                 <strong>Удалить</strong>
                                 <div style="margin-top: 15px;">
-                                    <asp:LinkButton runat="server" ID="lnkDelete" CommandArgument='<%# Eval("Id") %>' OnCommand="lnkDelete_Command">
+                                    <asp:LinkButton runat="server" ID="lnkDelete" CommandArgument='<%# Eval("Id") %>' OnCommand="lnkDelete_Command" OnClientClick="return confirm('Вы уверены, что хотите удалить это объявление?');">
                                         <img src="img/1370565849_101.png" />
                                     </asp:LinkButton>
                                 </div>
@@ -49,27 +66,37 @@
                     </ItemTemplate>
                 </asp:Repeater>
             </div>
+
+            <%--<div style="text-align: right; padding: 10px;" class="row-fluid">
+                <small>
+                    <a href="#">Это не все мои объявления и я хочу найти еще по моему номеру телефона</a>
+                </small>
+            </div>--%>
         </form>
         <% }else{ %>
             <form class="form-horizontal" runat="server">
                 <div class="control-group">
                     <label class="control-label">Текст</label>
                     <div class="controls">
-                        <asp:TextBox runat="server" TextMode="MultiLine" ID="txtText"/>
+                        <asp:TextBox runat="server" TextMode="MultiLine" ID="txtText" Rows="5" Width="350px"/>
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="inputPassword">Password</label>
+                    <label class="control-label">Телефоны</label>
                     <div class="controls">
-                        <input type="password" id="inputPassword" placeholder="Password">
+                        <asp:Repeater runat="server" ID="rptPhones">
+                            <ItemTemplate>
+                                <div style="margin-top: 10px;">
+                                    <input name="phoneId" value="<%# Eval("Id") %>" type="hidden" />
+                                    <input name="phones[<%# Eval("Id") %>].phone" value="<%# Eval("phone") %>" />
+                                </div>
+                            </ItemTemplate>
+                        </asp:Repeater>
                     </div>
                 </div>
                 <div class="control-group">
                     <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox"> Remember me
-                        </label>
-                        <button type="submit" class="btn">Sign in</button>
+                        <button type="submit" class="btn">Сохранить</button>
                     </div>
                 </div>
             </form>
