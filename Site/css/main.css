@@ -2,6 +2,9 @@
 {
     font-family: "Myriad Pro", "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
     font-size: 16px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
     color: #333;
     margin: 0;
     padding: 0;
@@ -265,7 +268,7 @@ ul.phoneList {
     height: 80px; 
     width: 100%; 
     top: 0; 
-    background-color: #DBDBDB; 
+    background-color: white; 
     z-index: 999;
 
     -webkit-box-shadow: 0 5px 6px -6px lightgray;
@@ -280,13 +283,13 @@ ul.phoneList {
 
         #userTopPanel .innerUserPanelBlock .userMenuItem {
             display: inline-block;
-            width: 120px;
+            width: 130px;
             height: 80px;
             padding: 0 10px;
             margin: 0 10px;
             text-align: center;
 
-            background-color: #e7e7e7;
+            background-color: white;
             -webkit-box-shadow: 0 4px 4px 0px lightgray;
             -moz-box-shadow: 0 4px 4px 0px lightgray;
             box-shadow: 0 4px 4px 0px lightgray;

@@ -49,7 +49,7 @@
       <div class="control-group">
         <label class="control-label">Телефон</label>
         <div class="controls">
-            <asp:TextBox runat="server" ID="txtPhone" placeholder="Телефон"></asp:TextBox>
+            <asp:TextBox runat="server" ID="txtPhone" placeholder="XXX-XXX-XX-XX"></asp:TextBox>
         </div>
       </div>
       <div class="control-group">

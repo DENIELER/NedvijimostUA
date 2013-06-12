@@ -20,7 +20,13 @@
                 </WhereParameters>
             </asp:LinqDataSource>
             <div style="margin-top: 40px;">
-                <asp:Repeater ID="rptAdvertisments" runat="server" DataSourceID="ldsAdvertisments">
+                <asp:ListView ID="rptAdvertisments" runat="server" DataSourceID="ldsAdvertisments">
+                    <EmptyDataTemplate>
+                        <div class="muted" style="text-align: center;">
+                            Извините, у Вас еще нет объявлений. Создайте их с помощью 
+                            раздела <a href="/add_advertisment.aspx">Добавить объявление</a>.
+                        </div>
+                    </EmptyDataTemplate>
                     <ItemTemplate>
                         <div class="advertisment_block row-fluid">
                             <div class="span8">
@@ -64,7 +70,7 @@
                             </div>
                         </div>
                     </ItemTemplate>
-                </asp:Repeater>
+                </asp:ListView>
             </div>
 
             <%--<div style="text-align: right; padding: 10px;" class="row-fluid">

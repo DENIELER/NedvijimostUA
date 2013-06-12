@@ -40,7 +40,29 @@
                     <a href="/add_advertisment.aspx" class="add_advertisment_mainpage_button button orange">Добавить объявление</a>
                 </div>
 
-                <div style="margin-top: 20px; padding: 5px; box-shadow: 0 0 5px 2px rgba(0,0,0,.1);">
+                <div id="Advertisment_Links" style="margin-top: 10px;">
+                    <script type="text/javascript"><!--
+                        google_ad_client = "ca-pub-5891602113354577";
+                        /* Links Nedvijimost Main Page */
+                        google_ad_slot = "4672892179";
+                        google_ad_width = 468;
+                        google_ad_height = 15;
+                        //-->
+                    </script>
+                    <script type="text/javascript"
+                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                    </script>
+                </div>
+
+                <div id="SearchResult_Charts">
+                    <h3>Статистика объявлений аренды</h3>
+                    <control:SearchResultsChart runat="server" ID="SearchResultsChart" />
+                </div>
+            </div>
+            
+            <%-- Right column  ---%>
+            <div class="span6">
+                                <div style="margin-top: 20px; padding: 5px; box-shadow: 0 0 5px 2px rgba(0,0,0,.1);">
                 <h3>Разделы</h3>
                 <h4>Жилая недвижимость</h4>
                     <div class="row-fluid" style="width: 90%; margin: 0 auto;">
@@ -79,32 +101,10 @@
                     </div>
                 </div>
 
-                <div id="Advertisment_Links" style="margin-top: 10px;">
-                    <script type="text/javascript"><!--
-                        google_ad_client = "ca-pub-5891602113354577";
-                        /* Links Nedvijimost Main Page */
-                        google_ad_slot = "4672892179";
-                        google_ad_width = 468;
-                        google_ad_height = 15;
-                        //-->
-                    </script>
-                    <script type="text/javascript"
-                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-                    </script>
-                </div>
-
-                <div id="SearchResult_Charts">
-                    <h3>Статистика объявлений аренды</h3>
-                    <control:SearchResultsChart runat="server" ID="SearchResultsChart" />
-                </div>
-            </div>
-            
-            <%-- Right column  ---%>
-            <div class="span6">
-                <div id="Advertisments_withPhonesRotator" style="margin-top: 10px;">
+                <%--<div id="Advertisments_withPhonesRotator" style="margin-top: 10px;">
                     <h3>Недавние объявления</h3>
                     <control:AdvertismentsWithPhotosViewControl runat="server" ID="AdvertismentsWithPhotosRotator" />
-                </div>
+                </div>--%>
 
                 <div id="Vkontakte_Social_Group" style="margin-top: 10px;">
                     <h3>Сообщество</h3>

@@ -43,7 +43,7 @@ public partial class MyAdvertisments : System.Web.UI.Page
                 var dataModel = new Model.NedvijimostDBEntities();
 
                 int? authorizedUserID = Authorization.Authorization.CurrentUser_UserID();
-                if(!authorizedUserID.HasValue)
+                if (!authorizedUserID.HasValue)
                     return;
 
                 var advertisment = dataModel.Advertisments
@@ -77,8 +77,15 @@ public partial class MyAdvertisments : System.Web.UI.Page
                     Response.Redirect(Request.Url.AbsolutePath);
                 }
             }
-        }else
-            ldsAdvertisments.WhereParameters["UserID"].DefaultValue = Authorization.Authorization.CurrentUser_UserID().ToString();
+        }
+        else
+        {
+            var userID = Authorization.Authorization.CurrentUser_UserID();
+            if (userID.HasValue)
+                ldsAdvertisments.WhereParameters["UserID"].DefaultValue = userID.ToString();
+            else
+                Response.Redirect("~/failed-authorization");
+        }
     }
 
     protected void lnkDelete_Command(object sender, CommandEventArgs e)

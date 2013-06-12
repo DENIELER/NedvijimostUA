@@ -21,10 +21,16 @@
 %>
 <div id="user_info" style="background-color: white; height: 130px; padding: 5px 0;">
     <div>
-        Здравствуйте, <strong><%= Authorization.Authorization.CurrentUser_Login() %></strong>!
+        Здравствуйте, <br />
+        <strong><%= Authorization.Authorization.CurrentUser_Login() %></strong>!
     </div>
     <% if(!Authorization.Authorization.CurrentUser_IsAdmin()) { %>
-    <div style="margin: 20px 0;">Ваш телефон: <%= !string.IsNullOrEmpty(Authorization.Authorization.CurrentUser_Phone()) ? Authorization.Authorization.CurrentUser_Phone() : "не указан" %></div>
+    <div style="margin-top: 14px;">
+        Ваш телефон: <strong><%= !string.IsNullOrEmpty(Authorization.Authorization.CurrentUser_Phone()) ? Authorization.Authorization.CurrentUser_Phone() : "не указан" %></strong>
+    </div>
+    <div style="margin-bottom: 14px;">
+        Ваших объявлений: <strong><%= UserAdvertismentsCount %></strong>
+    </div>
     <% }else{ %>
     <div style="margin-top: 14px;">
         <a href="/Admin/SubPurchases.aspx" style="font-size: 0.8em;">Добавить посредника(ов)</a>

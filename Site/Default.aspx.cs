@@ -16,7 +16,7 @@ public partial class _Default : System.Web.UI.Page
         {
             var context = new Model.NedvijimostDBEntities();
 
-            AdvertismentsWithPhotosRotator.DBContext = context;
+            //AdvertismentsWithPhotosRotator.DBContext = context;
             SearchResultsChart.DBContext = context;
         }
     }
