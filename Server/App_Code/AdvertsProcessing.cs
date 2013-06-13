@@ -160,10 +160,14 @@ public class AdvertsProcessing
             {
                 if (!string.IsNullOrEmpty(advPhone.phone))
                 {
-                    var advPhoneExpressin = SubpurchasesWorkflow.MakePhoneLikeExpression(advPhone.phone);
+                    var advPhoneExpression = SubpurchasesWorkflow.MakePhoneLikeExpression(advPhone.phone);
+                    Regex regex = new Regex(string.Format("^{0}$", advPhoneExpression.Replace("%", ".*")), RegexOptions.IgnoreCase);
                     var subpurchasePhonePair = allDatabaseSubpurchases.FirstOrDefault(
-                        sp => System.Data.Linq.SqlClient.SqlMethods.Like(sp.SubPurchasePhone.phone, advPhoneExpressin));
-
+                        sp =>
+                            {
+                                return regex.IsMatch(sp.SubPurchasePhone.phone ?? string.Empty);
+                            });
+                    
                     if (subpurchasePhonePair != null && subpurchasePhonePair.SubPurchase != null)
                     {
                         subpurchase = subpurchasePhonePair.SubPurchase;
@@ -189,7 +193,7 @@ public class AdvertsProcessing
             }
 
             tempCounter++;
-            if (tempCounter % 100 == 0)
+            if (tempCounter % 50 == 0)
                 Log.WriteLog("Database filtering..." + tempCounter.ToString() + " advertisments. Good have founded " +
                              goodAdvList.Count.ToString() + " adv.");
         }
@@ -306,10 +310,10 @@ public class AdvertsProcessing
                         }
                     }
                 }
-                else
-                {
-                    Log.WriteLog("Adv. without phone - " + advertisment.text);
-                }
+                //else
+                //{
+                //    Log.WriteLog("Adv. without phone - " + advertisment.text);
+                //}
 
                 currentAdvIndex++;
             }
