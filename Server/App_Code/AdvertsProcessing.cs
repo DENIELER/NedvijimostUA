@@ -160,8 +160,9 @@ public class AdvertsProcessing
             {
                 if (!string.IsNullOrEmpty(advPhone.phone))
                 {
+                    var advPhoneExpressin = SubpurchasesWorkflow.MakePhoneLikeExpression(advPhone.phone);
                     var subpurchasePhonePair = allDatabaseSubpurchases.FirstOrDefault(
-                        sp => sp.SubPurchasePhone.phone == advPhone.phone);
+                        sp => System.Data.Linq.SqlClient.SqlMethods.Like(sp.SubPurchasePhone.phone, advPhoneExpressin));
 
                     if (subpurchasePhonePair != null && subpurchasePhonePair.SubPurchase != null)
                     {

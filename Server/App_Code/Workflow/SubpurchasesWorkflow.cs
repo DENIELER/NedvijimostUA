@@ -55,7 +55,7 @@ public class SubpurchasesWorkflow
         }
     }
 
-    private string MakePhoneLikeExpression(string phone)
+    public static string MakePhoneLikeExpression(string phone)
     {
         string temp = phone.Replace("+", "%").Replace(" ", "%").Replace("-", "%").Trim();
         string result = "%";
@@ -96,8 +96,53 @@ public class SubpurchasesWorkflow
         List<string> phones = new List<string>(); 
 
         string temp = phone.Replace("+", "").Replace(" ", "").Replace("-", "").Trim();
-        //Regex.Replace(phone, @"(\w{4})(\w{4})(\w{4})", @"$1-$2-$3");
+        if (temp.StartsWith("8"))
+            temp = temp.Substring(1);
+        else if (temp.StartsWith("38"))
+            temp = temp.Substring(2);
 
+        if (temp.Length == 7)
+        {
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{2})(\w{2})", @"$1-$2-$3"));
+            phones.Add(Regex.Replace(phone, @"(\w{2})(\w{2})(\w{3})", @"$1-$2-$3"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{1})(\w{3})", @"$1-$2-$3"));
+            phones.Add(Regex.Replace(phone, @"(\w{1})(\w{3})(\w{3})", @"$1-$2-$3"));
+            phones.Add(Regex.Replace(phone, @"(\w{2})(\w{3})(\w{2})", @"$1-$2-$3"));
+        }
+        else if (temp.Length == 10)
+        {
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{3})(\w{2})(\w{2})", @"$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{7})", @"$1-$2"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{5})(\w{2})", @"$1-$2-$3"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{3})(\w{4})", @"$1-$2-$3"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{4})(\w{3})", @"$1-$2-$3"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{1})(\w{3})(\w{3})", @"$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{3})(\w{3})(\w{1})", @"$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{3})(\w{1})(\w{3})", @"$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{2})(\w{2})(\w{3})", @"$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{2})(\w{4})(\w{1})", @"$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{1})(\w{2})(\w{2})(\w{2})", @"$1-$2-$3-$4-$5"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{2})(\w{3})(\w{2})", @"$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{3})(\w{1})(\w{3})", @"$1 $2 $3 $4"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{3})(\w{2})(\w{2})", @"$1 $2 $3 $4"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{2})(\w{2})(\w{3})", @"$1 $2 $3 $4"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{2})(\w{4})(\w{1})", @"$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{3})(\w{4})", @"$1 $2 $3"));
+            phones.Add(Regex.Replace(phone, @"(\w{10})", @"$1"));
+            phones.Add(Regex.Replace(phone, @"(\w{10})", @"8$1"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{2})(\w{2})(\w{3})", @"8-$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(phone, @"(\w{3})(\w{3})(\w{2})(\w{2})", @"8-$1-$2-$3-$4"));
+        }
+        else
+        {
+            phones.Add(phone);
+        }
+
+        phones.ForEach(p =>
+        {
+            if (string.IsNullOrEmpty(p))
+                phones.Remove(p);
+        });
         return phones;
     }
 }
