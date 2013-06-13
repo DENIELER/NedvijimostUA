@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 /// <summary>
@@ -26,7 +27,9 @@ public class SubpurchasesWorkflow
 
     public Model.SubPurchase AddSubpurchasePhone(string phone, string name, string surname, bool validated)
     {
-        var selectPhone = _context.SubPurchasePhones.FirstOrDefault(p => p.phone == phone);
+        string phoneLikeExpression = MakePhoneLikeExpression(phone);
+        var selectPhone = _context.SubPurchasePhones
+            .FirstOrDefault(p => System.Data.Linq.SqlClient.SqlMethods.Like(p.phone, phoneLikeExpression));
 
         if (selectPhone == null)
         {
@@ -52,21 +55,49 @@ public class SubpurchasesWorkflow
         }
     }
 
+    private string MakePhoneLikeExpression(string phone)
+    {
+        string temp = phone.Replace("+", "%").Replace(" ", "%").Replace("-", "%").Trim();
+        string result = "%";
+        for (int i = 0; i < temp.Length; i++)
+        {
+            if (temp[i] != '%')
+                result += temp[i] + "%";
+            else result += temp[i];
+        }
+
+        return result;
+    }
+
     public Model.SubPurchase AddSubpurchasePhone(string phone, Model.SubPurchase subpurchase)
     {
         if (subpurchase == null)
             return null;
 
-        var newSubpurchasePhone = new Model.SubPurchasePhone()
+        List<string> formatedPhones = GetPhoneFormatsList(phone);
+        foreach (var formatedPhone in formatedPhones)
         {
-            Id = Guid.NewGuid(),
-            phone = phone,
-            createDate = Utils.GetUkranianDateTimeNow(),
-            SubPurchase = subpurchase
-        };
-        _context.AddToSubPurchasePhones(newSubpurchasePhone);
-        _context.SaveChanges();
+            var newSubpurchasePhone = new Model.SubPurchasePhone()
+            {
+                Id = Guid.NewGuid(),
+                phone = formatedPhone,
+                createDate = Utils.GetUkranianDateTimeNow(),
+                SubPurchase = subpurchase
+            };
+            _context.AddToSubPurchasePhones(newSubpurchasePhone);
+            _context.SaveChanges();
+        }
 
         return subpurchase;
+    }
+
+    private List<string> GetPhoneFormatsList(string phone)
+    {
+        List<string> phones = new List<string>(); 
+
+        string temp = phone.Replace("+", "").Replace(" ", "").Replace("-", "").Trim();
+        //Regex.Replace(phone, @"(\w{4})(\w{4})(\w{4})", @"$1-$2-$3");
+
+        return phones;
     }
 }
