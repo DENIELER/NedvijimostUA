@@ -341,7 +341,7 @@
             if (photos.length <= 3)
                 block_height = ' style="min-height: 80px;"';
 
-            var photosDiv = '<div class="row-fluid"' + block_height + '>' +
+            var photosDiv = '<noindex><div class="row-fluid"' + block_height + '>' +
                                 '<div class="span8">' +
                                     '<strong>Фото:</strong>' +
                                     '<div class="gallery" data-toggle="modal-gallery" data-target="#modal-gallery" data-selector="div.gallery-item">';
@@ -353,7 +353,7 @@
             });
             photosDiv +=            '</div>' +
                                 '</div>' +
-                            '</div>';
+                            '</div></noindex>';
 
             return photosDiv;
         }
