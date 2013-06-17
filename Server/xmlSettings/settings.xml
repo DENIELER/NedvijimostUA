@@ -103,26 +103,43 @@
     <stopWord>риелтер</stopWord>
     <stopWord>риелтор</stopWord>
   </sale_commercialStopSearchWords>
-  
-  <rent>
-    <take_off_words>
-      <word>сниму</word>
-      <word>снимет</word>
-      <word>снимем</word>
-	    <word>снимит</word>
-      <word>снять</word>
-      <word>ищу</word>
-      <word>ищет</word>
-    </take_off_words>
 
-    <rent_words>
-      <word>сдам</word>
-      <word>сдаю</word>
-      <word>сдаст</word>
-      <word>сдается</word>
-      <word>сдаеться</word>
-    </rent_words>
-  </rent>
+  <subSectionDeterminationWords>
+    <rent_section>
+      <rent_subsection>
+        <word>сдам</word>
+        <word>сдаю</word>
+        <word>сдаст</word>
+        <word>сдается</word>
+        <word>сдаеться</word>
+      </rent_subsection>
+
+      <take_off_subsection>
+        <word>сниму</word>
+        <word>снимет</word>
+        <word>снимем</word>
+        <word>снимит</word>
+        <word>снять</word>
+        <word>ищу</word>
+        <word>ищет</word>
+      </take_off_subsection>
+    </rent_section>
+
+    <sale_section>
+      <sell_subsection>
+        <word>продам</word>
+        <word>продаю</word>
+        <word>продается</word>
+        <word>продает</word>
+      </sell_subsection>
+
+      <buy_subsection>
+        <word>куплю</word>
+        <word>ищу</word>
+        <word>купит</word>
+      </buy_subsection>
+    </sale_section>
+  </subSectionDeterminationWords>
   
   <cottagesStopSearchWords>
 	  <stopWord>дом</stopWord>

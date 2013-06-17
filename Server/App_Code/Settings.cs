@@ -59,47 +59,73 @@ public class Settings
         return researchPhoneFormatsResult;
     }
 
-    public static RentOptions getRentOptions()
+    public class SubSectionDeterminationWordsSettings
     {
-        var rentOptions = new RentOptions();
-        
-        var xmlDocument = new XmlDocument();
-        xmlDocument.Load(System.Web.Hosting.HostingEnvironment.MapPath(settingsFileName));
-
-        var rentPath = xmlDocument.DocumentElement.SelectSingleNode("rent");
-        if(rentPath != null)
+        private static SubSectionDeterminationWordsSettings _instance;
+        public static SubSectionDeterminationWordsSettings Instance
         {
-            var takeOffWords = rentPath.SelectSingleNode("take_off_words");
-            if(takeOffWords != null)
+            get
             {
-                var words = takeOffWords.SelectNodes("word");
-                if(words != null)
-                {
-                    rentOptions.TakeOffWords = new List<string>();
-                    foreach (XmlNode word in words)
-                        rentOptions.TakeOffWords.Add(word.InnerText);
-                }
-            }
+                if (_instance == null)
+                    _instance = new SubSectionDeterminationWordsSettings();
 
-            var rentWords = rentPath.SelectSingleNode("rent_words");
-            if(rentWords != null)
-            {
-                var words = rentWords.SelectNodes("word");
-                if(words != null)
-                {
-                    rentOptions.RentWords = new List<string>();
-                    foreach (XmlNode word in words)
-                        rentOptions.RentWords.Add(word.InnerText);
-                }
+                return _instance;
             }
         }
-        
-        return rentOptions;
-    }
-}
 
-public class RentOptions
-{
-    public List<string> TakeOffWords { get; set; }
-    public List<string> RentWords { get; set; }
+        /// <summary>
+        /// Get SubSections determination words
+        /// </summary>
+        /// <param name="sectionCode"></param>
+        /// <param name="subSectionCodes"></param>
+        /// <returns>Dictionary: Key - subSectionCode, Value - list of subSection determination words</returns>
+        public Dictionary<string, List<string>> getSubSectionsDeterminationWords(string sectionCode, List<string> subSectionCodes)
+        {
+            if (subSectionCodes == null)
+                throw new ArgumentNullException("SubSections parameter is empty");
+
+            var xmlDocument = new XmlDocument();
+            xmlDocument.Load(System.Web.Hosting.HostingEnvironment.MapPath(settingsFileName));
+
+            var result = new Dictionary<string, List<string>>();
+
+            foreach (var subSectionCode in subSectionCodes)
+            {
+                var subSectionDeteminationWords = getSubSectionDeterminationWords(sectionCode, subSectionCode, xmlDocument);
+                if (subSectionDeteminationWords != null && subSectionDeteminationWords.Any())
+                    result.Add(subSectionCode, subSectionDeteminationWords);
+            }
+
+            return result;
+        }
+        private List<string> getSubSectionDeterminationWords(string sectionCode, string subSectionCode, XmlDocument xmlDocument = null)
+        {
+            var subSectionWords = new List<string>();
+
+            if (xmlDocument == null)
+            {
+                xmlDocument = new XmlDocument();
+                xmlDocument.Load(System.Web.Hosting.HostingEnvironment.MapPath(settingsFileName));
+            }
+
+            var rootPath = xmlDocument.DocumentElement.SelectSingleNode("subSectionDeterminationWords");
+            if (rootPath == null)
+                throw new Exception("subSectionDeterminationWords section was not found in settings.xml file");
+
+            var sectionPath = rootPath.SelectSingleNode(sectionCode + "_section");
+            if (sectionPath == null)
+                throw new Exception(sectionCode + "_section" + " section was not found in settings.xml file");
+
+            var takeOffWords = sectionPath.SelectSingleNode(subSectionCode + "_subsection");
+            if (takeOffWords == null)
+                throw new Exception(subSectionCode + "_subsection" + " section was not found in settings.xml file");
+
+            var words = takeOffWords.SelectNodes("word");
+            if (words != null)
+                foreach (XmlNode word in words)
+                    subSectionWords.Add(word.InnerText);
+
+            return subSectionWords;
+        }
+    }
 }

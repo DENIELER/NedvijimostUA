@@ -24,9 +24,9 @@ public class SiteParser
 
     private List<string> photosUrlsToRemove;
     //Return pair: first - dictionary of the advertisments with key - order number, the second - phones list with key - order advert number
-    public IList<Advertisment> GetAdvertisements()
+    public IList<ParsedAdvertisment> GetAdvertisements()
     {
-        var resultAdvertisments = new List<Advertisment>();
+        var resultAdvertisments = new List<ParsedAdvertisment>();
 
         bool advExists = false;
         int pageNum = CurrentSiteSetting.startPageIndex;
@@ -64,9 +64,7 @@ public class SiteParser
                     if (pageParsedAdvertisments != null
                         && pageParsedAdvertisments.Any())
                     {
-                        resultAdvertisments.AddRange(
-                                ConvertToAdvertismentList(pageParsedAdvertisments)
-                            );
+                        resultAdvertisments.AddRange(pageParsedAdvertisments);
                         advExists = true;
                     }
                     else
@@ -188,10 +186,17 @@ public class SiteParser
         catch (WebException ex)
         {
             Log.WriteLog("Web exception captured.");
-            using (var stream = ex.Response.GetResponseStream())
-            using (var reader = new StreamReader(stream))
+            if (ex.Response != null)
             {
-                Log.WriteLog(reader.ReadToEnd());
+                using (var stream = ex.Response.GetResponseStream())
+                using (var reader = new StreamReader(stream))
+                {
+                    Log.WriteLog(reader.ReadToEnd());
+                }
+            }
+            else
+            {
+                Log.WriteLog("web exception error: " + ex.Message);
             }
         }
 
@@ -221,7 +226,8 @@ public class SiteParser
                 sourceImageUrl = image.Attributes["src"].Value;
             }
 
-            string siteImageUrl = SavePhotoToFTP(sourceImageUrl);
+            string siteImageUrl = sourceImageUrl;
+                //SavePhotoToFTP(sourceImageUrl);
             image.Attributes["src"].Value = siteImageUrl;
             imageUrls.Add(siteImageUrl);
         }
@@ -229,44 +235,58 @@ public class SiteParser
         return imageUrls;
     }
 
+    //--- it is a lot of problems with FTP downloading files
     private string SavePhotoToFTP(string imageUrl)
     {
+        imageUrl = imageUrl.Replace("&amp;", "&");
+
         string ftpUrl = "lilac.arvixe.com/nedvijimost-ua.com/wwwroot";
         string filePath = "/files";
 
         string ftpusername = "denieler";
         string ftppassword = "gtycbz1990";
 
-        Uri uri = new Uri(imageUrl);
-        var filename = Path.GetFileName(uri.LocalPath);
+        string fileExtenstion;
+        fileExtenstion = GetFileExtension(imageUrl);
+        string filename = "photo_" + Guid.NewGuid() + fileExtenstion;
+        byte[] photoBytes;
+        using (WebClient clientRequest = new WebClient())
+        {
+            photoBytes = clientRequest.DownloadData(imageUrl);
+        }
+
         FtpWebRequest ftpClient = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpUrl + filePath + "/" + filename));
         ftpClient.Credentials = new System.Net.NetworkCredential(ftpusername, ftppassword);
         ftpClient.Method = System.Net.WebRequestMethods.Ftp.UploadFile;
         ftpClient.UseBinary = true;
-        ftpClient.KeepAlive = true;
+        ftpClient.KeepAlive = false;
+        ftpClient.Method = WebRequestMethods.Ftp.UploadFile;
+        ftpClient.ContentLength = photoBytes.Length;
 
-        System.IO.FileInfo fi = new System.IO.FileInfo(imageUrl);
-        ftpClient.ContentLength = fi.Length;
-        byte[] buffer = new byte[4097];
-        int bytes = 0;
-        int total_bytes = (int)fi.Length;
-        System.IO.FileStream fs = fi.OpenRead();
-        System.IO.Stream rs = ftpClient.GetRequestStream();
-        while (total_bytes > 0)
+        using (System.IO.Stream rs = ftpClient.GetRequestStream())
         {
-            bytes = fs.Read(buffer, 0, buffer.Length);
-            rs.Write(buffer, 0, bytes);
-            total_bytes = total_bytes - bytes;
+            rs.Write(photoBytes, 0, photoBytes.Length);
+            rs.Close();
         }
-        //fs.Flush();
-        fs.Close();
-        rs.Close();
 
-        FtpWebResponse uploadResponse = (FtpWebResponse)ftpClient.GetResponse();
-        //var value = uploadResponse.StatusDescription;
-        uploadResponse.Close();
-
+        using (FtpWebResponse uploadResponse = (FtpWebResponse)ftpClient.GetResponse())
+        {
+            //var value = uploadResponse.StatusDescription;
+            uploadResponse.Close();
+        }
+        
         return filePath + "/" + filename;
+    }
+
+    private string GetFileExtension(string imageUrl)
+    {
+        if (imageUrl.Contains(".jpg"))
+            return ".jpg";
+        else if (imageUrl.Contains(".png"))
+            return ".png";
+        else if (imageUrl.Contains(".gif"))
+            return ".gif";
+        else return ".jpg";
     }
 
     private List<string> SeparatePhones(HtmlNode container, string advText)
@@ -364,7 +384,7 @@ public class SiteParser
     }
 }
 
-public struct ParsedAdvertisment
+public class ParsedAdvertisment
 {
     public string Text {get;set;}
     public List<string> Phones {get;set;}
@@ -372,4 +392,7 @@ public struct ParsedAdvertisment
 
     public string Link { get; set; }
     public string SiteName { get; set; }
+
+    public int? SectionID { get; set; }
+    public int? SubSectionID { get; set; }
 }

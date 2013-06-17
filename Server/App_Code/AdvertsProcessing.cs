@@ -5,22 +5,23 @@ using System.Text.RegularExpressions;
 using System.Web;
 using Model;
 using System.Threading;
+using System.Net;
 
 public class AdvertsProcessing
 {
     public AdvertsProcessing(string sectionCode)
     {
         SectionCode = sectionCode;
-        
-        Context = new Model.NedvijimostDBEntities();
+
+        Context = new Model.DataModel();
     }
 
-	public AdvertsProcessing(Model.NedvijimostDBEntities context)
+    public AdvertsProcessing(Model.DataModel context)
     {
         Context = context;
     }
 
-    public Model.NedvijimostDBEntities Context { get; set; }
+    public Model.DataModel Context { get; set; }
 
     public Log Log { get; set; }
 
@@ -42,7 +43,7 @@ public class AdvertsProcessing
                 var siteParser = new SiteParser(siteSetting);
                 siteParser.Log = Log;
 
-                IList<Advertisment> parsedAdvertisments = null;
+                IList<ParsedAdvertisment> parsedAdvertisments = null;
                 try
                 {
                     // --------
@@ -69,10 +70,18 @@ public class AdvertsProcessing
                         Log.WriteLog("Inner exception: " + e.InnerException.Message);
                 }
 
+                Log.WriteLog("Check whether need to divide advertisments into sub sections.");
+                var subSectionsSeparator = new SubSectionsSeparator(SectionCode, Context, Log);
+                if (subSectionsSeparator.NeedToDivideIntoSubSections)
+                {
+                    subSectionsSeparator.DivideIntoSubSections(parsedAdvertisments);
+                }
+
+                PingServer();
                 Log.WriteLog("Saving advertisments in DB.");
                 searchResultsWorkflow.SaveAdvertismentsInSearchResult(searchResult, parsedAdvertisments);
                 searchResult.allParsedAdvertismentsCount += parsedAdvertisments.Count();
-                Context.SaveChanges();
+                Context.SubmitChanges();
                 Log.WriteLog("Finished. Saving advertisments in DB.");
             }
             catch (Exception e)
@@ -141,7 +150,7 @@ public class AdvertsProcessing
 
         var allDatabaseSubpurchases = (from subPurchaseObject in Context.SubPurchases
                                        join subPurchasePhoneObject in Context.SubPurchasePhones
-                                          on subPurchaseObject.Id equals subPurchasePhoneObject.SubPurchaseId
+                                          on subPurchaseObject.id equals subPurchasePhoneObject.SubPurchaseId
                                        select new { SubPurchase = subPurchaseObject, SubPurchasePhone = subPurchasePhoneObject }).ToList();
 
         if (!allDatabaseSubpurchases.Any())
@@ -189,7 +198,7 @@ public class AdvertsProcessing
                 adversitment.subpurchaseAdvertisment = true;
                 adversitment.SubPurchase = subpurchase;
 
-                Context.SaveChanges();
+                Context.SubmitChanges();
             }
 
             tempCounter++;
@@ -258,13 +267,13 @@ public class AdvertsProcessing
 
                                 Log.WriteLog("SubPurchase founded. Phone - " + phone.phone);
 
-                                var filterAdvertisment = new Model.WebSearchFilterAdvertisments();
+                                var filterAdvertisment = new Model.WebSearchFilterAdvertisment();
                                 filterAdvertisment.title = webResult.title ?? "";
                                 filterAdvertisment.text = webResult.content ?? "";
                                 filterAdvertisment.createDate = Utils.GetUkranianDateTimeNow();
                                 filterAdvertisment.subPurchasePhone = phone.phone;
-                                Context.WebSearchFilterAdvertisments.AddObject(filterAdvertisment);
-                                Context.SaveChanges();
+                                Context.WebSearchFilterAdvertisments.InsertOnSubmit(filterAdvertisment);
+                                Context.SubmitChanges();
                             }
 
                             if (badWebResultsCount == 3)
@@ -279,7 +288,7 @@ public class AdvertsProcessing
                             advertisment.SubPurchase = null;
                             advertisment.subpurchaseAdvertisment = false;
 
-                            Context.SaveChanges();
+                            Context.SubmitChanges();
 
                             goodAdvList.Add(advertisment);
                         }
@@ -290,7 +299,7 @@ public class AdvertsProcessing
                             advertisment.SubPurchase = subpurchase;
                             advertisment.subpurchaseAdvertisment = true;
 
-                            Context.SaveChanges();
+                            Context.SubmitChanges();
 
                             badAdvList.Add(advertisment);
                         }
@@ -384,4 +393,20 @@ public class AdvertsProcessing
     //        }            
     //    }
     //}
+
+    /// <summary>
+    /// Leave server alive
+    /// </summary>
+    public void PingServer()
+    {
+        try
+        {
+            WebClient http = new WebClient();
+            string Result = http.DownloadString(Resources.Constants.PingServerUrl);
+        }
+        catch (Exception ex)
+        {
+            Log.WriteLog("Ping server error: " + ex.Message);
+        }
+    }
 }

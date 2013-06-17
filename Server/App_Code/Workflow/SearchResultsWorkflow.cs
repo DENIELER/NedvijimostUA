@@ -10,7 +10,7 @@ using Model;
 /// </summary>
 public class SearchResultsWorkflow
 {
-    private Model.NedvijimostDBEntities _dbcontext;
+    private Model.DataModel _dbcontext;
 
     public string SectionCode { get; set; }
     
@@ -18,15 +18,15 @@ public class SearchResultsWorkflow
 	{
         this.SectionCode = sectionCode;
 
-        _dbcontext = new Model.NedvijimostDBEntities();
+        _dbcontext = new Model.DataModel();
 	}
 
-    public SearchResultsWorkflow(Model.NedvijimostDBEntities context)
+    public SearchResultsWorkflow(Model.DataModel context)
     {
         _dbcontext = context;
     }
 
-    public SearchResultsWorkflow(string sectionCode, Model.NedvijimostDBEntities context)
+    public SearchResultsWorkflow(string sectionCode, Model.DataModel context)
     {
         this.SectionCode = sectionCode;
 
@@ -34,7 +34,7 @@ public class SearchResultsWorkflow
     }
 
     private Log _log;
-    public SearchResultsWorkflow(string sectionCode, Model.NedvijimostDBEntities context, Log log)
+    public SearchResultsWorkflow(string sectionCode, Model.DataModel context, Log log)
     {
         this.SectionCode = sectionCode;
 
@@ -78,14 +78,14 @@ public class SearchResultsWorkflow
                 allParsedAdvertismentsCount = parsedAdvertismentsCount
             };
 
-            _dbcontext.AddToSearchResults(searchResult);
+            _dbcontext.SearchResults.InsertOnSubmit(searchResult);
         }
-        _dbcontext.SaveChanges();
+        _dbcontext.SubmitChanges();
 
         return searchResult;
     }
 
-    public void SaveAdvertismentsInSearchResult(Model.SearchResult searchResult, IList<Advertisment> advertisments)
+    public void SaveAdvertismentsInSearchResult(Model.SearchResult searchResult, IList<ParsedAdvertisment> advertisments)
     {
         //var advertismentsFromDB = (from adv in _dbcontext.Advertisments
         //                           select adv).ToList();
@@ -102,10 +102,10 @@ public class SearchResultsWorkflow
 
                 var existsAdvertisment = (from adv in _dbcontext.Advertisments
                                           where adv.searchresult_id == searchResult.Id
-                                          && adv.text == advertisment.text
+                                          && adv.text == advertisment.Text
                                           select adv).ToList();
 
-                if (existsAdvertisment.Count <= 0)
+                if (existsAdvertisment.Any())
                 {
                     //_log.WriteLog("Add advertisment:");
                     //_log.WriteLog(advertisment.text);
@@ -113,33 +113,39 @@ public class SearchResultsWorkflow
                     //_log.WriteLog(advertisment.siteName);
                     //_log.WriteLog(Utils.GetUkranianDateTimeNow().ToString());
 
+                    AdvertismentSubSection subSectionObject = null;
+                    if (advertisment.SubSectionID != null)
+                        subSectionObject = _dbcontext.AdvertismentSubSections
+                            .FirstOrDefault(s => s.Id == advertisment.SubSectionID.Value);
+
                     var advertismentEntity = new Model.Advertisment
                     {
                         createDate = Utils.GetUkranianDateTimeNow(),
                         modifyDate = Utils.GetUkranianDateTimeNow(),
-                        text = advertisment.text,
+                        text = advertisment.Text,
                         AdvertismentSection = searchResult.AdvertismentSection,
                         SearchResult = searchResult,
-                        link = advertisment.link,
-                        siteName = advertisment.siteName,
-                        subpurchaseAdvertisment = true
+                        link = advertisment.Link,
+                        siteName = advertisment.SiteName,
+                        subpurchaseAdvertisment = true,
+                        AdvertismentSubSection = subSectionObject
                     };
-                    _dbcontext.AddToAdvertisments(advertismentEntity);
-                    _dbcontext.SaveChanges();
+                    _dbcontext.Advertisments.InsertOnSubmit(advertismentEntity);
+                    _dbcontext.SubmitChanges();
 
                     //--- add phones
-                    foreach (var phone in advertisment.AdvertismentPhones)
+                    foreach (var phone in advertisment.Phones)
                     {
-                        if (!string.IsNullOrWhiteSpace(phone.phone))
+                        if (!string.IsNullOrWhiteSpace(phone))
                         {
                             //_log.WriteLog(phone.phone);
                             var advertismentPhoneEntity = new Model.AdvertismentPhone
                             {
-                                phone = phone.phone,
+                                phone = phone,
                                 Advertisment = advertismentEntity
                             };
-                            _dbcontext.AddToAdvertismentPhones(advertismentPhoneEntity);
-                            _dbcontext.SaveChanges();
+                            _dbcontext.AdvertismentPhones.InsertOnSubmit(advertismentPhoneEntity);
+                            _dbcontext.SubmitChanges();
 
                             advertismentEntity.AdvertismentPhones.Add(advertismentPhoneEntity);
                         }
@@ -147,19 +153,19 @@ public class SearchResultsWorkflow
                     //----
 
                     //--- add photos
-                    foreach (var photo in advertisment.AdvertismentsPhotos)
+                    foreach (var photoUrl in advertisment.PhotoUrls)
                     {
-                        if (!string.IsNullOrWhiteSpace(photo.filename))
+                        if (!string.IsNullOrWhiteSpace(photoUrl))
                         {
                             //_log.WriteLog(photo.filename);
                             var advertismentPhotoEntity = new Model.AdvertismentsPhoto
                             {
-                                filename = photo.filename,
+                                filename = photoUrl,
                                 createDate = Utils.GetUkranianDateTimeNow(),
                                 Advertisment = advertismentEntity
                             };
-                            _dbcontext.AddToAdvertismentsPhotoes(advertismentPhotoEntity);
-                            _dbcontext.SaveChanges();
+                            _dbcontext.AdvertismentsPhotos.InsertOnSubmit(advertismentPhotoEntity);
+                            _dbcontext.SubmitChanges();
 
                             advertismentEntity.AdvertismentsPhotos.Add(advertismentPhotoEntity);
                         }
@@ -169,17 +175,17 @@ public class SearchResultsWorkflow
                     //_log.WriteLog("End");
 
                     searchResult.Advertisments.Add(advertismentEntity);
-                    _dbcontext.SaveChanges();
+                    _dbcontext.SubmitChanges();
                 }
             }
             catch (Exception e)
             {
-                _log.WriteLog("Save advertisment error. Adv text: " + advertisment.text + Environment.NewLine
-                    + "link: " + advertisment.link + Environment.NewLine
-                    + "site: " + advertisment.siteName + Environment.NewLine
+                _log.WriteLog("Save advertisment error. Adv text: " + advertisment.Text + Environment.NewLine
+                    + "link: " + advertisment.Link + Environment.NewLine
+                    + "site: " + advertisment.SiteName + Environment.NewLine
                     + "Error: " + e.Message + ". Trace:" + e.StackTrace);
-                foreach (var phone in advertisment.AdvertismentPhones)
-                    _log.WriteLog("Phone: " + phone.phone + Environment.NewLine);
+                foreach (var phone in advertisment.Phones)
+                    _log.WriteLog("Phone: " + phone + Environment.NewLine);
                 
                 if (e.InnerException != null)
                     _log.WriteLog("Inner exception: " + e.InnerException.Message);

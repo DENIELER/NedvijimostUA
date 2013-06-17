@@ -11,15 +11,15 @@ public class AdvertismentsWorkflow
 {
     public AdvertismentsWorkflow()
     {
-        Context = new NedvijimostDBEntities();
+        Context = new DataModel();
     }
 
-	public AdvertismentsWorkflow(NedvijimostDBEntities context)
+	public AdvertismentsWorkflow(DataModel context)
 	{
         Context = context;
 	}
 
-    public NedvijimostDBEntities Context { get; set; }
+    public DataModel Context { get; set; }
 
     public AdvertismentsView LoadTodayAdversitments(AdvertismentsState advertismentState, int sectionId)
     {
@@ -122,7 +122,7 @@ public class AdvertismentsWorkflow
             if (adv != null)
             {
                 adv.not_realestate = true;
-                Context.SaveChanges();
+                Context.SubmitChanges();
             }
         }
     }
@@ -135,7 +135,7 @@ public class AdvertismentsWorkflow
             {
                 adv.isSpecial = true;
                 adv.isSpecialDateTime = Utils.GetUkranianDateTimeNow();
-                Context.SaveChanges();
+                Context.SubmitChanges();
             }
         }
     }
@@ -160,7 +160,7 @@ public class AdvertismentsWorkflow
             if (adv != null)
             {
                 adv.not_show_advertisment = true;
-                Context.SaveChanges();
+                Context.SubmitChanges();
             }
         }
     }

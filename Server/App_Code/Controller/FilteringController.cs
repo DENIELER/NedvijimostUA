@@ -60,7 +60,7 @@ public class FilteringController
     {
         try
         {
-            var context = new Model.NedvijimostDBEntities();
+            var context = new Model.DataModel();
 
             var advertismentsWorkflow = new AdvertismentsWorkflow(context);
             var adversitmentsView = advertismentsWorkflow.LoadTodayAdversitments(AdvertismentsState.JustParsed, _advertismentSectionCode);
@@ -78,7 +78,8 @@ public class FilteringController
         }
         finally
         {
-            HttpContext.Current.Application[_webFilterProcessName + "_TaskExecuted"] = false;
+            if (HttpContext.Current != null)
+                HttpContext.Current.Application[_webFilterProcessName + "_TaskExecuted"] = false;
         }
     }
 }

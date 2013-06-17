@@ -9,13 +9,13 @@ using System.Web;
 /// </summary>
 public class SubpurchasesWorkflow
 {
-    private Model.NedvijimostDBEntities _context;
+    private Model.DataModel _context;
 	public SubpurchasesWorkflow()
 	{
-        _context = new Model.NedvijimostDBEntities();
+        _context = new Model.DataModel();
 	}
 
-    public SubpurchasesWorkflow(Model.NedvijimostDBEntities context)
+    public SubpurchasesWorkflow(Model.DataModel context)
     {
         _context = context;
     }
@@ -35,15 +35,15 @@ public class SubpurchasesWorkflow
         {
             var addingSubPurchase = new Model.SubPurchase()
             {
-                Id = Guid.NewGuid(),
+                id = Guid.NewGuid(),
                 name = name,
                 surname = surname,
                 not_checked = !validated,
                 createDate = Utils.GetUkranianDateTimeNow(),
                 modifyDate = Utils.GetUkranianDateTimeNow()
             };
-            _context.AddToSubPurchases(addingSubPurchase);
-            _context.SaveChanges();
+            _context.SubPurchases.InsertOnSubmit(addingSubPurchase);
+            _context.SubmitChanges();
 
             this.AddSubpurchasePhone(phone, addingSubPurchase);
 
@@ -82,10 +82,10 @@ public class SubpurchasesWorkflow
                 Id = Guid.NewGuid(),
                 phone = formatedPhone,
                 createDate = Utils.GetUkranianDateTimeNow(),
-                SubPurchase = subpurchase
+                SubPurchaseId = subpurchase.id
             };
-            _context.AddToSubPurchasePhones(newSubpurchasePhone);
-            _context.SaveChanges();
+            _context.SubPurchasePhones.InsertOnSubmit(newSubpurchasePhone);
+            _context.SubmitChanges();
         }
 
         return subpurchase;
@@ -103,35 +103,35 @@ public class SubpurchasesWorkflow
 
         if (temp.Length == 7)
         {
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{2})(\d{2})", @"$1-$2-$3"));
-            phones.Add(Regex.Replace(phone, @"(\d{2})(\d{2})(\d{3})", @"$1-$2-$3"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{1})(\d{3})", @"$1-$2-$3"));
-            phones.Add(Regex.Replace(phone, @"(\d{1})(\d{3})(\d{3})", @"$1-$2-$3"));
-            phones.Add(Regex.Replace(phone, @"(\d{2})(\d{3})(\d{2})", @"$1-$2-$3"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{2})(\d{2})", @"$1-$2-$3"));
+            phones.Add(Regex.Replace(temp, @"(\d{2})(\d{2})(\d{3})", @"$1-$2-$3"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{1})(\d{3})", @"$1-$2-$3"));
+            phones.Add(Regex.Replace(temp, @"(\d{1})(\d{3})(\d{3})", @"$1-$2-$3"));
+            phones.Add(Regex.Replace(temp, @"(\d{2})(\d{3})(\d{2})", @"$1-$2-$3"));
         }
         else if (temp.Length == 10)
         {
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{3})(\d{2})(\d{2})", @"$1-$2-$3-$4"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{7})", @"$1-$2"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{5})(\d{2})", @"$1-$2-$3"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{3})(\d{4})", @"$1-$2-$3"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{4})(\d{3})", @"$1-$2-$3"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{1})(\d{3})(\d{3})", @"$1-$2-$3-$4"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{3})(\d{3})(\d{1})", @"$1-$2-$3-$4"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{3})(\d{1})(\d{3})", @"$1-$2-$3-$4"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{2})(\d{2})(\d{3})", @"$1-$2-$3-$4"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{2})(\d{4})(\d{1})", @"$1-$2-$3-$4"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{1})(\d{2})(\d{2})(\d{2})", @"$1-$2-$3-$4-$5"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{2})(\d{3})(\d{2})", @"$1-$2-$3-$4"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{3})(\d{1})(\d{3})", @"$1 $2 $3 $4"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{3})(\d{2})(\d{2})", @"$1 $2 $3 $4"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{2})(\d{2})(\d{3})", @"$1 $2 $3 $4"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{2})(\d{4})(\d{1})", @"$1-$2-$3-$4"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{3})(\d{4})", @"$1 $2 $3"));
-            phones.Add(Regex.Replace(phone, @"(\d{10})", @"$1"));
-            phones.Add(Regex.Replace(phone, @"(\d{10})", @"8$1"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{2})(\d{2})(\d{3})", @"8-$1-$2-$3-$4"));
-            phones.Add(Regex.Replace(phone, @"(\d{3})(\d{3})(\d{2})(\d{2})", @"8-$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{3})(\d{2})(\d{2})", @"$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{7})", @"$1-$2"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{5})(\d{2})", @"$1-$2-$3"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{3})(\d{4})", @"$1-$2-$3"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{4})(\d{3})", @"$1-$2-$3"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{1})(\d{3})(\d{3})", @"$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{3})(\d{3})(\d{1})", @"$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{3})(\d{1})(\d{3})", @"$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{2})(\d{2})(\d{3})", @"$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{2})(\d{4})(\d{1})", @"$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{1})(\d{2})(\d{2})(\d{2})", @"$1-$2-$3-$4-$5"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{2})(\d{3})(\d{2})", @"$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{3})(\d{1})(\d{3})", @"$1 $2 $3 $4"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{3})(\d{2})(\d{2})", @"$1 $2 $3 $4"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{2})(\d{2})(\d{3})", @"$1 $2 $3 $4"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{2})(\d{4})(\d{1})", @"$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{3})(\d{4})", @"$1 $2 $3"));
+            phones.Add(Regex.Replace(temp, @"(\d{10})", @"$1"));
+            phones.Add(Regex.Replace(temp, @"(\d{10})", @"8$1"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{2})(\d{2})(\d{3})", @"8-$1-$2-$3-$4"));
+            phones.Add(Regex.Replace(temp, @"(\d{3})(\d{3})(\d{2})(\d{2})", @"8-$1-$2-$3-$4"));
         }
         else
         {

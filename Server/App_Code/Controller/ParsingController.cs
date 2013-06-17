@@ -80,7 +80,8 @@ public class ParsingController
         }
         finally
         {
-            HttpContext.Current.Application[_parsingProcessName + _parsingProcessPart ?? string.Empty + "_TaskExecuted"] = false;
+            if (HttpContext.Current != null)
+                HttpContext.Current.Application[_parsingProcessName + _parsingProcessPart ?? string.Empty + "_TaskExecuted"] = false;
         }
     }
 }

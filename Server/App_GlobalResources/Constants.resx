@@ -120,6 +120,9 @@
   <data name="MainSqlConnectionName" xml:space="preserve">
     <value>NedvijimostDBEntities</value>
   </data>
+  <data name="PingServerUrl" xml:space="preserve">
+    <value>http://nedvijimost-ua.azurewebsites.net/processor/PingUrl.aspx</value>
+  </data>
   <data name="SettingsFile" xml:space="preserve">
     <value>~/xmlSettings/settings.xml</value>
   </data>
