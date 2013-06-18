@@ -36,6 +36,12 @@
                 тем меньше времени Вы потратите на ответы на нецелевые для Вас звонки.
             </p>
 
+            <% if(!Authorization.Authorization.IsUserAuthorized()) { %>
+            <p style="margin-top: 20px;">
+                Внимание! Если Вы не <a href="/register">зарегистрируетесь</a>, то не сможете редактировать и управлять своим добавленным объявлением.
+            </p>
+            <% } %>
+
             <asp:ScriptManager runat="server" ID="ScriptManager"></asp:ScriptManager>
             <div style="width: 650px;margin: 0 auto;">
                 <asp:UpdatePanel runat="server" ID="UpdatePanelAdvSection">
