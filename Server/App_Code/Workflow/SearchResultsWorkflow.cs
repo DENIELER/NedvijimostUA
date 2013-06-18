@@ -100,12 +100,11 @@ public class SearchResultsWorkflow
                 //                         && adv.text == advertisment.text
                 //                         select adv).ToList();
 
-                var existsAdvertisment = (from adv in _dbcontext.Advertisments
-                                          where adv.searchresult_id == searchResult.Id
-                                          && adv.text == advertisment.Text
-                                          select adv).ToList();
+                bool existsAdvertisment = _dbcontext.Advertisments
+                                          .Any(a => a.searchresult_id == searchResult.Id
+                                                  && a.text == advertisment.Text);
 
-                if (existsAdvertisment.Any())
+                if (!existsAdvertisment)
                 {
                     //_log.WriteLog("Add advertisment:");
                     //_log.WriteLog(advertisment.text);

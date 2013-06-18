@@ -171,11 +171,12 @@ public class AdvertsProcessing
                 {
                     var advPhoneExpression = SubpurchasesWorkflow.MakePhoneLikeExpression(advPhone.phone);
                     Regex regex = new Regex(string.Format("^{0}$", advPhoneExpression.Replace("%", ".*")), RegexOptions.IgnoreCase);
+                    
                     var subpurchasePhonePair = allDatabaseSubpurchases.FirstOrDefault(
                         sp =>
-                            {
-                                return regex.IsMatch(sp.SubPurchasePhone.phone ?? string.Empty);
-                            });
+                        {
+                            return regex.IsMatch(sp.SubPurchasePhone.phone);
+                        });
                     
                     if (subpurchasePhonePair != null && subpurchasePhonePair.SubPurchase != null)
                     {
