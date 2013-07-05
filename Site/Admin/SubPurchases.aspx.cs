@@ -24,7 +24,7 @@ public partial class Admin_SubPurchases : System.Web.UI.Page
             throw new Exception("Добавьте номер посредника, который хотите разместить в базе.");
         }
 
-        var context = new NedvijimostDBEntities();
+        var context = new DataModel();
         var subpurchasesWorkflow = new SubpurchasesWorkflow();
         foreach(var subpurchasePhoneNumber in subpurchasePhoneNumbers)
         {
@@ -40,9 +40,9 @@ public partial class Admin_SubPurchases : System.Web.UI.Page
                 {
                     foreach (var adv in subPurchaseAdvertisments)
                     {
-                        context.Advertisments.DeleteObject(adv);
+                        context.Advertisments.DeleteOnSubmit(adv);
                     }
-                    context.SaveChanges();
+                    context.SubmitChanges();
                 }
             }
             Response.Redirect(Request.RawUrl + "?success=1");

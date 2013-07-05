@@ -8,7 +8,7 @@ using Model;
 
 public partial class Controls_SearchResultsChart : System.Web.UI.UserControl
 {
-    public NedvijimostDBEntities DBContext
+    public DataModel DBContext
     {
         get;
         set;
@@ -24,7 +24,7 @@ public partial class Controls_SearchResultsChart : System.Web.UI.UserControl
     {
         if (DBContext != null)
         {
-            SearchResults = DBContext.ExecuteStoreQuery<SearchResultCountEntity>(@"
+            SearchResults = DBContext.ExecuteQuery<SearchResultCountEntity>(@"
 select 
 	[date] = createDate, 
 	[fullCount] = searchresult_fullcount, 

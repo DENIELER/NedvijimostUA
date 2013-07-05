@@ -18,7 +18,7 @@ namespace BaseProjectModels
 
         public void Save()
         {
-            var context = new Model.NedvijimostDBEntities();
+            var context = new Model.DataModel();
             var model = new Model.AdvertismentPhone();
 
             model.Id = ID;
@@ -26,8 +26,8 @@ namespace BaseProjectModels
 
             model.AdvertismentId = AdvertismentId;
             
-            context.AdvertismentPhones.AddObject(model);
-            context.SaveChanges();
+            context.AdvertismentPhones.InsertOnSubmit(model);
+            context.SubmitChanges();
         }
     }
 }

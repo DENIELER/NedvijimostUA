@@ -20,10 +20,10 @@ public partial class Kharkiv_SubPurchase : System.Web.UI.Page
     {
         SubPurchasePhone = Request["phone"];
 
-        var subpurchasesContext = new NedvijimostDBEntities();
+        var subpurchasesContext = new DataModel();
         var currentSubPurchase = (from subPurchase in subpurchasesContext.SubPurchases
                                   join subPurchasePhone in subpurchasesContext.SubPurchasePhones 
-                                    on subPurchase.Id equals subPurchasePhone.SubPurchaseId
+                                    on subPurchase.id equals subPurchasePhone.SubPurchaseId
                                   where subPurchasePhone.phone == SubPurchasePhone
                            select subPurchase).FirstOrDefault();
 

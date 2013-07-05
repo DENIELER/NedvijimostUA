@@ -26,11 +26,11 @@ public partial class Kharkiv_SubPurchases : System.Web.UI.Page
 
     private void LoadSubPuchasesPhones()
     {
-        var subpurchasesContext = new NedvijimostDBEntities();
+        var subpurchasesContext = new DataModel();
         var subPurchases = from subPurchase in subpurchasesContext.SubPurchases
                            join subPurchasePhone in subpurchasesContext.SubPurchasePhones
-                                    on subPurchase.Id equals subPurchasePhone.SubPurchaseId
-                           where !subPurchase.not_checked
+                                    on subPurchase.id equals subPurchasePhone.SubPurchaseId
+                           where !subPurchase.not_checked.HasValue || !subPurchase.not_checked.Value
                            orderby subPurchasePhone.phone
                            select new { subpurchase = subPurchase, phone = subPurchasePhone };
 

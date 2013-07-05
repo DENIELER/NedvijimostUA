@@ -8,7 +8,7 @@ using Model;
 
 public partial class Controls_AdvertismentsWithPhotosRotator : System.Web.UI.UserControl
 {
-    public NedvijimostDBEntities DBContext
+    public DataModel DBContext
     {
         get;
         set;

@@ -9,12 +9,12 @@ using Model;
 /// </summary>
 public class AdvertismentSectionsWorkflow
 {
-	public AdvertismentSectionsWorkflow(Model.NedvijimostDBEntities context)
+    public AdvertismentSectionsWorkflow(Model.DataModel context)
 	{
         Context = context;
 	}
 
-    public Model.NedvijimostDBEntities Context { get; set; }
+    public Model.DataModel Context { get; set; }
 
     public List<AdvertismentSection> LoadSections()
     {

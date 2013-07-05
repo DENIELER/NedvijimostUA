@@ -27,7 +27,7 @@ public partial class MyAdvertisments : System.Web.UI.Page
         {
             if (Request.Form.Count == 0)
             {
-                var dataModel = new Model.NedvijimostDBEntities();
+                var dataModel = new Model.DataModel();
 
                 txtText.Text = dataModel.Advertisments
                     .Where(a => a.Id == editAdvertismentID)
@@ -40,7 +40,7 @@ public partial class MyAdvertisments : System.Web.UI.Page
             }
             else
             {
-                var dataModel = new Model.NedvijimostDBEntities();
+                var dataModel = new Model.DataModel();
 
                 int? authorizedUserID = Authorization.Authorization.CurrentUser_UserID();
                 if (!authorizedUserID.HasValue)
@@ -73,7 +73,7 @@ public partial class MyAdvertisments : System.Web.UI.Page
                         }
                     }
 
-                    dataModel.SaveChanges();
+                    dataModel.SubmitChanges();
                     Response.Redirect(Request.Url.AbsolutePath);
                 }
             }

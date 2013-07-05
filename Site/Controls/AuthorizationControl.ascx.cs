@@ -14,7 +14,7 @@ public partial class Controls_AuthorizationControl : System.Web.UI.UserControl
         if (Authorization.Authorization.IsUserAuthorized()
             && userID.HasValue)
         {
-            var dataModel = new Model.NedvijimostDBEntities();
+            var dataModel = new Model.DataModel();
             UserAdvertismentsCount = dataModel.Advertisments.Count(a => a.UserID == userID.Value);
         }
     }

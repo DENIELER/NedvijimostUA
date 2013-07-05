@@ -8,13 +8,13 @@ using System.Web;
 /// </summary>
 public class SubpurchasesWorkflow
 {
-    private Model.NedvijimostDBEntities _context;
+    private Model.DataModel _context;
 	public SubpurchasesWorkflow()
 	{
-        _context = new Model.NedvijimostDBEntities();
+        _context = new Model.DataModel();
 	}
 
-    public SubpurchasesWorkflow(Model.NedvijimostDBEntities context)
+    public SubpurchasesWorkflow(Model.DataModel context)
     {
         _context = context;
     }
@@ -32,15 +32,15 @@ public class SubpurchasesWorkflow
         {
             var addingSubPurchase = new Model.SubPurchase()
             {
-                Id = Guid.NewGuid(),
+                id = Guid.NewGuid(),
                 name = name,
                 surname = surname,
                 not_checked = !validated,
                 createDate = Utils.GetUkranianDateTimeNow(),
                 modifyDate = Utils.GetUkranianDateTimeNow()
             };
-            _context.AddToSubPurchases(addingSubPurchase);
-            _context.SaveChanges();
+            _context.SubPurchases.InsertOnSubmit(addingSubPurchase);
+            _context.SubmitChanges();
 
             this.AddSubpurchasePhone(phone, addingSubPurchase);
 
@@ -64,8 +64,8 @@ public class SubpurchasesWorkflow
             createDate = Utils.GetUkranianDateTimeNow(),
             SubPurchase = subpurchase
         };
-        _context.AddToSubPurchasePhones(newSubpurchasePhone);
-        _context.SaveChanges();
+        _context.SubPurchasePhones.InsertOnSubmit(newSubpurchasePhone);
+        _context.SubmitChanges();
 
         return subpurchase;
     }

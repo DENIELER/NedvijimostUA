@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 public partial class Controls_AdvertismentSections : System.Web.UI.UserControl
 {
-    public NedvijimostDBEntities DBContext
+    public DataModel DBContext
     {
         get;
         set;

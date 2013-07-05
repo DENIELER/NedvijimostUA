@@ -6,7 +6,7 @@
             <ItemTemplate>
                 <div class="scroll_item" style="float:left; margin: 0 5px;">
                     <a href="<%= "/Obyavleniya-Arenda/Sdam-kvartiru" %>" style="display: block; text-align: center;">
-                        <img style="height: 150px;" src="<%# FormatPhotoFileName(((Model.viewAdvertismentPhotos)Container.DataItem).PhotoFileName)  %>" alt="<%# ((Model.viewAdvertismentPhotos)Container.DataItem).siteName %>"/>
+                        <img style="height: 150px;" src="<%# FormatPhotoFileName(((Model.viewAdvertismentPhoto)Container.DataItem).PhotoFileName)  %>" alt="<%# ((Model.viewAdvertismentPhoto)Container.DataItem).siteName %>"/>
                         <%--<div>
                             <%# ((Model.viewAdvertismentPhotos)Container.DataItem).SectionDisplayName %>
                         </div>--%>

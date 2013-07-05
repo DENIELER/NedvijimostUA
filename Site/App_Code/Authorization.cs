@@ -19,14 +19,14 @@ namespace Authorization
         {
             string passwordMD5 = Utils.CalculateMD5Hash(password);
 
-            var dataModel = new NedvijimostDBEntities();
+            var dataModel = new DataModel();
             var currentUser = dataModel.Users
                 .FirstOrDefault(u => (u.Login == loginOrEmail || u.Email == loginOrEmail)
                     && u.Password == passwordMD5);
 
             if (currentUser != null)
             {
-                string userData = currentUser.IsAdmin + "|" + currentUser.Phone + "|" + currentUser.UserId + "|";
+                string userData = currentUser.IsAdmin + "|" + currentUser.Phone + "|" + currentUser.UserID + "|";
 
                 // Create forms authentication ticket
                 FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(

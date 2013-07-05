@@ -26,7 +26,7 @@ public partial class News_Article : System.Web.UI.Page
         {
             article_link = Page.RouteData.Values["article_link"].ToString();
 
-            var _context = new NedvijimostDBEntities();
+            var _context = new DataModel();
             var articles = from article in _context.Articles
                           where article.link == article_link.Replace(".aspx", "")
                           select article;

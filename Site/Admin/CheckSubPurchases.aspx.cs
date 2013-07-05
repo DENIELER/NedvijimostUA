@@ -8,14 +8,14 @@ using System.Web.UI.WebControls;
 public partial class Admin_CheckSubPurchases : System.Web.UI.Page
 {
     public int SubPurchasesCount { get; set; }
-    private Model.NedvijimostDBEntities _dbcontext;
+    private Model.DataModel _dbcontext;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Authorization.Authorization.CurrentUser_IsAdmin())
             Response.Redirect("/", true);
 
-        _dbcontext = new Model.NedvijimostDBEntities();
+        _dbcontext = new Model.DataModel();
     }
 
     protected void dlCheckSubPurchases_EditCommand(object source, DataListCommandEventArgs e)
@@ -35,13 +35,13 @@ public partial class Admin_CheckSubPurchases : System.Web.UI.Page
         //--- save into DB
         var editItemKey = Guid.Parse(subpurchaseIdLabel.Text);
         var subPurchase = (from subPurch in _dbcontext.SubPurchases
-                                where subPurch.Id == editItemKey
+                                where subPurch.id == editItemKey
                                 select subPurch).SingleOrDefault();
 
         _dbcontext.SubPurchases.Attach(subPurchase);
         subPurchase.not_checked = checkedState;
 
-        _dbcontext.SaveChanges();
+        _dbcontext.SubmitChanges();
         //--- end save into DB
 
         if (!checkedState)
@@ -61,7 +61,7 @@ public partial class Admin_CheckSubPurchases : System.Web.UI.Page
                     {
                         adv.not_show_advertisment = true;
                     }
-                    _dbcontext.SaveChanges();
+                    _dbcontext.SubmitChanges();
                 }
             }
         }
@@ -77,7 +77,7 @@ public partial class Admin_CheckSubPurchases : System.Web.UI.Page
     protected void dlCheckSubPurchases_DeleteCommand(object source, DataListCommandEventArgs e)
     {
         //--- save into DB
-        var subpurchasesContext = new Model.NedvijimostDBEntities();
+        var subpurchasesContext = new Model.DataModel();
 
         Label subpurchaseIdLabel;
         subpurchaseIdLabel = (Label)(e.Item.FindControl("subpurchaseId"));
@@ -85,12 +85,12 @@ public partial class Admin_CheckSubPurchases : System.Web.UI.Page
         var editItemKey = Guid.Parse(subpurchaseIdLabel.Text);
         var subPurchase = new Model.SubPurchase()
         {
-            Id = editItemKey
+            id = editItemKey
         };
         subpurchasesContext.SubPurchases.Attach(subPurchase);
 
-        subpurchasesContext.SubPurchases.DeleteObject(subPurchase);
-        subpurchasesContext.SaveChanges();
+        subpurchasesContext.SubPurchases.DeleteOnSubmit(subPurchase);
+        subpurchasesContext.SubmitChanges();
         //--- end save into DB
 
         dlCheckSubPurchases.EditItemIndex = -1;
@@ -101,8 +101,8 @@ public partial class Admin_CheckSubPurchases : System.Web.UI.Page
     {
         var result = from subPurchaseObject in _dbcontext.SubPurchases
                      join subPurchasePhoneObject in _dbcontext.SubPurchasePhones
-                        on subPurchaseObject.Id equals subPurchasePhoneObject.SubPurchaseId
-                     where subPurchaseObject.not_checked
+                        on subPurchaseObject.id equals subPurchasePhoneObject.SubPurchaseId
+                     where subPurchaseObject.not_checked.HasValue && subPurchaseObject.not_checked.Value
                      orderby subPurchaseObject.createDate descending
                      select new { SubPurchase = subPurchaseObject, SubPurchasePhone = subPurchasePhoneObject };
 

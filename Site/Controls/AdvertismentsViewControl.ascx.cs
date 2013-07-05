@@ -6,6 +6,10 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Model;
 using System.Web.UI.HtmlControls;
+using DTO = Nedvijimost.DataTransferObject;
+using System.Net;
+using System.Xml;
+using System.IO;
 
 public partial class AdvertismentsViewControl : System.Web.UI.UserControl
 {
@@ -48,6 +52,28 @@ public partial class AdvertismentsViewControl : System.Web.UI.UserControl
 
             this.Settings.Offset = (ViewPage - 1) * this.Settings.Limit;
         }
+
+        //--- execute service to get advertisments
+        var subSectionId = Settings.SubSectionId != null ? Settings.SubSectionId.ToString() : "null";
+        var date = Settings.Date != null ? Settings.Date.Value.ToShortDateString() : "";
+        string jsonRequest = 
+        "{" +
+                "\"sectionId\":" + Settings.SectionId.ToString() + "," +
+                "\"subSectionId\":" + subSectionId + "," +
+                "\"filter\":" + Convert.ToInt32(Settings.Filter).ToString() + "," +
+                "\"offset\":" + Settings.Offset.ToString() + "," +
+                "\"limit\":" + Settings.Limit.ToString() + "," +
+                "\"date\":'" + date + "'" +
+        "}";
+        var serviceUrl = new System.Uri(Page.Request.Url, "/WebServices/AdvertismentsService.asmx/GetAdvertismentsHtml").AbsoluteUri;
+        var result = GetServiceResult(serviceUrl, jsonRequest);
+        Newtonsoft.Json.Linq.JObject jsonObject = Newtonsoft.Json.Linq.JObject.Parse(result);
+        
+        advertisments_header.InnerHtml += (string)jsonObject["d"]["Header"];
+
+        advertisments.InnerHtml = "";
+        advertisments.InnerHtml += (string)jsonObject["d"]["Advertisments"];
+        advertisments.InnerHtml += (string)jsonObject["d"]["Pagging"];
     }
 
     protected void lvAdvertisments_ItemDataBound(object sender, ListViewItemEventArgs e)
@@ -89,6 +115,34 @@ public partial class AdvertismentsViewControl : System.Web.UI.UserControl
         if (photoUrl.Contains("thumb=1&"))
             return photoUrl.Replace("thumb=1&", "");
         else return photoUrl;
+    }
+
+    public string GetServiceResult(string serviceUrl, string data)
+    {
+        HttpWebRequest HttpWReq;
+        HttpWebResponse HttpWResp;
+        HttpWReq = (HttpWebRequest)WebRequest.Create(serviceUrl);
+        HttpWReq.Method = "POST";
+        HttpWReq.ContentType = "application/json; charset:utf-8";
+
+        using (var writer = new StreamWriter(HttpWReq.GetRequestStream()))
+        {
+            writer.Write(data);
+            writer.Flush();
+            writer.Close();
+        }
+
+        HttpWResp = (HttpWebResponse)HttpWReq.GetResponse();
+        if (HttpWResp.StatusCode == HttpStatusCode.OK)
+        {
+            //Consume webservice with basic XML reading, assumes it returns (one) string
+            StreamReader reader = new StreamReader(HttpWResp.GetResponseStream());
+            return reader.ReadToEnd();
+        }
+        else
+        {
+            throw new Exception("Error: " + HttpWResp.StatusCode.ToString());
+        }
     }
 }
 

@@ -96,21 +96,21 @@ public partial class add_advertisment : System.Web.UI.Page
 
     private void SaveAdvertismentInfoDB(int sectionID, int? subsectionID, string address, string phone, string text, int? userID, List<PhotoResponse> photosList)
     {
-        var context = new NedvijimostDBEntities();
+        var context = new DataModel();
 
         var advertisment = new Advertisment();
         advertisment.createDate = Utils.GetUkranianDateTimeNow();
         advertisment.modifyDate = Utils.GetUkranianDateTimeNow();
         advertisment.text = text;
         advertisment.AdvertismentSection = context.AdvertismentSections.FirstOrDefault(s => s.Id == sectionID);
-        advertisment.AdvertismentSubSection = context.AdvertismentSubSection.FirstOrDefault(s => s.Id == subsectionID);
+        advertisment.AdvertismentSubSection = context.AdvertismentSubSections.FirstOrDefault(s => s.Id == subsectionID);
         advertisment.link = string.Empty;
         advertisment.siteName = "Nedvijimost-UA";
-        advertisment.SubPurchase = null;
+        advertisment.SubPurchase_Id = null;
         advertisment.subpurchaseAdvertisment = false;
         advertisment.UserID = userID;
-        context.AddToAdvertisments(advertisment);
-        context.SaveChanges();
+        context.Advertisments.InsertOnSubmit(advertisment);
+        context.SubmitChanges();
 
         string[] phonesSplited = phone.Split(',');
         foreach (var phoneSplited in phonesSplited)
@@ -118,8 +118,8 @@ public partial class add_advertisment : System.Web.UI.Page
             var advPhone = new AdvertismentPhone();
             advPhone.phone = phoneSplited;
             advPhone.Advertisment = advertisment;
-            context.AddToAdvertismentPhones(advPhone);
-            context.SaveChanges();
+            context.AdvertismentPhones.InsertOnSubmit(advPhone);
+            context.SubmitChanges();
         }
 
         if (photosList != null)
@@ -131,8 +131,8 @@ public partial class add_advertisment : System.Web.UI.Page
                 advertismentsPhoto.createDate = Utils.GetUkranianDateTimeNow();
                 advertismentsPhoto.Advertisment = advertisment;
                 
-                context.AddToAdvertismentsPhotoes(advertismentsPhoto);
-                context.SaveChanges();
+                context.AdvertismentsPhotos.InsertOnSubmit(advertismentsPhoto);
+                context.SubmitChanges();
             }
         }
 
@@ -148,10 +148,10 @@ public partial class add_advertisment : System.Web.UI.Page
             int sectionID;
             if (int.TryParse(ddlAdvSection.SelectedValue, out sectionID))
             {
-                var context = new NedvijimostDBEntities();
-                if (context.AdvertismentSubSection.Any(x => x.AdvertismentSection.Id == sectionID))
+                var context = new DataModel();
+                if (context.AdvertismentSubSections.Any(x => x.AdvertismentSection.Id == sectionID))
                 {
-                    ddlAdvSubSection.DataSource = context.AdvertismentSubSection
+                    ddlAdvSubSection.DataSource = context.AdvertismentSubSections
                                         .Where(x => x.AdvertismentSection.Id == sectionID)
                                         .Select(x => new { Id = x.Id, displayName = x.displayName });
                     ddlAdvSubSection.DataBind();

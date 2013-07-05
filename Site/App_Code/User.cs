@@ -19,7 +19,7 @@ namespace Authorization
 
         public static bool RegisterUser(string email, string login, string password, string phone, bool isSubpurchase)
         {
-            var dataModel = new NedvijimostDBEntities();
+            var dataModel = new DataModel();
             var user = new Model.User();
             user.Email = email;
             user.Login = login;
@@ -27,8 +27,8 @@ namespace Authorization
             user.Phone = phone;
             user.IsSubPurchase = isSubpurchase;
 
-            dataModel.AddToUsers(user);
-            dataModel.SaveChanges();
+            dataModel.Users.InsertOnSubmit(user);
+            dataModel.SubmitChanges();
 
             return true;
         }

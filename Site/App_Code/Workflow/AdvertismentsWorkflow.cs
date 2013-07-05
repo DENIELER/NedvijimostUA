@@ -13,9 +13,9 @@ public class AdvertismentsWorkflow
 
     public AdvertismentsWorkflow()
     {
-        Context = new NedvijimostDBEntities();
+        Context = new DataModel();
     }
-	public AdvertismentsWorkflow(NedvijimostDBEntities context)
+    public AdvertismentsWorkflow(DataModel context)
 	{
         Context = context;
 	}
@@ -24,7 +24,7 @@ public class AdvertismentsWorkflow
 
     #region Variables
 
-    public NedvijimostDBEntities Context { get; set; }
+    public DataModel Context { get; set; }
 
     #endregion Variables
 
@@ -59,7 +59,7 @@ public class AdvertismentsWorkflow
             if (adv != null)
             {
                 adv.not_realestate = true;
-                Context.SaveChanges();
+                Context.SubmitChanges();
             }
         }
     }
@@ -72,7 +72,7 @@ public class AdvertismentsWorkflow
             {
                 adv.isSpecial = true;
                 adv.isSpecialDateTime = Utils.GetUkranianDateTimeNow();
-                Context.SaveChanges();
+                Context.SubmitChanges();
             }
         }
     }
@@ -97,7 +97,7 @@ public class AdvertismentsWorkflow
             if (adv != null)
             {
                 adv.not_show_advertisment = true;
-                Context.SaveChanges();
+                Context.SubmitChanges();
             }
         }
     }
@@ -141,7 +141,7 @@ public class AdvertismentsWorkflow
         int advertismentsToShowCount = 0;
         if (advertisments != null)
         {
-            advertisments = advertisments.Where(adv => adv.AdvertismentSection.Id == sectionId);
+            advertisments = advertisments.Where(adv => adv.AdvertismentSection_Id == sectionId);
 
             if(subSectionId != null)
                 advertisments = advertisments.Where(adv => adv.AdvertismentSubSection.Id == subSectionId.Value);
@@ -152,7 +152,7 @@ public class AdvertismentsWorkflow
             {
                 case AdvertismentsState.JustParsed:
                     advertisments = advertisments.Where(
-                        adv => adv.subpurchaseAdvertisment && adv.SubPurchase == null
+                        adv => adv.subpurchaseAdvertisment && adv.SubPurchase_Id == null
                         );
                     break;
                 case AdvertismentsState.NotSubpurchase:
@@ -162,12 +162,12 @@ public class AdvertismentsWorkflow
                     break;
                 case AdvertismentsState.Subpurchase:
                     advertisments = advertisments.Where(
-                        adv => adv.subpurchaseAdvertisment && adv.SubPurchase != null
+                        adv => adv.subpurchaseAdvertisment && adv.SubPurchase_Id != null
                         );
                     break;
                 case AdvertismentsState.SubpurchaseWithNotSubpurchase:
                     advertisments = advertisments.Where(
-                        adv => !adv.subpurchaseAdvertisment || adv.SubPurchase != null
+                        adv => !adv.subpurchaseAdvertisment || adv.SubPurchase_Id != null
                         );
                     break;
             }
@@ -200,7 +200,7 @@ public class AdvertismentsWorkflow
                                  && adv.createDate < dateTimeTo.Date
                                  && !adv.not_realestate
                                  && !adv.not_show_advertisment
-                                 && adv.AdvertismentPhones.Any()
+                                 //&& adv.AdvertismentPhones.Any()
                              orderby adv.isSpecial descending, adv.createDate descending
                              select adv;
 

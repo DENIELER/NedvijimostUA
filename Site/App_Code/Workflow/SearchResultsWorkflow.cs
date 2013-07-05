@@ -10,7 +10,7 @@ using Model;
 /// </summary>
 public class SearchResultsWorkflow
 {
-    private Model.NedvijimostDBEntities _dbcontext;
+    private Model.DataModel _dbcontext;
 
     public string SectionCode { get; set; }
     
@@ -18,15 +18,15 @@ public class SearchResultsWorkflow
 	{
         this.SectionCode = sectionCode;
 
-        _dbcontext = new Model.NedvijimostDBEntities();
+        _dbcontext = new Model.DataModel();
 	}
 
-    public SearchResultsWorkflow(Model.NedvijimostDBEntities context)
+    public SearchResultsWorkflow(Model.DataModel context)
     {
         _dbcontext = context;
     }
 
-    public SearchResultsWorkflow(string sectionCode, Model.NedvijimostDBEntities context)
+    public SearchResultsWorkflow(string sectionCode, Model.DataModel context)
     {
         this.SectionCode = sectionCode;
 
@@ -34,7 +34,7 @@ public class SearchResultsWorkflow
     }
 
     private Log _log;
-    public SearchResultsWorkflow(string sectionCode, Model.NedvijimostDBEntities context, Log log)
+    public SearchResultsWorkflow(string sectionCode, Model.DataModel context, Log log)
     {
         this.SectionCode = sectionCode;
 

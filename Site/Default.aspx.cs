@@ -14,7 +14,7 @@ public partial class _Default : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            var context = new Model.NedvijimostDBEntities();
+            var context = new Model.DataModel();
 
             //AdvertismentsWithPhotosRotator.DBContext = context;
             SearchResultsChart.DBContext = context;

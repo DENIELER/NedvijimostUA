@@ -27,7 +27,7 @@ namespace BaseProjectModels
 
         public void Save()
         {
-            var context = new Model.NedvijimostDBEntities();
+            var context = new Model.DataModel();
             var model = new Model.Advertisment();
             
             model.Id = ID;
@@ -41,8 +41,8 @@ namespace BaseProjectModels
 
             model.searchresult_id = SearchResultId;
 
-            context.Advertisments.AddObject(model);
-            context.SaveChanges();
+            context.Advertisments.InsertOnSubmit(model);
+            context.SubmitChanges();
         }
     }
 }
