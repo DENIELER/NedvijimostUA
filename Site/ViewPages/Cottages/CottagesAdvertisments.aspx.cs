@@ -29,7 +29,7 @@ public partial class RentAdvertisments : System.Web.UI.Page
 
         AdvertismentsViewControl.Settings.SectionId = SectionId;
         AdvertismentsViewControl.Settings.SubSectionId = null;
-        AdvertismentsViewControl.Settings.Filter = AdvertismentsMode;
+        AdvertismentsViewControl.Settings.State = AdvertismentsMode;
         AdvertismentsViewControl.Settings.Limit = Constants.Max_Advertisments_View_Count;
     }
     private void CapturePageRequestParameters()

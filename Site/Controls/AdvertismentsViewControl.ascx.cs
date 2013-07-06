@@ -18,13 +18,13 @@ public partial class AdvertismentsViewControl : System.Web.UI.UserControl
 
     public IList<Advertisment> ResultsToShow = null;
 
-    public AdvertismentsViewSettings _settings;
-    public AdvertismentsViewSettings Settings 
+    public Nedvijimost.AdvertismentsRequest _settings;
+    public Nedvijimost.AdvertismentsRequest Settings 
     {
         get
         {
             if (_settings == null)
-                _settings = new AdvertismentsViewSettings();
+                _settings = new Nedvijimost.AdvertismentsRequest();
             return _settings;
         }
 
@@ -78,11 +78,11 @@ public partial class AdvertismentsViewControl : System.Web.UI.UserControl
                                 ? "&subSectionId=" + Settings.SubSectionId.ToString()
                                 : "";
         string date = Settings.Date != null
-                                ? "&date=" + Settings.Date.Value.ToShortDateString()
+                                ? "&date=" + Settings.Date
                                 : "";
         string parameters = "sectionId=" + Settings.SectionId +
             subSectionId +
-            "&filter=" + Convert.ToInt32(Settings.Filter) +
+            "&filter=" + Convert.ToInt32(Settings.State) +
             "&offset=" + Settings.Offset +
             "&limit=" + Settings.Limit +
             date +
@@ -138,24 +138,4 @@ public partial class AdvertismentsViewControl : System.Web.UI.UserControl
             throw new Exception("Error: " + HttpWResp.StatusCode.ToString());
         }
     }
-}
-
-public class AdvertismentsViewSettings
-{
-    public AdvertismentsViewSettings()
-    {
-        SectionId = 1;
-    }
-
-    public int SectionId { get; set; }
-    public int? SubSectionId { get; set; }
-
-    //private const string SessionSavedConjecturedSubpurchases = "SavedConjecturedSubpurchases";
-    //public bool NotShowSubpurchaseCheckbox { get; set; }
-
-    public AdvertismentsState Filter { get; set; }
-    public int Offset { get; set; }
-    public int Limit { get; set; }
-
-    public DateTime? Date { get; set; }
 }

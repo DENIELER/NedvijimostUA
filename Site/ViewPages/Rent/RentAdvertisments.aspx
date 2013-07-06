@@ -49,9 +49,20 @@
 
 <asp:Content runat="server" ContentPlaceHolderID="RightColumn">
     <div class="well" style="margin-top: 20px;">
-        <ul class="nav nav-list">
-            <li class="nav-header">Сдам квартиру</li>
-            <li><a href="/Arhiv-Objyavlenij/Sdam-kvartiru?date=<%= DateTime.Now.AddDays(-1).ToString("dd-MM-yyyy") %>">Объявления вчерашнего дня</a></li>
-        </ul>
+        <h4>Сдам квартиру</h4>
+
+        <div style="margin-top: 20px;">
+            <a href="/Arhiv-Objyavlenij/Sdam-kvartiru?date=<%= DateTime.Now.AddDays(-1).ToString("dd-MM-yyyy") %>">Объявления вчерашнего дня</a>
+        </div>
+    </div>
+
+    <div class="well" style="margin-top: 20px;">
+        <h4>Фильтр</h4>
+
+        <div style="margin-top: 20px;">
+            <label class="checkbox">
+              <input type="checkbox"> Только объявления с фото
+            </label>
+        </div>
     </div>
 </asp:Content>

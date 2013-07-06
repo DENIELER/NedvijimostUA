@@ -30,25 +30,18 @@ public class AdvertismentsWorkflow
 
     #region Methods
 
-    public AdvertismentsView LoadAdvertisments(int sectionId, AdvertismentsState advertismentsFilter, int? subSectionId = null, int offset = 0, int limit = 100)
+    public AdvertismentsResponse LoadAdvertisments(Nedvijimost.AdvertismentsRequest request)
     {
-        AdvertismentsView adversitmentsAndFullParsedCount = LoadTodayAdversitments(advertismentsFilter, sectionId, subSectionId, offset, limit);
-        if (AdvertismentsNotLoaded(adversitmentsAndFullParsedCount))
-            adversitmentsAndFullParsedCount = LoadYesterdayAdversitments(advertismentsFilter, sectionId, subSectionId, offset, limit);
-        
-        return adversitmentsAndFullParsedCount;
-    }
+        if (request.Date == null)
+        {
+            AdvertismentsResponse adversitmentsAndFullParsedCount = LoadTodayAdversitments(request);
+            if (AdvertismentsNotLoaded(adversitmentsAndFullParsedCount))
+                adversitmentsAndFullParsedCount = LoadYesterdayAdversitments(request);
 
-    public AdvertismentsView LoadAdvertisments(int sectionId, AdvertismentsState advertismentsFilter, DateTime date, int? subSectionId = null, int offset = 0, int limit = 100)
-    {
-        return LoadAdversitments(
-            advertismentsFilter,
-            date.Date, 
-            date.Date.AddDays(1),
-            sectionId, 
-            subSectionId, 
-            offset, 
-            limit);
+            return adversitmentsAndFullParsedCount;
+        }
+        else
+            return LoadAdversitments(request);
     }
 
     public void MarkNotByTheme(int advertisment_id)
@@ -103,7 +96,7 @@ public class AdvertismentsWorkflow
     }
 
     #region Advertisments loading
-    private static bool AdvertismentsNotLoaded(AdvertismentsView adversitmentsAndFullParsedCount)
+    private static bool AdvertismentsNotLoaded(AdvertismentsResponse adversitmentsAndFullParsedCount)
     {
         return adversitmentsAndFullParsedCount == null
                || (adversitmentsAndFullParsedCount != null
@@ -111,44 +104,35 @@ public class AdvertismentsWorkflow
                    && adversitmentsAndFullParsedCount.Advertisments.All(a => a.isSpecial));
     }
 
-    private AdvertismentsView LoadTodayAdversitments(AdvertismentsState advertismentState, int sectionId, int? subSectionId = null, int offset = 0, int limit = 100)
+    private AdvertismentsResponse LoadTodayAdversitments(Nedvijimost.AdvertismentsRequest request)
     {
-        return LoadAdversitments(
-            advertismentState,
-            Utils.GetUkranianDateTimeNow().Date,
-            Utils.GetUkranianDateTimeNow().Date.AddDays(1),
-            sectionId,
-            subSectionId,
-            offset,
-            limit);
+        request.DateFrom = Utils.GetUkranianDateTimeNow().Date;
+        request.DateTo = Utils.GetUkranianDateTimeNow().Date.AddDays(1);
+        return LoadAdversitments(request);
     }
-    private AdvertismentsView LoadYesterdayAdversitments(AdvertismentsState advertismentState, int sectionId, int? subSectionId = null, int offset = 0, int limit = 100)
+    private AdvertismentsResponse LoadYesterdayAdversitments(Nedvijimost.AdvertismentsRequest request)
     {
-        return LoadAdversitments(
-            advertismentState,
-            Utils.GetUkranianDateTimeNow().AddDays(-1).Date,
-            Utils.GetUkranianDateTimeNow().Date,
-            sectionId,
-            subSectionId,
-            offset,
-            limit);
+        request.DateFrom = Utils.GetUkranianDateTimeNow().AddDays(-1).Date;
+        request.DateTo = Utils.GetUkranianDateTimeNow().Date;
+        return LoadAdversitments(request);
     }
 
-    private AdvertismentsView LoadAdversitments(AdvertismentsState advertismentState, DateTime dateTimeFrom, DateTime dateTimeTo, int sectionId = 1, int? subSectionId = null, int offset = 0, int limit = 100)
+    //AdvertismentsState advertismentState, DateTime dateTimeFrom, DateTime dateTimeTo, int sectionId = 1, int? subSectionId = null, int offset = 0, int limit = 100
+    private AdvertismentsResponse LoadAdversitments(Nedvijimost.AdvertismentsRequest requestParameters)
     {
-        IQueryable<Advertisment> advertisments = FilterAdversitments(dateTimeFrom, dateTimeTo);
+        IQueryable<Advertisment> advertisments = FilterAdversitments(requestParameters.DateFrom.Value, requestParameters.DateTo.Value);
         int advertismentsCount = 0;
         int advertismentsToShowCount = 0;
         if (advertisments != null)
         {
-            advertisments = advertisments.Where(adv => adv.AdvertismentSection_Id == sectionId);
+            advertisments = advertisments.Where(adv => adv.AdvertismentSection_Id == requestParameters.SectionId);
 
-            if(subSectionId != null)
-                advertisments = advertisments.Where(adv => adv.AdvertismentSubSection.Id == subSectionId.Value);
+            if (requestParameters.SubSectionId != null)
+                advertisments = advertisments.Where(adv => adv.AdvertismentSubSection.Id == requestParameters.SubSectionId.Value);
 
             advertismentsCount = advertisments.Count();
 
-            switch (advertismentState)
+            switch (requestParameters.State)
             {
                 case AdvertismentsState.JustParsed:
                     advertisments = advertisments.Where(
@@ -173,7 +157,12 @@ public class AdvertismentsWorkflow
             }
 
             advertismentsToShowCount = advertisments.Count();
-            advertisments = advertisments.Skip(offset).Take(limit);
+
+            //--- special filters
+            if (requestParameters.OnlyWithPhotos)
+                advertisments = advertisments.Where(adv => adv.AdvertismentsPhotos.Any());
+
+            advertisments = advertisments.Skip(requestParameters.Offset).Take(requestParameters.Limit);
         }
 
         return FormatResultAdversitments(advertisments, advertismentsCount, advertismentsToShowCount);
@@ -218,7 +207,7 @@ public class AdvertismentsWorkflow
 
         return searchResults;
     }
-    private AdvertismentsView FormatResultAdversitments(IQueryable<Advertisment> advertisments, int fullAdvertismentsCountBeforeFilter, int advertismentsToShowCount)
+    private AdvertismentsResponse FormatResultAdversitments(IQueryable<Advertisment> advertisments, int fullAdvertismentsCountBeforeFilter, int advertismentsToShowCount)
     {
         //--- set last update time
         DateTime lastTimeUpdated;
@@ -227,7 +216,7 @@ public class AdvertismentsWorkflow
             lastTimeUpdated = advertisments.Max(adv => adv.createDate);
         else lastTimeUpdated = DateTime.Now;
 
-        return new AdvertismentsView(advertisments, fullAdvertismentsCountBeforeFilter, advertismentsToShowCount, lastTimeUpdated);
+        return new AdvertismentsResponse(advertisments, fullAdvertismentsCountBeforeFilter, advertismentsToShowCount, lastTimeUpdated);
     }
     public string GetAdvertismentText(int advertisment_id)
     {

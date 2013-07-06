@@ -8,9 +8,9 @@ using System.Runtime.Serialization;
 using DTO = Nedvijimost.DataTransferObject;
 
 [DataContract]
-public class AdvertismentsView
+public class AdvertismentsResponse
 {
-    public AdvertismentsView(List<DTO.Advertisment> advertisments, int fullCount, int advertismentsToShowCount, DateTime date)
+    public AdvertismentsResponse(List<DTO.Advertisment> advertisments, int fullCount, int advertismentsToShowCount, DateTime date)
     {
         _advertisments = advertisments;
         _fullCount = fullCount;
@@ -18,7 +18,7 @@ public class AdvertismentsView
         _date = date;
     }
 
-    public AdvertismentsView(IEnumerable<Model.Advertisment> advertisments, int fullCount, int advertismentsToShowCount, DateTime date)
+    public AdvertismentsResponse(IEnumerable<Model.Advertisment> advertisments, int fullCount, int advertismentsToShowCount, DateTime date)
     {
         _advertisments = advertisments.Select(x => new DTO.Advertisment(x)).ToList();
         _fullCount = fullCount;
