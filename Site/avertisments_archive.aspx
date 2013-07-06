@@ -11,6 +11,7 @@
     <meta name="keywords" content="<%= AdvSectionName != null ? AdvSectionName : "Архив объявлений" %>, архив, объявлений, недвижимость, Харьков, квартиры в Харькове, Харьков, квартир, без посредников" />
     
     <link href="/css/bootstrap.calendar.css" type="text/css" rel="Stylesheet"/>
+    <link rel="stylesheet" href="/css/blueimp-gallery.min.css">
 </asp:Content>
 
 <asp:Content runat="server" ContentPlaceHolderID="Body">
