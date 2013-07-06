@@ -10,6 +10,8 @@
 <asp:Content runat="server" ContentPlaceHolderID="Head">
     <meta name="description" content="Недвижимость Харькова без посредников. Коллектор и доска объявлений недвижимости Харькова без посредников. Квартиры, новостройки, продажа и аренда." />
     <meta name="keywords" content="Недвижимость Харькова, без посредников, квартиры, новостройки, продажа, аренда, Харьков, коллектор объявлений" />
+
+    <link rel="stylesheet" href="Scripts/tufte-graph/tufte-graph.css" type="text/css" />
 </asp:Content>
 
 <asp:Content runat="server" ContentPlaceHolderID="Body">
