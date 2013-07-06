@@ -10,7 +10,7 @@
     <meta name="description" content="Объявления по продаже коммерческой недвижимости, офисов, промышленных построек и т.д. в Харькове без посредников." />
     <meta name="keywords" content="продам, куплю, продажа, квартиру, однокомнатную, гостинку, жилье" />
     
-    <link rel="stylesheet" href="/css/bootstrap-image-gallery.min.css" />
+    <link rel="stylesheet" href="/css/blueimp-gallery.min.css">
 </asp:Content>
 
 

@@ -10,7 +10,7 @@
     <meta name="description" content="Объявления по аренде коммерческой недвижимости, офисов в Харькове без посредников." />
     <meta name="keywords" content="аренда, сниму, сдам, квартиру, сдам в аренду, офис, офисов" />
     
-    <link rel="stylesheet" href="/css/bootstrap-image-gallery.min.css" />
+    <link rel="stylesheet" href="/css/blueimp-gallery.min.css">
 </asp:Content>
 
 

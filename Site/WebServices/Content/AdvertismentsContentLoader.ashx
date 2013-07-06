@@ -92,11 +92,13 @@ public class AdvertismentsContentLoader : IHttpHandler {
                                 "<strong>Фото:</strong>" +
                                 "<div class=\"gallery\" data-toggle=\"modal-gallery\" data-target=\"#modal-gallery\" data-selector=\"div.gallery-item\">";
 
+        int photo_index = 0;
         foreach (var photo in photos)
         {
-            photosDiv += "<div class=\"gallery-item\" data-href=\"" + photo.filenameFormated + "\">" +
+            photosDiv += "<div class=\"gallery-item\" data-href=\"" + photo.filenameFormated + "\" data-index=\"" + photo_index + "\">" +
                             "<img src=\"" + photo.filename + "\"/>" +
                          "</div>";
+            photo_index++;
         }
         photosDiv += "</div>" +
                             "</div>" +

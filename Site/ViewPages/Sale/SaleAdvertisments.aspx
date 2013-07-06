@@ -10,7 +10,7 @@
     <meta name="description" content="Объявления по продаже квартир, гостинок, новостроев в Харькове без посредников. Объявления отфильтрованы без посредников, от хозяев квартир." />
     <meta name="keywords" content="продам, продажа, квартиру, однокомнатную, гостинку, жилье" />
     
-    <link rel="stylesheet" href="/css/bootstrap-image-gallery.min.css" />
+    <link rel="stylesheet" href="/css/blueimp-gallery.min.css">
 </asp:Content>
 
 

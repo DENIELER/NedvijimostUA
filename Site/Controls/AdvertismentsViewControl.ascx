@@ -60,8 +60,6 @@
         </div>
     </div>
 
-    <script src="/js/jquery.masonry.min.js"></script>
-    
     <noindex>
         <div style="margin-top: 10px; text-align:center;">
             <script type="text/javascript"><!--
@@ -78,10 +76,11 @@
     </noindex>
 </div>
 
+<script src="/js/blueimp-gallery.min.js"></script>
+<script src="/js/jquery.masonry.min.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
-        //getAdvertisments('<%= Settings.SectionId %>', '<%= Settings.SubSectionId != null ? Settings.SubSectionId.ToString() : "null" %>', '<%= Convert.ToInt32(Settings.Filter) %>', '<%= Settings.Offset %>', '<%= Settings.Limit %>', '<%= Settings.Date != null ? Settings.Date.Value.ToShortDateString() : "" %>');
-
         //--- format photos
         var $photosContainer = $('.gallery');
         $photosContainer.imagesLoaded(function () {
@@ -92,72 +91,20 @@
             });
         });
 
-        var bootstrapLoadImage = 'http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js';
-        var bootstrapImageGallery = '/js/bootstrap-image-gallery.min.js';
-        $.getScript(bootstrapLoadImage);
-        $.getScript(bootstrapImageGallery);
+        $('.gallery').each(function (index) {
+            var linksContainer = $(this).on('click', 'div', function (event) {
+                // Show the Gallery as lightbox when selecting a link,
+                // starting with the selected image:
+                if (blueimp.Gallery(linksContainer.find('div'), {
+                    index: $(this).data('index')
+                })) {
+                    // Prevent the default link action on
+                    // successful Gallery initialization:
+                    event.preventDefault();
+                }
+            });
+        });
     });
-
-    function getAdvertisments(sectionId, subSectionId, filter, offset, limit, date)
-    {
-        //var getAdvertismentsUrl = "/WebServices/AdvertismentsService.asmx/GetAdvertismentsHtml";
-        //var filterAdvertismentsData = 
-        //    "{ "+
-        //    "\"sectionId\": " + sectionId + "," +
-        //    "\"subSectionId\": " + subSectionId + "," +
-        //    "\"filter\": " + filter + "," +
-        //    "\"offset\": " + offset + "," +
-        //    "\"limit\": " + limit + "," +
-        //    "\"date\": '" + date + "'" +
-        //    " }";
-        //$.ajax({
-        //    url: getAdvertismentsUrl,
-        //    type: "POST",
-        //    data: filterAdvertismentsData,
-        //    contentType: "application/json; charset=utf-8",
-        //    dataType: "json",
-        //    success: function (data) {
-        //        getAdvertismentsFromJson(data);
-        //    },
-        //    error: function (data) {
-        //        showAdvertismentsLoadingError(data);
-        //    }
-        //});
-    }
-    function getAdvertismentsFromJson(response)
-    {
-        //var advertismentsView = response.d;
-
-        //$('<%= "#" + advertisments_header.ClientID %>').append(advertismentsView.Header);
-
-        //$('<%= "#" + advertisments.ClientID %>').empty();
-        //$('<%= "#" + advertisments.ClientID %>').append(advertismentsView.Advertisments);
-        //$('<%= "#" + advertisments.ClientID %>').append(advertismentsView.Pagging);
-
-        ////--- format photos
-        //var $photosContainer = $('.gallery');
-        //$photosContainer.imagesLoaded(function () {
-        //    $photosContainer.masonry({
-        //        itemSelector: '.gallery-item',
-        //        //columnWidth: 300,
-        //        //gutterWidth: 20
-        //    });
-        //});
-
-        //var bootstrapLoadImage = 'http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js';
-        //var bootstrapImageGallery = '/js/bootstrap-image-gallery.min.js';
-        //$.getScript(bootstrapLoadImage);
-        //$.getScript(bootstrapImageGallery);
-    }
-
-    function showAdvertismentsLoadingError(response) {
-        $('#advertisments').empty();
-        $('#advertisments').html(
-            '<div style="text-align: center;">' +
-                'Извините, но произошла ошибка и объявления не загружены. Попробуйте перезагрузить страницу.' + 
-            '</div>'
-            );
-    }
 
     function MarkAsSubpurchase(subpurchaseIndex, val) {
         if (confirm("Вы уверены, что данное объявление является объявлением посредника?")) {
@@ -218,15 +165,13 @@
     }
 </script>
 
-<!-- modal-gallery is the modal dialog used for the image gallery -->
-<div id="modal-gallery" class="modal modal-gallery hide fade" style="width:auto;">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">&times;</a>
-        <h3 class="modal-title"></h3>
-    </div>
-    <div class="modal-body"><div class="modal-image"></div></div>
-    <div class="modal-footer">
-        <a class="btn btn-info modal-prev"><i class="icon-arrow-left icon-white"></i> Назад</a>
-        <a class="btn btn-primary modal-next">Дальше <i class="icon-arrow-right icon-white"></i></a>
-    </div>
+<!-- The Gallery as lightbox dialog, should be a child element of the document body -->
+<div id="blueimp-gallery" class="blueimp-gallery">
+    <div class="slides"></div>
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
 </div>

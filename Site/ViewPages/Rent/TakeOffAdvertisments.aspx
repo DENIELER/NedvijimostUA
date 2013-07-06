@@ -10,7 +10,7 @@
     <meta name="description" content="Сниму квартиру в Харькове без посредников. Объявления об аренде квартир в Харькове без посредников" />
     <meta name="keywords" content="сниму, аренда, квартиру, сниму в аренду, однокомнатная, гостинка, жилье" />
     
-    <link rel="stylesheet" href="/css/bootstrap-image-gallery.min.css" />
+    <link rel="stylesheet" href="/css/blueimp-gallery.min.css">
 </asp:Content>
 
 

@@ -10,7 +10,7 @@
     <meta name="description" content="Объявления о продаже и покупке домов, дач, участков в Харькове и харьковской области без посредников" />
     <meta name="keywords" content="продам, куплю, дом, дача, участок, область, харьковская, харьков" />
     
-    <link rel="stylesheet" href="/css/bootstrap-image-gallery.min.css" />
+    <link rel="stylesheet" href="/css/blueimp-gallery.min.css">
 </asp:Content>
 
 
