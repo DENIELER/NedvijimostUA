@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12, 15.375" name="DataModel">
+  <DataContextMoniker Name="/DataModel" />
+  <nestedChildShapes>
+    <classShape Id="8d916b14-daa0-46ce-b5d3-eeeff644f9b6" absoluteBounds="0.75, 0.75, 2, 3.6939111328124996">
+      <DataClassMoniker Name="/DataModel/viewAdvertismentPhone" />
+      <nestedChildShapes>
+        <elementListCompartment Id="efdceaac-1c84-4e8c-bc8b-a400214dd1a3" absoluteBounds="0.765, 1.21, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="912a0451-3ec7-49d2-8b87-c2d5410ddafd" absoluteBounds="3.75, 0.75, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/DataModel/viewAdvertismentPhoto" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5a226cba-fd18-4ac6-817b-58347db9af9e" absoluteBounds="3.765, 1.21, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="da6ab0f7-1304-4c68-b960-59ce5b0564f5" absoluteBounds="9, 6.125, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/DataModel/AdvertismentPhone" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bf08c926-c97e-4350-80c0-e60f89c3a34c" absoluteBounds="9.015, 6.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d67544f8-60e3-40cb-9bb5-ffd2a93add3f" absoluteBounds="6.75, 0.75, 2, 1.7708968098958329">
+      <DataClassMoniker Name="/DataModel/WebSearchFilterAdvertisment" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f712dad4-13e2-4462-ac21-4c10e11a99cb" absoluteBounds="6.765, 1.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7bc93719-ce72-4a7d-b989-967093561bc7" absoluteBounds="6.25, 6, 2, 3.8862125651041666">
+      <DataClassMoniker Name="/DataModel/Advertisment" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6769d48a-1c6c-4ebe-bda6-908ba9baddba" absoluteBounds="6.265, 6.46, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f08857b1-6c42-4d48-b9cd-de619c259d8a" absoluteBounds="0.75, 7.125, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DataModel/AdvertismentSection" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7a88d311-a7aa-4f32-9f3e-f9dda5b56e89" absoluteBounds="0.765, 7.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="44c64e23-ba70-4919-b270-3523d6a31ddd" absoluteBounds="9, 8.25, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DataModel/AdvertismentsPhoto" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cb0fab9f-5676-4010-997f-ebade365f4b3" absoluteBounds="9.015, 8.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="bd759a8e-6144-4c4d-9d04-bd6a79183bba" absoluteBounds="9.75, 0.75, 2, 1.7708968098958329">
+      <DataClassMoniker Name="/DataModel/AdvertismentSubSection" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f6f0616f-255e-4dd5-8ec7-9da339d322d3" absoluteBounds="9.765, 1.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="43aa0791-6187-4bcf-973e-20e3c2a80887" absoluteBounds="0.75, 9.75, 2, 2.5401025390624987">
+      <DataClassMoniker Name="/DataModel/Article" />
+      <nestedChildShapes>
+        <elementListCompartment Id="38dc164c-cddd-4e73-aa03-12e839d97a90" absoluteBounds="0.765, 10.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="61e9c108-7ae9-4e19-a1bd-2c14a22d3a31" absoluteBounds="3.5, 7.125, 2, 1.7708968098958335">
+      <DataClassMoniker Name="/DataModel/SearchResult" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8f23d570-269c-4b13-b891-0b5db378ffc6" absoluteBounds="3.515, 7.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="60f17a7e-6fce-4bbf-bd3b-019648dc499e" absoluteBounds="0.75, 12.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DataModel/SubPurchasePhone" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4da42871-a030-4026-8e49-802c045038ea" absoluteBounds="0.76500000000000057, 13.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7bd644ff-28d8-433f-b1bb-26e22140842f" absoluteBounds="3.75, 12.75, 2, 2.3478011067708344">
+      <DataClassMoniker Name="/DataModel/SubPurchase" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1c34f981-0839-4708-abdc-c8608505b1b1" absoluteBounds="3.765, 13.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="62b90c58-8be2-4988-98ca-29bfff27e9ec" absoluteBounds="6.75, 10.75, 2, 2.9247054036458309">
+      <DataClassMoniker Name="/DataModel/User" />
+      <nestedChildShapes>
+        <elementListCompartment Id="911e4edd-b751-4950-8488-17f048b571e0" absoluteBounds="6.765, 11.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8.25 : 6.81814697265625); (9 : 6.81814697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DataModel/Advertisment/Advertisment_AdvertismentPhone" />
+      <nodes>
+        <classShapeMoniker Id="7bc93719-ce72-4a7d-b989-967093561bc7" />
+        <classShapeMoniker Id="da6ab0f7-1304-4c68-b960-59ce5b0564f5" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 8.01044840494792); (6.25 : 8.01044840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DataModel/SearchResult/SearchResult_Advertisment" />
+      <nodes>
+        <classShapeMoniker Id="61e9c108-7ae9-4e19-a1bd-2c14a22d3a31" />
+        <classShapeMoniker Id="7bc93719-ce72-4a7d-b989-967093561bc7" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 7.91429768880208); (3.5 : 7.91429768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DataModel/AdvertismentSection/AdvertismentSection_SearchResult" />
+      <nodes>
+        <classShapeMoniker Id="f08857b1-6c42-4d48-b9cd-de619c259d8a" />
+        <classShapeMoniker Id="61e9c108-7ae9-4e19-a1bd-2c14a22d3a31" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 9.03929768880208); (9 : 9.03929768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DataModel/Advertisment/Advertisment_AdvertismentsPhoto" />
+      <nodes>
+        <classShapeMoniker Id="7bc93719-ce72-4a7d-b989-967093561bc7" />
+        <classShapeMoniker Id="44c64e23-ba70-4919-b270-3523d6a31ddd" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.75 : 13.5392976888021); (2.75 : 13.5392976888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DataModel/SubPurchase/SubPurchase_SubPurchasePhone" />
+      <nodes>
+        <classShapeMoniker Id="7bd644ff-28d8-433f-b1bb-26e22140842f" />
+        <classShapeMoniker Id="60f17a7e-6fce-4bbf-bd3b-019648dc499e" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

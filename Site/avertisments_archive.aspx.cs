@@ -74,8 +74,8 @@ public partial class avertisments_archive : System.Web.UI.Page
 
         AdvertismentsViewControl.Settings.SectionId = AdvSectionID;
         AdvertismentsViewControl.Settings.SubSectionId = AdvSubSectionID;
-        AdvertismentsViewControl.Settings.Filter = AdvertismentsMode;
+        AdvertismentsViewControl.Settings.State = AdvertismentsMode;
         AdvertismentsViewControl.Settings.Limit = Constants.Max_Advertisments_View_Count;
-        AdvertismentsViewControl.Settings.Date = Date;
+        AdvertismentsViewControl.Settings.Date = Date.ToShortDateString();
     }
 }

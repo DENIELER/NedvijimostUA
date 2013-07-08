@@ -11,6 +11,7 @@ public class AdvertismentsContentLoader : IHttpHandler {
     public void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/plain";
 
+        //--- common parameters
         int sectionId = context.Request["sectionId"] != null ? TryGetIntParameter(context.Request["sectionId"]) : 0;
         int? subSectionId = context.Request["subSectionId"] != null ? TryGetIntParameter(context.Request["subSectionId"]) : (int?)null;
         AdvertismentsState filter = context.Request["filter"] != null ? (AdvertismentsState)TryGetIntParameter(context.Request["filter"]) : AdvertismentsState.NotSubpurchase;
@@ -19,7 +20,24 @@ public class AdvertismentsContentLoader : IHttpHandler {
         string date = context.Request["date"];
         string url = context.Request["url"];
         
-        Nedvijimost.DataTransferObject.Html.AdvertismentsList html = GetAdvertismentsHtml(sectionId, subSectionId, filter, offset, limit, date, url);
+        //--- special filters
+        bool showOnlyWithPhotos = context.Request["onlyPhoto"] != null ? Convert.ToBoolean(context.Request["onlyPhoto"]) : false;
+
+        var requestParameters = new Nedvijimost.AdvertismentsRequest()
+        {
+            SectionId = sectionId,
+            SubSectionId = subSectionId,
+            State = filter,
+            Offset = offset,
+            Limit = limit,
+            Url = url,
+
+            Date = date,
+            
+            OnlyWithPhotos = showOnlyWithPhotos
+        };
+        
+        Nedvijimost.DataTransferObject.Html.AdvertismentsList html = GetAdvertismentsHtml(requestParameters);
         context.Response.Write(Newtonsoft.Json.JsonConvert.SerializeObject(html));
     }
  
@@ -36,36 +54,28 @@ public class AdvertismentsContentLoader : IHttpHandler {
         return result;
     }
     
-    private Nedvijimost.DataTransferObject.Html.AdvertismentsList GetAdvertismentsHtml(int sectionId, int? subSectionId, AdvertismentsState filter, int offset, int limit, string date, string url)
+    private Nedvijimost.DataTransferObject.Html.AdvertismentsList GetAdvertismentsHtml(Nedvijimost.AdvertismentsRequest requestParameters)
     {
         var html = new Nedvijimost.DataTransferObject.Html.AdvertismentsList();
 
-        AdvertismentsView view = GetAdvertisments(sectionId, subSectionId, filter, offset, limit, date);
+        AdvertismentsResponse view = GetAdvertisments(requestParameters);
 
         html.Header = PrepairHeaderHtml(view.FullCount, view.AdvCountToShow);
         html.Advertisments = PrepairAdvertismentsHtml(view.Advertisments);
 
-        html.Pagging = PrepairPaggingHtml(view.AdvCountToShow, offset, limit, url);
+        html.Pagging = PrepairPaggingHtml(view.AdvCountToShow, requestParameters.Offset, requestParameters.Limit, requestParameters.Url);
 
         return html;
     }
 
-    private AdvertismentsView GetAdvertisments(int sectionId, int? subSectionId, AdvertismentsState filter, int offset, int limit, string date)
+    private AdvertismentsResponse GetAdvertisments(Nedvijimost.AdvertismentsRequest requestParameters)
     {
         var context = new DataModel();
 
-        DateTime _date;
-        if (!DateTime.TryParse(date, out _date))
-            _date = DateTime.Now;
-
         //--- load advertisments
         var advertismentsWorkflow = new AdvertismentsWorkflow(context);
-        AdvertismentsView view = null;
-        if (string.IsNullOrEmpty(date))
-            view = advertismentsWorkflow.LoadAdvertisments(sectionId, filter, subSectionId, offset, limit);
-        else
-            view = advertismentsWorkflow.LoadAdvertisments(sectionId, filter, _date, subSectionId, offset, limit);
-
+        AdvertismentsResponse view = advertismentsWorkflow.LoadAdvertisments(requestParameters);
+        
         return view;
     }
 

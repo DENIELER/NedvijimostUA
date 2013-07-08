@@ -30,7 +30,7 @@ public partial class SaleAdvertisments : System.Web.UI.Page
 
         AdvertismentsViewControl.Settings.SectionId = SectionId;
         AdvertismentsViewControl.Settings.SubSectionId = SubSectionId;
-        AdvertismentsViewControl.Settings.Filter = AdvertismentsMode;
+        AdvertismentsViewControl.Settings.State = AdvertismentsMode;
         AdvertismentsViewControl.Settings.Limit = Constants.Max_Advertisments_View_Count;
     }
     private void CapturePageRequestParameters()

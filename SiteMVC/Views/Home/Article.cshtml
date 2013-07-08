@@ -1,0 +1,52 @@
+﻿@model SiteMVC.Models.UI.Article
+
+@{
+    ViewBag.Title = Model.Header + " | Недвижимость-UA";
+    Layout = "~/Views/Shared/_AdvertismentsLayout.cshtml";
+}
+
+@section Head
+{
+    <meta name="description" content="@Model.HeaderWithoutTags" />
+    <meta name="keywords" content="@Model.Keywords" />
+}
+
+@section Body
+{
+    @if(Model != null)
+    {
+        <div runat="server" id="pnlSites">
+            <h1>@Model.Header</h1>
+        
+            @Html.Raw(Model.Text)
+
+            <div style="margin: 10px 0;">
+                <small>@Model.CreateDate.ToShortDateString()</small> | 
+                <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
+                <div style="display:inline;" class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="vkontakte,facebook,twitter,gplus,pinterest"></div> 
+            </div>
+
+            <div>
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'nedvijimostua'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function () {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+        </div>
+    }else{
+        <h2>Статья не найдена</h2>
+        <p>
+            Извините, статья не была найдена. Пожалуйста, обратитесь к администратору сайта.
+        </p>
+    }
+}

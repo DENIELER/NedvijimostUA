@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="NedvijimostDB" Class="DataModel" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=lilac.arvixe.com;Initial Catalog=NedvijimostDB;User ID=nedvijimost_admin;MultipleActiveResultSets=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="NedvijimostDBConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.viewAdvertismentPhones" Member="viewAdvertismentPhones">
+    <Type Name="viewAdvertismentPhone">
+      <Column Name="AdvertismentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="text" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="createDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="AdvertismentSection_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="link" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="siteName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="subpurchaseAdvertisment" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SubPurchase_Id" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="not_realestate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="not_show_advertisment" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="isSpecial" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="isSpecialDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="AdvertismentSubSection_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="VarChar(80)" CanBeNull="true" />
+      <Column Name="PhoneID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.viewAdvertismentPhotos" Member="viewAdvertismentPhotos">
+    <Type Name="viewAdvertismentPhoto">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="text" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="createDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="link" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="siteName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="subpurchaseAdvertisment" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SubPurchase_Id" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="PhotoId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PhotoFileName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="PhotoCreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SectionCode" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="SectionDisplayName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="SectionFriendlyUrl" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AdvertismentPhones" Member="AdvertismentPhones">
+    <Type Name="AdvertismentPhone">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="phone" Type="System.String" DbType="VarChar(80)" CanBeNull="true" />
+      <Column Name="AdvertismentId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Advertisment_AdvertismentPhone" Member="Advertisment" ThisKey="AdvertismentId" OtherKey="Id" Type="Advertisment" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WebSearchFilterAdvertisments" Member="WebSearchFilterAdvertisments">
+    <Type Name="WebSearchFilterAdvertisment">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="text" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="createDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="subPurchasePhone" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Advertisments" Member="Advertisments">
+    <Type Name="Advertisment">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="text" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="createDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="modifyDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="searchresult_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AdvertismentSection_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="link" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="siteName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="subpurchaseAdvertisment" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SubPurchase_Id" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="not_realestate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="not_show_advertisment" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="isSpecial" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="isSpecialDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="AdvertismentSubSection_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Advertisment_AdvertismentPhone" Member="AdvertismentPhones" ThisKey="Id" OtherKey="AdvertismentId" Type="AdvertismentPhone" />
+      <Association Name="Advertisment_AdvertismentsPhoto" Member="AdvertismentsPhotos" Storage="_AdvertismentsPhotoes" ThisKey="Id" OtherKey="Advertisment_Id" Type="AdvertismentsPhoto" />
+      <Association Name="SearchResult_Advertisment" Member="SearchResult" ThisKey="searchresult_id" OtherKey="Id" Type="SearchResult" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AdvertismentSections" Member="AdvertismentSections">
+    <Type Name="AdvertismentSection">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="code" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="displayName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="friendlyUrl" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="AdvertismentSection_SearchResult" Member="SearchResults" ThisKey="Id" OtherKey="AdvertismentSection_Id" Type="SearchResult" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AdvertismentsPhotoes" Member="AdvertismentsPhotos">
+    <Type Name="AdvertismentsPhoto">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="filename" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Advertisment_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="createDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Advertisment_AdvertismentsPhoto" Member="Advertisment" ThisKey="Advertisment_Id" OtherKey="Id" Type="Advertisment" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AdvertismentSubSection" Member="AdvertismentSubSections">
+    <Type Name="AdvertismentSubSection">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="code" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="displayName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="friendlyUrl" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AdvertismentSection_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Articles" Member="Articles">
+    <Type Name="Article">
+      <Column Name="article_id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="header" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="text" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="createDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="author" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="link" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="keywords" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="title" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SearchResults" Member="SearchResults">
+    <Type Name="SearchResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="createDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="allParsedAdvertismentsCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AdvertismentSection_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="modifyDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="SearchResult_Advertisment" Member="Advertisments" ThisKey="Id" OtherKey="searchresult_id" Type="Advertisment" />
+      <Association Name="AdvertismentSection_SearchResult" Member="AdvertismentSection" ThisKey="AdvertismentSection_Id" OtherKey="Id" Type="AdvertismentSection" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SubPurchasePhones" Member="SubPurchasePhones">
+    <Type Name="SubPurchasePhone">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="phone" Type="System.String" DbType="VarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="SubPurchaseId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="createDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="SubPurchase_SubPurchasePhone" Member="SubPurchase" ThisKey="SubPurchaseId" OtherKey="id" Type="SubPurchase" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SubPurchases" Member="SubPurchases">
+    <Type Name="SubPurchase">
+      <Column Name="id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="phone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="name" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="surname" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="not_checked" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="createDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Advertisment_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="modifyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="SubPurchase_SubPurchasePhone" Member="SubPurchasePhones" ThisKey="id" OtherKey="SubPurchaseId" Type="SubPurchasePhone" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="VkontakteID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="IsSubPurchase" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SubPurchaseID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Login" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="IsAdmin" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Phone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

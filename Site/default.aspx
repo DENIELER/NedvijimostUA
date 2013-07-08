@@ -111,11 +111,28 @@
                 <div id="Vkontakte_Social_Group" style="margin-top: 10px;">
                     <h3>Сообщество</h3>
 
-                    <!-- VK Widget -->
-                    <div id="vk_groups"></div>
-                    <script type="text/javascript">
-                        VK.Widgets.Group("vk_groups", { mode: 2, width: "507", height: "300" }, 43123714);
-                    </script>
+                    <div>
+                        <div class="span6">
+                            <!-- VK Widget -->
+                            <div id="vk_groups"></div>
+                            <script type="text/javascript">
+                                VK.Widgets.Group("vk_groups", { mode: 0, width: "250", height: "300" }, 43123714);
+                            </script>
+                        </div>
+
+                        <div class="span6">
+                            <div id="fb-root"></div>
+                            <script>(function (d, s, id) {
+                                var js, fjs = d.getElementsByTagName(s)[0];
+                                if (d.getElementById(id)) return;
+                                js = d.createElement(s); js.id = id;
+                                js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=253985454612657";
+                                fjs.parentNode.insertBefore(js, fjs);
+                            }(document, 'script', 'facebook-jssdk'));</script>
+
+                            <div class="fb-like-box" data-href="https://www.facebook.com/NedvijimostUA" data-width="250" data-height="300" data-show-faces="true" data-stream="false" data-show-border="true" data-header="true"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="News" style="margin-top: 10px;">
