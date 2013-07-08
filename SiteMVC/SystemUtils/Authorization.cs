@@ -38,16 +38,10 @@ namespace SystemUtils
 
                 // Add the cookie to the response, user browser
                 HttpContext.Current.Response.Cookies.Add(cookie);// Get the requested page from the url
-                string returnUrl = HttpContext.Current.Request.QueryString["ReturnUrl"];
-
-                // check if it exists, if not then redirect to default page
-                if (returnUrl == null) returnUrl = "~/";
-                HttpContext.Current.Response.Redirect(returnUrl);
-
+                
                 return true;
             }
 
-            HttpContext.Current.Response.Redirect("~/failed-authorization");
             return false;
         }
         public static bool LogOut()
@@ -55,7 +49,6 @@ namespace SystemUtils
             FormsAuthentication.SignOut();
             HttpContext.Current.Request.Cookies.Remove(FormsAuthentication.FormsCookieName);
 
-            HttpContext.Current.Response.Redirect("~/");
             return true;
         }
 

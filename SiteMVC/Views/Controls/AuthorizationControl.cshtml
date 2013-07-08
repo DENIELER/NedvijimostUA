@@ -3,15 +3,16 @@
 @if(!Model.IsAuthorized)
 {
 <div id="authorization" style="background-color: white; height: 110px; padding: 5px 0;">
-    <div style="clear:both;">Вход: <a href="/register" style="float:right;">Регистрация</a></div>
-    <form id="authorizationForm" class="form-inline" action="/authorization" method="post">
-      <input name="login" type="text" class="input" placeholder="Email/Логин" />
-      <input name="password" type="password" class="input" placeholder="Пароль" />
-      <label class="checkbox">
-        <input name="rememberMe" type="checkbox" /> Запомнить меня
-      </label>
+    <div style="clear:both;">Вход: <a href="@Url.Content("~/register")" style="float:right;">Регистрация</a></div>
+    @using(Html.BeginForm("LogIn", "Home", FormMethod.Post, new { id="authorizationForm", @class="form-inline"}))
+    {
+        @Html.TextBox("Login", null, new { @class = "input", placeholder = "Email/Логин" })
+        @Html.Password("Password", null, new { @class = "input", placeholder = "Пароль" })
+        <label class="checkbox">
+            @Html.CheckBox("RememberMe", false) Запомнить меня
+        </label>
       <button type="submit" class="btn" style="float:right;">Войти</button>
-    </form>
+    }
     <div style="clear:both;"></div>
 </div>
 }else{
@@ -37,7 +38,7 @@
     }
     <div style="clear:both;">
         <a href="~/user-options">Настройки</a>
-        <a href="~/authorization" style="float:right;">Выйти</a>
+        <a href="@Url.Action("LogOut", "Home")" style="float:right;">Выйти</a>
     </div>
 </div>
 }

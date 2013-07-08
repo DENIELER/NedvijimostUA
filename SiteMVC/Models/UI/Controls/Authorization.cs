@@ -20,5 +20,7 @@ namespace SiteMVC.Models.UI.Controls
         }
 
         public int AdvertismentsCount { get; set; }
+
+        public int? UserID { get; set; }
     }
 }
