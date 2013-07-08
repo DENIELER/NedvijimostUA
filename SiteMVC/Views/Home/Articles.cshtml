@@ -1,0 +1,32 @@
+﻿@model IEnumerable<SiteMVC.Models.UI.Article>
+
+@{
+    ViewBag.Title = "Новости и статьи о недвижимости - Недвижимость-UA";
+    Layout = "~/Views/Shared/_AdvertismentsLayout.cshtml";
+}
+
+@section Head
+{
+    <meta name="description" content="Статьи по выбору недивижимости в Харькове, аренде, продаже. Помощь в аренде квартир без посредников." />
+    <meta name="keywords" content="Недвижимость, аренда, снять квартиру, аренда квартир, Харьков" />
+}
+
+@section Body
+{
+    <div runat="server" id="pnlSites">
+        <h1 class="block_header">Новости и статьи о недвижимости <hr/></h1>
+
+        @foreach(var article in Model)
+        {
+            <a href="/News/@article.Link"><h2>@article.Header</h2></a>
+            <p>
+                @Html.Raw(article.Description) <a href="/News/@article.Link">Читать дальше..</a>
+            </p>
+            <hr style="clear:both;"/>
+        }
+        
+        <p style="text-align: center;">
+           @*Here should be paggination*@
+        </p>
+    </div>
+}
