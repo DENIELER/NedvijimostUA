@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    <div class="well" style="margin-top: 20px;">
+    <%--<div class="well" style="margin-top: 20px;">
         <h4>Фильтр</h4>
 
         <div style="margin-top: 20px;">
@@ -64,5 +64,5 @@
               <input type="checkbox"> Только объявления с фото
             </label>
         </div>
-    </div>
+    </div>--%>
 </asp:Content>
