@@ -25,7 +25,8 @@ namespace SiteMVC.Controllers
             return View(viewModel);
         }
 
-        public ActionResult GetSubSections(int sectionID)
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult GetSubSectionsEditList(int sectionID)
         {
             var dataModel = new DataModel();
 
@@ -34,7 +35,7 @@ namespace SiteMVC.Controllers
                                        .OrderBy(s => s.displayName)
                                        .ToList();
 
-            return View(advertismentSections);
+            return PartialView(advertismentSections);
         }
     }
 }

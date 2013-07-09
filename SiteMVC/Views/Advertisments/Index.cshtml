@@ -16,6 +16,28 @@
 
 @section Body
 {
+    <script type="text/javascript">
+        $(function () {
+            $('#sectionDropDown').change(function () {
+                var sectionID = $(this).val();
+
+                $.ajax({
+                    url: '@Url.Action("GetSubSectionsEditList", "Advertisments")',
+                    data: 'sectionID=' + sectionID,
+                    success: function (data) {
+                        if (data != '') {
+                            $('#subsectionDropDownContainer').html(data);
+                            $('#subsectionDropDownContainer').attr("class", "control-group");
+                        } else {
+                            $('#subsectionDropDownContainer').empty();
+                            $('#subsectionDropDownContainer').attr("class", "");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
     @using (Html.BeginForm("Add", "Advertisments", FormMethod.Post, new { @class = "form-horizontal" }))
     {
         @*<h2 class="block_header">Объявление добавлено <hr/></h2>
@@ -47,14 +69,10 @@
                 <div class="control-group">
                     <label class="control-label" for="inputType">Раздел объявлений:</label>
                     <div class="controls">
-                        @Html.DropDownList("Sections", new SelectList(Model.Sections, "Id", "displayName"), "(Выберите раздел)")
+                        @Html.DropDownList("Sections", new SelectList(Model.Sections, "Id", "displayName"), "(Выберите раздел)", new { id ="sectionDropDown" })
                     </div>
                 </div>
-                <label class="control-label" for="inputType">Подраздел:</label>
-                <div class="controls">
-                    @*<asp:DropDownList runat="server" ID="ddlAdvSubSection" DataValueField="Id" DataTextField="displayName">
-                    </asp:DropDownList>*@
-                </div>
+                <div id="subsectionDropDownContainer"></div>
                 <div class="control-group">
                     <label class="control-label" for="inputAddress">Адрес квартиры:</label>
                     <div class="controls">
