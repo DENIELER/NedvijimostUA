@@ -1,10 +1,10 @@
-﻿@model SiteMVC.Models.UI.Controls.Authorization
+﻿@model SiteMVC.ViewModels.Controls.Authorization
 
 @if(!Model.IsAuthorized)
 {
 <div id="authorization" style="background-color: white; height: 110px; padding: 5px 0;">
     <div style="clear:both;">Вход: <a href="@Url.Content("~/register")" style="float:right;">Регистрация</a></div>
-    @using(Html.BeginForm("LogIn", "Home", FormMethod.Post, new { id="authorizationForm", @class="form-inline"}))
+    @using(Html.BeginForm("LogIn", "Authorization", FormMethod.Post, new { id="authorizationForm", @class="form-inline"}))
     {
         @Html.TextBox("Login", null, new { @class = "input", placeholder = "Email/Логин" })
         @Html.Password("Password", null, new { @class = "input", placeholder = "Пароль" })
@@ -38,7 +38,7 @@
     }
     <div style="clear:both;">
         <a href="~/user-options">Настройки</a>
-        <a href="@Url.Action("LogOut", "Home")" style="float:right;">Выйти</a>
+        <a href="@Url.Action("LogOut", "Authorization")" style="float:right;">Выйти</a>
     </div>
 </div>
 }

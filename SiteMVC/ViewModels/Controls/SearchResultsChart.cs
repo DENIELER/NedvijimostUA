@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SiteMVC.Models.UI.Controls
+namespace SiteMVC.ViewModels.Controls
 {
     public class SearchResult
     {

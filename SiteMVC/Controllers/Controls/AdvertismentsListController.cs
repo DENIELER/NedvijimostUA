@@ -7,10 +7,10 @@ using System.Web.Mvc;
 
 namespace SiteMVC.Controllers.Controls
 {
-    public class AdvertismentsController : Controller
+    public class AdvertismentsListController : Controller
     {
 
-        public ActionResult AdvertismentsList(SiteMVC.Models.UI.AdvertismentsRequest request)
+        public ActionResult AdvertismentsList(SiteMVC.Models.Engine.AdvertismentsRequest request)
         {
             AdvertismentsList advertisments;
 
@@ -44,7 +44,7 @@ namespace SiteMVC.Controllers.Controls
         }
 
         #region Advertisments Loading
-        private AdvertismentsList LoadAdversitments(SiteMVC.Models.UI.AdvertismentsRequest request)
+        private AdvertismentsList LoadAdversitments(SiteMVC.Models.Engine.AdvertismentsRequest request)
         {
             IQueryable<Models.Advertisment> advertisments = LoadAdvertismentsByDate(request.DateFrom.Value, request.DateTo.Value);
             int advertismentsCount = 0;
@@ -125,13 +125,13 @@ namespace SiteMVC.Controllers.Controls
                        && response.Advertisments.All(a => a.IsSpecial));
         }
 
-        private void SetTodayDate(SiteMVC.Models.UI.AdvertismentsRequest request)
+        private void SetTodayDate(SiteMVC.Models.Engine.AdvertismentsRequest request)
         {
             request.DateFrom = SystemUtils.Utils.Date.GetUkranianDateTimeNow().Date;
             request.DateTo = SystemUtils.Utils.Date.GetUkranianDateTimeNow().Date.AddDays(1);
         }
 
-        private void SetYesterdayDate(SiteMVC.Models.UI.AdvertismentsRequest request)
+        private void SetYesterdayDate(SiteMVC.Models.Engine.AdvertismentsRequest request)
         {
             request.DateFrom = SystemUtils.Utils.Date.GetUkranianDateTimeNow().AddDays(-1).Date;
             request.DateTo = SystemUtils.Utils.Date.GetUkranianDateTimeNow().Date;

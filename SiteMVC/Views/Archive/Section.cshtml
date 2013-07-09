@@ -1,4 +1,4 @@
-﻿@model SiteMVC.Models.UI.AdvertismentsRequest
+﻿@model SiteMVC.Models.Engine.AdvertismentsRequest
 
 @{
     ViewBag.Title = Model.SectionName != null ? Model.SectionName + ". " : "" + "Архив объявлений о недвижимости Харькова | Недвижимость-UA";
@@ -28,7 +28,7 @@
             <h2>@(Model.DateFrom != null ? Model.DateFrom.Value.ToString("dd/MM/yyyy") : "")</h2>
 
             @{
-                Html.RenderAction("AdvertismentsList", "Advertisments", Model);
+                Html.RenderAction("AdvertismentsList", "AdvertismentsList", Model);
             }
         </div>
     </form>

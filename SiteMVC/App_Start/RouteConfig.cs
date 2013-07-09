@@ -40,6 +40,11 @@ namespace SiteMVC
             #endregion Common Pages
 
             routes.MapRoute(
+                name: "Route_AddAdvertisment",
+                url: "add-advertisment",
+                defaults: new { controller = "Advertisments", action = "Index" });
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

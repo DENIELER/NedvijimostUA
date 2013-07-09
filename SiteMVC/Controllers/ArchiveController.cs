@@ -68,7 +68,7 @@ namespace SiteMVC.Controllers
             }
             #endregion Section switch
 
-            var advertisments = new SiteMVC.Models.UI.AdvertismentsRequest()
+            var advertisments = new SiteMVC.Models.Engine.AdvertismentsRequest()
             {
                 SectionId = _sectionID,
                 SubSectionId = _subSectionID,

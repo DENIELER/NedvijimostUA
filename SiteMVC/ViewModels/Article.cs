@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SiteMVC.Models.UI
+namespace SiteMVC.ViewModels
 {
     public class Article
     {
