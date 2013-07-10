@@ -9,5 +9,7 @@ namespace SiteMVC.ViewModels.Advertisments
     {
         public IEnumerable<Models.AdvertismentSection> Sections { get; set; }
         public IEnumerable<Models.AdvertismentSubSection> SubSections { get; set; }
+
+        public SiteMVC.ViewModels.Advertisments.Advertisment Advertisment { get; set; }
     }
 }
