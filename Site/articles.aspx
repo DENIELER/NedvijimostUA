@@ -14,7 +14,7 @@
     <div runat="server" id="pnlSites">
         <h1 class="block_header">Новости и статьи о недвижимости <hr/></h1>
 
-        <asp:EntityDataSource runat="server" ID="dsArticles" ConnectionString="name=NedvijimostDBEntities" DefaultContainerName="NedvijimostDBEntities" EnableFlattening="False" EntitySetName="Articles" OrderBy="it.createDate DESC"></asp:EntityDataSource>
+        <asp:LinqDataSource runat="server" ID="dsArticles" ContextTypeName="Model.DataModel" EntityTypeName="" Select="new (article_id, header, text, createDate, link, description, keywords, title)" TableName="Articles" OrderBy="createDate DESC"/>
         <asp:ListView runat="server" ID="lvArticles" DataSourceID="dsArticles">
             <ItemTemplate>
                 <a href="/News/<%# Eval("link") %>"><h2><%# Eval("header") %></h2></a>

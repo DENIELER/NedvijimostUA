@@ -49,7 +49,7 @@
                         <div class="control-group">
                             <label class="control-label" for="inputType">Раздел объявлений:</label>
                             <div class="controls">
-                                <asp:LinqDataSource runat="server" ID="ldsAdvertismentSections" ContextTypeName="Model.NedvijimostDBEntities" EntityTypeName="" Select="new (Id, displayName, code)" TableName="AdvertismentSections"/>
+                                <asp:LinqDataSource runat="server" ID="ldsAdvertismentSections" ContextTypeName="Model.DataModel" EntityTypeName="" Select="new (Id, displayName, code)" TableName="AdvertismentSections"/>
                                 <asp:DropDownList runat="server" ID="ddlAdvSection" AutoPostBack="true" DataSourceID="ldsAdvertismentSections" DataValueField="Id" DataTextField="displayName" OnSelectedIndexChanged="ddlAdvType_SelectedIndexChanged" AppendDataBoundItems="true">
                                     <asp:ListItem Selected="True" Value="-1">(Выберите раздел)</asp:ListItem>
                                 </asp:DropDownList>
