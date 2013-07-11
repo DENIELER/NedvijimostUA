@@ -62,27 +62,40 @@
                         continue;
                     }
 
-                    if (filesList.files.indexOf(file.name) < 0)
-                    {
-                        var reader = new window.FileReader();
-                        reader.onloadend = (function (reader) {
-                            return function () {
-                                var content = reader.result;
-                                var id = 'photo_' + s.toString();
-                                s++;
+                    var reader = new window.FileReader();
+                    reader.onloadend = (function (e) {
+                        var f = file;
+                        
+                        return function (e) {
+                            var content = e.target.result;
+                            var id = 'photo_' + s.toString();
+                            s++;
 
-                                var previewImage = new Image();
-                                previewImage.id = id;
-                                previewImage.className = "photoPreview";
-                                $('#previewFilesDownload').append(previewImage);
+                            var previewImage = new Image();
+                            previewImage.id = id;
+                            previewImage.className = "photoPreview";
+                            previewImage.onclick = removeImage;
+                            previewImage.setAttribute('data-filename', f.name);
+                            $('#previewFilesDownload').append(previewImage);
 
-                                previewImage.src = content;
-                            }
-                        })(reader);
-                        reader.readAsDataURL(file);
-                    }
+                            previewImage.src = content;
+                        };
+                    })();
+                    reader.readAsDataURL(file);
                 }
             });
+
+            function removeImage() {
+                var files = document.getElementById('filesDownload').files;
+
+                var fileName = $(this).attr('data-filename');
+
+                for (var i = 0; file = files[i]; i++) {
+                    if (file.name == fileName) {
+                        file[i] = "";
+                    }
+                }
+            }
         });
     </script>
 

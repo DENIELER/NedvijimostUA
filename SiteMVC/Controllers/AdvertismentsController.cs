@@ -47,7 +47,7 @@ namespace SiteMVC.Controllers
         private string uploadedPhotosSessionKey = "AddAdvertisment_UploadedPhotos";
 
         [HttpPost]
-        public ActionResult LoadAdvertismentPhotos(IEnumerable<HttpPostedFileBase> files)
+        public ActionResult Add(IEnumerable<HttpPostedFileBase> files)
         {
             var photoResponsesList = new List<AdvertismentPhotoResponse>();
 
