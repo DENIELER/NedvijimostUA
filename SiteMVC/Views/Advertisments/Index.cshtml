@@ -12,7 +12,7 @@
 
     <style>
         .photoPreview {
-            height: 40px;
+            height: 120px;
 
             margin: 5px;
             float: left;
@@ -26,6 +26,13 @@
             padding: 7px;
             transition: -moz-box-shadow 1s ease 0s;
         }
+
+        /** Styling input[type=file] **/
+        .btn-file { position: relative; overflow: hidden; margin-right: 4px; }
+        .btn-file input { position: absolute; top: 0; right: 0; margin: 0; opacity: 0; filter: alpha(opacity=0);
+            transform: translate(-300px, 0) scale(4); font-size: 23px; direction: ltr; cursor: pointer; }
+        /* Fix for IE 7: */
+        * + html .btn-file { padding: 2px 15px; margin: 1px 0 0 0; }
     </style>
 }
 
@@ -54,7 +61,6 @@
 
                 var files = document.getElementById('filesDownload').files;
 
-                var s = 1;
                 for(var i = 0, file; file = files[i]; i++)
                 {
                     // Only process image files.
@@ -68,13 +74,12 @@
                         
                         return function (e) {
                             var content = e.target.result;
-                            var id = 'photo_' + s.toString();
-                            s++;
-
+                            var id = 'photo_' + GetIdFromFileName(f.name);
+                            
                             var previewImage = new Image();
                             previewImage.id = id;
                             previewImage.className = "photoPreview";
-                            previewImage.onclick = removeImage;
+                            //previewImage.onclick = removeImage;
                             previewImage.setAttribute('data-filename', f.name);
                             $('#previewFilesDownload').append(previewImage);
 
@@ -85,16 +90,28 @@
                 }
             });
 
-            function removeImage() {
-                var files = document.getElementById('filesDownload').files;
+            //function removeImage() {
+            //    var files = document.getElementById('filesDownload').files;
 
-                var fileName = $(this).attr('data-filename');
+            //    var fileName = $(this).attr('data-filename');
 
-                for (var i = 0; file = files[i]; i++) {
-                    if (file.name == fileName) {
-                        file[i] = "";
-                    }
+            //    for (var i = 0; file = files[i]; i++) {
+            //        if (file.name == fileName) {
+            //            files[i] = null;
+            //        }
+            //    }
+            //}
+
+            function GetIdFromFileName(filename) {
+                var list = '0123456789';
+                var result = '';
+
+                for (var i = 0; i < filename.length; i++) {
+                    var charNum = filename[i].charCodeAt(0);
+                    result += list[charNum % 10];
                 }
+
+                return result;
             }
         });
     </script>
@@ -162,10 +179,10 @@
                         <p style="margin-top: 5px;">В открывшемся диалоге вы можете выбрать сразу несколько фото вашей квартиры или объекта недвижимости.</p>
                         <div id="fileupload">
                             <div>
-                                <label>
-                                    <span>Добавить фото...</span>
+                                <span class="btn btn-file">
+                                    <i class="icon-plus"> </i><span>Добавить фото...</span>
                                     <input type="file" name="files" id="filesDownload" multiple="multiple" />
-                                </label>
+                                </span>
                             </div>
                             <div id="previewFilesDownload">
                             </div>
@@ -175,8 +192,9 @@
                 
                 <div class="control-group">
                     <div class="controls" style="line-height: 42px;">
-                        @Html.ValidationMessageFor(model => model.Advertisment.AdvertismentSection_Id, "Не выбран раздел объявления.", new { @class = "alert alert-error"})
-                        @Html.ValidationMessageFor(model => model.Advertisment.Text, "Текст объявления не может быть пустым.", new { @class = "alert alert-error"})
+                        @Html.ValidationSummary()
+                        @*@Html.ValidationMessageFor(model => model.Advertisment.AdvertismentSection_Id, "Не выбран раздел объявления.", new { @class = "alert alert-error" })
+                        @Html.ValidationMessageFor(model => model.Advertisment.Text, "Текст объявления не может быть пустым.", new { @class = "alert alert-error" })*@
                     </div>
                 </div>
 

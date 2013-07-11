@@ -93,7 +93,7 @@ namespace SiteMVC.Controllers
                     Session.Add(uploadedPhotosSessionKey, photoResponsesList);
             }
 
-            return Json(photoResponsesList);
+            return View();
         }
     }
 }
