@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "PhonesNotFound";
+    Layout = "~/Views/Shared/_AdvertismentsLayout.cshtml";
+}
+
+<h2 class="block_header">Объявление без номера телефона <hr/></h2>
+<p>
+    Извините, Ваше объявление не было добавлено, так как не указан контактный номер телефона.
+</p>
+<p>
+    Попробуйте добавить Ваше объявление еще раз:
+</p>
+<div style="margin-top: 20px; text-align: center;">
+    <a href="@Url.Content("~/add-advertisment")" class="add_advertisment_mainpage_button button orange">Добавить объявление</a>
+</div>

@@ -44,56 +44,94 @@ namespace SiteMVC.Controllers
             return PartialView(advertismentSections);
         }
         
-        private string uploadedPhotosSessionKey = "AddAdvertisment_UploadedPhotos";
-
         [HttpPost]
-        public ActionResult Add(IEnumerable<HttpPostedFileBase> files)
+        public ActionResult Add(SiteMVC.ViewModels.Advertisments.Advertisment advertisment, IEnumerable<HttpPostedFileBase> files)
         {
-            var photoResponsesList = new List<AdvertismentPhotoResponse>();
+            List<AdvertismentPhone> phones = GetAdvertismentPhones(advertisment.Phones);
+            List<AdvertismentsPhoto> photos = GetAdvertismentPhotos(files);
 
-            if (Request.ContentType.Contains("multipart/form-data"))
-            {
-                foreach (string file in Request.Files)
+            if (!phones.Any())
+                return RedirectToAction("PhonesNotFound");
+
+            var newAdvertisment = new Models.Advertisment();
+            newAdvertisment.AdvertismentSection_Id = advertisment.AdvertismentSection_Id;
+            newAdvertisment.AdvertismentSubSection_Id = advertisment.AdvertismentSubSection_Id;
+            
+            newAdvertisment.AdvertismentPhones.AddRange(phones);
+            newAdvertisment.AdvertismentsPhotos.AddRange(photos);
+            
+            newAdvertisment.createDate = SystemUtils.Utils.Date.GetUkranianDateTimeNow();
+            newAdvertisment.modifyDate = SystemUtils.Utils.Date.GetUkranianDateTimeNow();
+
+            newAdvertisment.isSpecial = false;
+            newAdvertisment.isSpecialDateTime = null;
+            newAdvertisment.link = "http://nedvijimost-ua.com";
+            newAdvertisment.not_realestate = false;
+            newAdvertisment.not_show_advertisment = false;
+            newAdvertisment.siteName = "Nedvijimost-UA";
+            newAdvertisment.subpurchaseAdvertisment = false;
+            newAdvertisment.SubPurchase_Id = null;
+
+            newAdvertisment.text = advertisment.Text;
+            //--- newAdvertisment.Address1 = advertisment.Address;
+
+            if (SystemUtils.Authorization.IsAuthorized)
+                newAdvertisment.UserID = SystemUtils.Authorization.UserID;
+            else
+                newAdvertisment.UserID = null;
+
+            var dataModel = new DataModel();
+            dataModel.Advertisments.InsertOnSubmit(newAdvertisment);
+            dataModel.SubmitChanges();
+
+            return RedirectToAction("SuccessfulyAdd");
+        }
+
+        public ActionResult PhonesNotFound()
+        {
+            return View();
+        }
+
+        public ActionResult SuccessfulyAdd()
+        {
+            return View();
+        }
+
+        private List<AdvertismentPhone> GetAdvertismentPhones(string phones)
+        {
+            string[] phonesArray = phones.Split(',');
+            return phonesArray
+                .Select(p => new AdvertismentPhone() 
+                            { 
+                                phone = p 
+                            })
+                .ToList();
+        }
+        private List<AdvertismentsPhoto> GetAdvertismentPhotos(IEnumerable<HttpPostedFileBase> files)
+        {
+            var photos = new List<AdvertismentsPhoto>();
+
+            if(files != null)
+                foreach (HttpPostedFileBase file in files)
                 {
-                    var hpf = Request.Files[file] as HttpPostedFileBase;
-                    if (hpf.ContentLength == 0)
+                    if (file.ContentLength == 0)
                         continue;
                     string pathPhotos = Path.Combine(
                             AppDomain.CurrentDomain.BaseDirectory,
                             "Data/AdvertismentsPhotos");
                     string savedFileName = Path.Combine(
                             pathPhotos,
-                            Path.GetFileName(hpf.FileName));
-                    hpf.SaveAs(savedFileName);
+                            Path.GetFileName(file.FileName));
+                    file.SaveAs(savedFileName);
 
                     //--- make response
-                    var photoResponse = new AdvertismentPhotoResponse();
-                    photoResponse.Name = Path.GetFileName(hpf.FileName);
-                    photoResponse.Size = hpf.ContentLength;
-                    photoResponse.Url = string.Format("{0}://{1}/files/{2}",
-                                                      Request.Url.Scheme,
-                                                      Request.Url.Host,
-                                                      Path.GetFileName(hpf.FileName));
-                    photoResponse.Thumbnail_url = savedFileName;
-                    photoResponse.Delete_url = savedFileName;
-                    photoResponse.Delete_type = "POST";
+                    var photoResponse = new Models.AdvertismentsPhoto();
+                    photoResponse.filename = Path.GetFileName(file.FileName);
 
-                    photoResponsesList.Add(photoResponse);
+                    photos.Add(photoResponse);
                 }
 
-                //--- save into session
-                if (Session[uploadedPhotosSessionKey] != null)
-                {
-                    var list = Session[uploadedPhotosSessionKey] as List<AdvertismentPhotoResponse>;
-                    list.AddRange(photoResponsesList);
-
-                    Session[uploadedPhotosSessionKey] = list;
-                }
-                else
-                    Session.Add(uploadedPhotosSessionKey, photoResponsesList);
-            }
-
-            return View();
+            return photos;
         }
     }
 }
