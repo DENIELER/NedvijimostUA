@@ -1066,6 +1066,8 @@ namespace SiteMVC.Models
 		
 		private System.Nullable<int> _UserID;
 		
+		private string _Address1;
+		
 		private EntitySet<AdvertismentPhone> _AdvertismentPhones;
 		
 		private EntitySet<AdvertismentsPhoto> _AdvertismentsPhotoes;
@@ -1108,6 +1110,8 @@ namespace SiteMVC.Models
     partial void OnAdvertismentSubSection_IdChanged();
     partial void OnUserIDChanging(System.Nullable<int> value);
     partial void OnUserIDChanged();
+    partial void OnAddress1Changing(string value);
+    partial void OnAddress1Changed();
     #endregion
 		
 		public Advertisment()
@@ -1438,6 +1442,26 @@ namespace SiteMVC.Models
 					this._UserID = value;
 					this.SendPropertyChanged("UserID");
 					this.OnUserIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address1")]
+		public string Address1
+		{
+			get
+			{
+				return this._Address1;
+			}
+			set
+			{
+				if ((this._Address1 != value))
+				{
+					this.OnAddress1Changing(value);
+					this.SendPropertyChanging();
+					this._Address1 = value;
+					this.SendPropertyChanged("Address1");
+					this.OnAddress1Changed();
 				}
 			}
 		}

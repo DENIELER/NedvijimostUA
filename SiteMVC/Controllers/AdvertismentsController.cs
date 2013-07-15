@@ -73,7 +73,7 @@ namespace SiteMVC.Controllers
             newAdvertisment.SubPurchase_Id = null;
 
             newAdvertisment.text = advertisment.Text;
-            //--- newAdvertisment.Address1 = advertisment.Address;
+            newAdvertisment.Address1 = advertisment.Address;
 
             if (SystemUtils.Authorization.IsAuthorized)
                 newAdvertisment.UserID = SystemUtils.Authorization.UserID;
@@ -103,7 +103,7 @@ namespace SiteMVC.Controllers
             return phonesArray
                 .Select(p => new AdvertismentPhone() 
                             { 
-                                phone = p 
+                                phone = p.Trim()
                             })
                 .ToList();
         }
@@ -114,7 +114,7 @@ namespace SiteMVC.Controllers
             if(files != null)
                 foreach (HttpPostedFileBase file in files)
                 {
-                    if (file.ContentLength == 0)
+                    if (file == null || file.ContentLength == 0)
                         continue;
                     string pathPhotos = Path.Combine(
                             AppDomain.CurrentDomain.BaseDirectory,
