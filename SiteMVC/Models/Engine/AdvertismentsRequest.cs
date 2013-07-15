@@ -57,6 +57,9 @@ namespace SiteMVC.Models.Engine
         public string Url { get; set; }
         #endregion common parameters
 
+        /// <summary>
+        /// Using to show section name in archive
+        /// </summary>
         private string _sectionName;
         public string SectionName 
         { 
@@ -69,6 +72,23 @@ namespace SiteMVC.Models.Engine
                 _sectionName = value;
             }
         }
+
+        /// <summary>
+        /// Can be set title of page
+        /// </summary>
+        public string SectionTitle { get; set; }
+        /// <summary>
+        /// Page desciption
+        /// </summary>
+        public string SectionDescription { get; set; }
+        /// <summary>
+        /// Page Keywords
+        /// </summary>
+        public string SectionKeywords { get; set; }
+        /// <summary>
+        /// Page Header text
+        /// </summary>
+        public string SectionHeader { get; set; }
 
         private string _date;
         public string Date 

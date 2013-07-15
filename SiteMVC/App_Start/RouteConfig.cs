@@ -13,6 +13,21 @@ namespace SiteMVC
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            #region Sections Pages
+            routes.MapRoute(
+                name: "Route_AdvertismentsBySectionAndSubSection",
+                url: "{sectionUrl}/{subSectionUrl}/{subpurchaseMode}",
+                defaults: new
+                {
+                    controller = "Advertisments",
+                    action = "Index",
+
+                    sectionUrl = "Obyavleniya-Arenda",
+                    subSectionUrl = "Sdam-kvartiru",
+                    subpurchaseMode = UrlParameter.Optional
+                });
+            #endregion Sections Pages
+
             #region Common Pages
             routes.MapRoute(
                 name: "Route_NewsArticles",
@@ -42,7 +57,7 @@ namespace SiteMVC
             routes.MapRoute(
                 name: "Route_AddAdvertisment",
                 url: "add-advertisment",
-                defaults: new { controller = "Advertisments", action = "Index" });
+                defaults: new { controller = "AddAdvertisments", action = "Index" });
 
             routes.MapRoute(
                 name: "Default",

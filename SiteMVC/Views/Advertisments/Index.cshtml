@@ -1,212 +1,62 @@
-﻿@model SiteMVC.ViewModels.Advertisments.AddAdvertisment
+﻿@model SiteMVC.Models.Engine.AdvertismentsRequest
 
 @{
-    ViewBag.Title = "Разместить объявление недвижимости | Недвижимость-UA";
+    ViewBag.Title = Model.SectionTitle + " | Недвижимость-UA";
     Layout = "~/Views/Shared/_AdvertismentsLayout.cshtml";
 }
 
 @section Head
 {
-    <meta name="description" content="Размещение нового объявления недвижимости на сервисе Недвижимость-UA, г.Харьков." />
-    <meta name="keywords" content="Объявление, недвижимость, размещение объявления, продам, куплю, сдам, сниму, Харьков" />
-
-    <style type="text/css">
-        .photoPreview {
-            height: 120px;
-
-            margin: 5px;
-            float: left;
-
-            text-align: center;
-
-            background: none repeat scroll 0 0 #FFFFFF;
-            box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
-            line-height: 1.7;
-            margin-bottom: 5px;
-            padding: 7px;
-            transition: -moz-box-shadow 1s ease 0s;
-        }
-
-        /** Styling input[type=file] **/
-        .btn-file
-        { 
-            position: relative; 
-            overflow: hidden; 
-            margin-right: 4px; 
-        }
-        .btn-file input 
-        { 
-            position: absolute; 
-            top: 0; 
-            right: 0; 
-            margin: 0; 
-            opacity: 0; 
-            filter: alpha(opacity=0);
-            transform: translate(-300px, 0) scale(4); 
-            font-size: 23px; 
-            direction: ltr; 
-            cursor: pointer; 
-        }
-    </style>
+    <meta name="description" content="@Model.SectionDescription" />
+    <meta name="keywords" content="@Model.SectionKeywords" />
+    
+    <link rel="stylesheet" href="~/Content/css/blueimp-gallery.min.css">
 }
 
 @section Body
 {
-    <script type="text/javascript">
-        $(function () {
-            $('#sectionDropDown').change(function () {
-                $.ajax({
-                    url: '@Url.Action("GetSubSectionsEditList", "Advertisments")',
-                    data: 'sectionID=' + $(this).val(),
-                    success: function (data) {
-                        if (data.length && data.length != 0) {
-                            $('#subsectionDropDownContainer').html(data);
-                            $('#subsectionDropDownContainer').addClass("control-group");
-                        } else {
-                            $('#subsectionDropDownContainer').removeClass("control-group");
-                            $('#subsectionDropDownContainer').empty();
-                        }
-                    }
-                });
-            });
+    <ul class="breadcrumb">
+          <li>Объявления @SystemUtils.Utils.Date.GetUkranianDateTimeNow().ToString("dd/MM/yyyy") <span class="divider">/</span></li>
+          <li class="active">@Model.SectionName</li>
+        </ul>
 
-            $('#filesDownload').change(function () {
-                $('#previewFilesDownload').empty();
-
-                var files = document.getElementById('filesDownload').files;
-
-                for(var i = 0, file; file = files[i]; i++)
-                {
-                    // Only process image files.
-                    if (!file.type.match('image.*')) {
-                        continue;
-                    }
-
-                    var reader = new window.FileReader();
-                    reader.onloadend = (function (e) {
-                        var f = file;
-                        
-                        return function (e) {
-                            var content = e.target.result;
-                            var id = 'photo_' + GetIdFromFileName(f.name);
-                            
-                            var previewImage = new Image();
-                            previewImage.id = id;
-                            previewImage.className = "photoPreview";
-                            //previewImage.onclick = removeImage;
-                            previewImage.setAttribute('data-filename', f.name);
-                            $('#previewFilesDownload').append(previewImage);
-
-                            previewImage.src = content;
-                        };
-                    })();
-                    reader.readAsDataURL(file);
-                }
-            });
-
-            function GetIdFromFileName(filename) {
-                var list = '0123456789';
-                var result = '';
-
-                for (var i = 0; i < filename.length; i++) {
-                    var charNum = filename[i].charCodeAt(0);
-                    result += list[charNum % 10];
-                }
-
-                return result;
+        <div style="float:right; line-height: 50px;">
+            @if(Model.State == SiteMVC.Models.Engine.Advertisment.State.NotSubpurchase)
+            {
+                @Html.ActionLink(
+                            "Объявления включая посредников",
+                            "Index",
+                            new 
+                            { 
+                                sectionUrl = ViewContext.RouteData.Values["sectionUrl"], 
+                                subSectionUrl = ViewContext.RouteData.Values["subSectionUrl"], 
+                                subpurchaseMode = Resources.Resource.VKLUCHAYA_POSREDNIKOV
+                            },
+                            new { id="lnkWithSubpurchases" }
+                         );
+            }else{
+                @Html.ActionLink(
+                            "Объявления без посредников",
+                            "Index",
+                            new
+                            {
+                                sectionUrl = ViewContext.RouteData.Values["sectionUrl"],
+                                subSectionUrl = ViewContext.RouteData.Values["subSectionUrl"],
+                                subpurchaseMode = Resources.Resource.BEZ_POSREDNIKOV
+                            },
+                            new { id = "lnkWithSubpurchases" }
+                         );
             }
-        });
-    </script>
-
-    <script src="~/Scripts/jquery.validate.js" type="text/javascript"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+        </div>
     
-    <div id="pnlSites">
-        <h2 class="block_header">Добавление нового объявления <hr/></h2>
-            
-        <p style="margin-top: 20px;">
-            Добавьте свое объявление в нашу базу объявлений недвижимости города Харькова. При добавлении
-            объявления правильно укажите раздел куда вы хотите добавить свое объявление.
+        <h2 class="page_header">@Model.SectionName</h2>
+        <p>
+            @Model.SectionHeader
         </p>
-
-        <p style="margin-top: 20px;">
-            Пожалуйста, указывайте номер телефона и адрес. Фотографии квартиры, объекта недвижимости 
-            в объявлении будут несомненным плюсом. Чем больше информации Вы укажите при создании объявления, 
-            тем меньше времени Вы потратите на ответы на нецелевые для Вас звонки.
-        </p>
-
-        @if(!SystemUtils.Authorization.IsAuthorized)
-        {
-            <p style="margin-top: 20px;">
-                Внимание! Если Вы не <a href="@Url.Content("~/register")">зарегистрируетесь</a>, то не сможете редактировать и управлять своим добавленным объявлением.
-            </p>
-        }
-
-        @using (Html.BeginForm("Add", "Advertisments", FormMethod.Post, new { id = "AddAdvertismentForm", enctype = "multipart/form-data" }))
-        {
-            <div style="width: 650px;margin: 0 auto;" class="form-horizontal">
-                <div class="control-group">
-                    <label class="control-label" for="inputType">Раздел объявлений:</label>
-                    <div class="controls">
-                        @Html.DropDownListFor(model => model.Advertisment.AdvertismentSection_Id, new SelectList(Model.Sections, "Id", "displayName"), "(Выберите раздел)", new { id ="sectionDropDown" })
-                    </div>
-                </div>
-                <div id="subsectionDropDownContainer"></div>
-                <div class="control-group">
-                    <label class="control-label" for="inputAddress">Адрес квартиры:</label>
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.Advertisment.Address, new { placeholder="Адрес" })
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="inputPhone">Телефон(-ы):</label>
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.Advertisment.Phones, new { placeholder="(111)111-11-11, (222)222-22-22" })
-                    </div>
-                </div>
-            
-                <div class="control-group">
-                    <label class="control-label" for="inputAdvText">Текст объявления:</label>
-                    <div class="controls">
-                        @Html.TextAreaFor(model => model.Advertisment.Text, new { placeholder="Текст объявления", rows = "10" })
-                    </div>
-                </div>
-            
-                <div class="control-group">
-                    <label class="control-label" for="inputPhotos">Фото:</label>
-                    <div class="controls">
-                        <p style="margin-top: 5px;">
-                            В открывшемся диалоге Вы можете выбрать сразу несколько фото вашей квартиры или объекта недвижимости.
-                        </p>
-                        <p style="margin-top: 5px;">
-                            Если Вы хотите изменить загруженные фотографии - нажмите "Добавить фото" и выберите 
-                            фотографии заново.
-                        </p>
-                        <div id="fileupload">
-                            <div>
-                                <span class="btn btn-file">
-                                    <i class="icon-plus"> </i><span>Добавить фото...</span>
-                                    <input type="file" name="files" id="filesDownload" multiple="multiple" />
-                                </span>
-                            </div>
-                            <div id="previewFilesDownload">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <div class="controls" style="line-height: 42px;">
-                        @Html.ValidationSummary()
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <input type="submit" id="btnSubmitAddAdvertisment" class="btn" value="Добавить объявление" />
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
+        
+        <div class="advertisments">
+            @{
+                Html.RenderAction("AdvertismentsList", "AdvertismentsList", Model);
+            }
+        </div>
 }
