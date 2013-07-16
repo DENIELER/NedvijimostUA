@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SiteMVC.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -53,6 +54,47 @@ namespace SiteMVC.Controllers
         public ActionResult FailedRegistration()
         {
             return View();
+        }
+
+        public ActionResult UserOptions()
+        {
+            if (!SystemUtils.Authorization.IsAuthorized)
+                return RedirectToAction("NotAuthorizedUser");
+
+            var dataModel = new DataModel();
+            var user = dataModel.Users
+                .FirstOrDefault(u => u.UserID == SystemUtils.Authorization.UserID);
+
+            return View(user);
+        }
+
+        public ActionResult NotAuthorizedUser()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SaveUserOptions(User user)
+        {
+            try
+            {
+                var dataModel = new DataModel();
+
+                var dbUser = dataModel.Users
+                    .FirstOrDefault(u => u.UserID == SystemUtils.Authorization.UserID);
+
+                dbUser.FirstName = user.FirstName;
+                dbUser.LastName = user.LastName;
+                dbUser.Phone = user.Phone;
+
+                dataModel.SubmitChanges();
+
+                return PartialView("UserOptionsSaveSuccess");
+            }
+            catch
+            {
+                return PartialView("UserOptionsSaveFailed");
+            }
         }
     }
 }

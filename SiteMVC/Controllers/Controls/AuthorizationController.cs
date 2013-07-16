@@ -40,12 +40,17 @@ namespace SiteMVC.Controllers.Controls
                 return Redirect(returnUrl);
             }
 
-            return Redirect("~/registration/failed-authorization");
+            return Redirect("~/Failed-authorization");
         }
         public ActionResult LogOut()
         {
             SystemUtils.Authorization.LogOut();
             return Redirect("~/");
+        }
+
+        public ActionResult FailedAuthorization()
+        {
+            return View();
         }
 
     }

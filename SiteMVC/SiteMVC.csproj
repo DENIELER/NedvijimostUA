@@ -190,6 +190,8 @@
     <Content Include="Content\img\pbar-ani.gif" />
     <Content Include="Content\img\scroll_arrow_left.png" />
     <Content Include="Content\img\scroll_arrow_right.png" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\tufte-graph\jquery.enumerable.js" />
     <Content Include="Scripts\tufte-graph\jquery.tufte-graph.js" />
     <Content Include="Scripts\tufte-graph\raphael.js" />
@@ -243,6 +245,11 @@
     <Content Include="Views\Authentication\Registration.cshtml" />
     <Content Include="Views\Authentication\SuccessRegistration.cshtml" />
     <Content Include="Views\Authentication\FailedRegistration.cshtml" />
+    <Content Include="Views\Authentication\NotAuthorizedUser.cshtml" />
+    <Content Include="Views\Authentication\UserOptions.cshtml" />
+    <Content Include="Views\Authentication\UserOptionsSaveSuccess.cshtml" />
+    <Content Include="Views\Authentication\UserOptionsSaveFailed.cshtml" />
+    <Content Include="Views\Authorization\FailedAuthorization.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
