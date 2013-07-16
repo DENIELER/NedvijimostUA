@@ -15,17 +15,19 @@ namespace SiteMVC
 
             #region Sections Pages
             routes.MapRoute(
-                name: "Route_AdvertismentsBySectionAndSubSection",
+                name: "Route_AdvertismentsBySectionAndSubSection_RentSection",
                 url: "{sectionUrl}/{subSectionUrl}/{subpurchaseMode}",
                 defaults: new
                 {
                     controller = "Advertisments",
                     action = "Index",
 
-                    sectionUrl = "Obyavleniya-Arenda",
-                    subSectionUrl = "Sdam-kvartiru",
+                    subSectionUrl = "",
                     subpurchaseMode = UrlParameter.Optional
-                });
+                },
+                constraints: new { sectionUrl = "Obyavleniya-Arenda|Obyavleniya-Prodaja|Obyavleniya-Arenda-Kommercheskaya|Obyavleniya-Prodaja-Kommercheskaya|Obyavleniya-Doma-Dachi" }
+            );
+
             #endregion Sections Pages
 
             #region Common Pages

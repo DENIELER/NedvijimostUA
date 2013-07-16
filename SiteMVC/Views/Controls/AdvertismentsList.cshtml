@@ -1,6 +1,6 @@
 ﻿@model SiteMVC.Models.Engine.Advertisment.AdvertismentsList
 
-<div runat="server" id="pnlAdvRentRecords">
+<div id="pnlAdvRentRecords">
 
     <noindex>
         <div style="height: 280px;">
@@ -47,7 +47,7 @@
         </div>
     </div>
     
-    <div id="advertisments" runat="server">
+    <div id="advertisments">
 
         @{ var isAdmin = SystemUtils.Authorization.IsAdmin; }
 

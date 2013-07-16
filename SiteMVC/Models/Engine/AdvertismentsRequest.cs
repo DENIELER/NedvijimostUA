@@ -85,11 +85,7 @@ namespace SiteMVC.Models.Engine
         /// Page Keywords
         /// </summary>
         public string SectionKeywords { get; set; }
-        /// <summary>
-        /// Page Header text
-        /// </summary>
-        public string SectionHeader { get; set; }
-
+        
         private string _date;
         public string Date 
         {

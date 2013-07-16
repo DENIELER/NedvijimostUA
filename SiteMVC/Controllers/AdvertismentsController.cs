@@ -27,11 +27,11 @@ namespace SiteMVC.Controllers
                 result.SectionTitle = section.Title;
                 result.SectionDescription = section.Description;
                 result.SectionKeywords = section.Keywords;
-                result.SectionHeader = section.Header;
             }
 
             var subSection = dataModel.AdvertismentSubSections
-                .FirstOrDefault(s => s.friendlyUrl == subSectionUrl);
+                .FirstOrDefault(s => s.friendlyUrl == subSectionUrl
+                                    && s.AdvertismentSection_Id == section.Id);
             if (subSection == null)
                 result.SubSectionId = null;
             else
@@ -45,8 +45,6 @@ namespace SiteMVC.Controllers
                     result.SectionDescription = subSection.Description;
                 if (!string.IsNullOrEmpty(subSection.Keywords))
                     result.SectionKeywords = subSection.Keywords;
-                if (!string.IsNullOrEmpty(subSection.Header))
-                    result.SectionHeader = subSection.Header;
             }
 
             result.State = State.NotSubpurchase;
