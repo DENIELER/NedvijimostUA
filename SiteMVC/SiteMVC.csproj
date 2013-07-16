@@ -135,6 +135,7 @@
     <Compile Include="Controllers\AddAdvertismentsController.cs" />
     <Compile Include="Controllers\AdvertismentsController.cs" />
     <Compile Include="Controllers\ArchiveController.cs" />
+    <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\Controls\AdvertismentsListController.cs" />
     <Compile Include="Controllers\Controls\AuthorizationController.cs" />
     <Compile Include="Controllers\Controls\SearchResultsChartController.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Models\Partials\User.cs" />
     <Compile Include="SystemUtils\Utils.cs" />
     <Compile Include="ViewModels\Advertisments\AddAdvertisment.cs" />
+    <Compile Include="ViewModels\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -238,6 +240,7 @@
     <Content Include="Views\AddAdvertisments\SuccessfulyAdd.cshtml" />
     <Content Include="Views\Advertisments\Index.cshtml" />
     <Content Include="Views\Advertisments\Header.cshtml" />
+    <Content Include="Views\Authentication\Registration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

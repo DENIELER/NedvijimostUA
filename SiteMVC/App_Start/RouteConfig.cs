@@ -56,6 +56,14 @@ namespace SiteMVC
             );
             #endregion Common Pages
 
+            #region Authentication
+            routes.MapRoute(
+                name: "Route_Register",
+                url: "Registration",
+                defaults: new { controller = "Authentication", action = "Registration" }
+            );
+            #endregion Authentication
+
             routes.MapRoute(
                 name: "Route_AddAdvertisment",
                 url: "add-advertisment",
