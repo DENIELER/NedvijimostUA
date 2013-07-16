@@ -114,7 +114,7 @@
                             }
                             <div class="btn-group">
                                 <button class="btn dropdown-toggle btn-mini" data-toggle="dropdown"><i class="icon-exclamation-sign"></i> Сообщить <span class="caret"></span></button>
-                                <ul class="dropdown-menu">
+                                <ul class="dropdown-menu" style="text-align: left;">
                                     <li>
                                         @Ajax.ActionLink("Объявление посредника", "NotifySubpurchaseAdvertisment",
                                         new { advertismentID = advertisment.Id },
@@ -124,7 +124,7 @@
                                             Confirm = "Вы уверены, что данное объявление является объявлением посредника?",
                                             OnSuccess = "HideAdvertisment(" + @i + ", 900)",
                                             OnFailure = "AjaxRequestFailed"
-                                        }, new { @class = "btn btn-mini" })
+                                        })
                                     </li>
                                     <li>
                                         @Ajax.ActionLink("Объявление не по теме", "NotifyNotByThemeAdvertisment",
@@ -135,7 +135,7 @@
                                             Confirm = "Вы уверены, что данное объявление не является объявлением о недвижимости?",
                                             OnSuccess = "HideAdvertisment(" + @i + ", 900)",
                                             OnFailure = "AjaxRequestFailed"
-                                        }, new { @class = "btn btn-mini" })
+                                        })
                                     </li>
                                 </ul>
                             </div>

@@ -142,6 +142,9 @@ namespace SiteMVC.Controllers.Controls
         [HttpPost]
         public JsonResult AdminRemoveAdvertisment(int advertismentID)
         {
+            if (!SystemUtils.Authorization.IsAdmin)
+                return Json("Access denied.");
+
             var dataModel = new DataModel();
 
             var advertisment = dataModel.Advertisments
