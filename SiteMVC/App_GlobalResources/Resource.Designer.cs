@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to support@nedvijimost-ua.com.
+        /// </summary>
+        internal static string SiteSupportEmail {
+            get {
+                return ResourceManager.GetString("SiteSupportEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vkluchaya-posrednikov.
         /// </summary>
         internal static string VKLUCHAYA_POSREDNIKOV {

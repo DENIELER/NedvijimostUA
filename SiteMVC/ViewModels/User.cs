@@ -18,8 +18,9 @@ namespace SiteMVC.ViewModels
 
         [Required(ErrorMessage = "Введите пароль пользователя")]
         [DataType(DataType.Password)]
-        [Compare("RepeatPassword")]
+        [Compare("RepeatPassword", ErrorMessage = "Введенные пароли не совпадают")]
         public string Password { get; set; }
+        [Required(ErrorMessage = "Введите повторно пароль пользователя")]
         [DataType(DataType.Password)]
         public string RepeatPassword { get; set; }
 

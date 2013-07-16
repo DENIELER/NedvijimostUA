@@ -241,6 +241,8 @@
     <Content Include="Views\Advertisments\Index.cshtml" />
     <Content Include="Views\Advertisments\Header.cshtml" />
     <Content Include="Views\Authentication\Registration.cshtml" />
+    <Content Include="Views\Authentication\SuccessRegistration.cshtml" />
+    <Content Include="Views\Authentication\FailedRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

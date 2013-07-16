@@ -138,42 +138,42 @@
         @if(!SystemUtils.Authorization.IsAuthorized)
         {
             <p style="margin-top: 20px;">
-                Внимание! Если Вы не <a href="@Url.Content("~/register")">зарегистрируетесь</a>, то не сможете редактировать и управлять своим добавленным объявлением.
+                Внимание! Если Вы не <a href="~/Registration">зарегистрируетесь</a>, то не сможете редактировать и управлять своим добавленным объявлением.
             </p>
         }
 
         @using (Html.BeginForm("Add", "Advertisments", FormMethod.Post, new { id = "AddAdvertismentForm", enctype = "multipart/form-data" }))
         {
-            <div style="width: 650px;margin: 0 auto;" class="form-horizontal">
+            <div style="width: 650px; margin: 0 auto;" class="form-horizontal">
                 <div class="control-group">
-                    <label class="control-label" for="inputType">Раздел объявлений:</label>
+                    <label class="control-label">Раздел объявлений:</label>
                     <div class="controls">
                         @Html.DropDownListFor(model => model.Advertisment.AdvertismentSection_Id, new SelectList(Model.Sections, "Id", "displayName"), "(Выберите раздел)", new { id ="sectionDropDown" })
                     </div>
                 </div>
                 <div id="subsectionDropDownContainer"></div>
                 <div class="control-group">
-                    <label class="control-label" for="inputAddress">Адрес квартиры:</label>
+                    <label class="control-label">Адрес квартиры:</label>
                     <div class="controls">
                         @Html.TextBoxFor(model => model.Advertisment.Address, new { placeholder="Адрес" })
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="inputPhone">Телефон(-ы):</label>
+                    <label class="control-label">Телефон(-ы):</label>
                     <div class="controls">
                         @Html.TextBoxFor(model => model.Advertisment.Phones, new { placeholder="(111)111-11-11, (222)222-22-22" })
                     </div>
                 </div>
             
                 <div class="control-group">
-                    <label class="control-label" for="inputAdvText">Текст объявления:</label>
+                    <label class="control-label">Текст объявления:</label>
                     <div class="controls">
                         @Html.TextAreaFor(model => model.Advertisment.Text, new { placeholder="Текст объявления", rows = "10" })
                     </div>
                 </div>
             
                 <div class="control-group">
-                    <label class="control-label" for="inputPhotos">Фото:</label>
+                    <label class="control-label">Фото:</label>
                     <div class="controls">
                         <p style="margin-top: 5px;">
                             В открывшемся диалоге Вы можете выбрать сразу несколько фото вашей квартиры или объекта недвижимости.

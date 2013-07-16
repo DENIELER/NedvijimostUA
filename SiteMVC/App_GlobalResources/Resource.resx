@@ -120,6 +120,9 @@
   <data name="BEZ_POSREDNIKOV" xml:space="preserve">
     <value>Bez-posrednikov</value>
   </data>
+  <data name="SiteSupportEmail" xml:space="preserve">
+    <value>support@nedvijimost-ua.com</value>
+  </data>
   <data name="VKLUCHAYA_POSREDNIKOV" xml:space="preserve">
     <value>Vkluchaya-posrednikov</value>
   </data>
