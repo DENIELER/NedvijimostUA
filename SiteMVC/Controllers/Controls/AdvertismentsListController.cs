@@ -1,4 +1,5 @@
-﻿using SiteMVC.Models.Engine.Advertisment;
+﻿using SiteMVC.Models;
+using SiteMVC.Models.Engine.Advertisment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,10 +120,10 @@ namespace SiteMVC.Controllers.Controls
 
         private bool IsLoaded(AdvertismentsList response)
         {
-            return response == null
-                   || (response != null
-                       && response.Advertisments != null
-                       && response.Advertisments.All(a => a.IsSpecial));
+            return response != null
+                   && response.Advertisments != null
+                   && response.Advertisments.Count > 0
+                   && !response.Advertisments.All(a => a.IsSpecial);
         }
 
         private void SetTodayDate(SiteMVC.Models.Engine.AdvertismentsRequest request)
@@ -138,5 +139,111 @@ namespace SiteMVC.Controllers.Controls
         }
         #endregion Advertisments Loading
 
+        [HttpPost]
+        public JsonResult AdminRemoveAdvertisment(int advertismentID)
+        {
+            var dataModel = new DataModel();
+
+            var advertisment = dataModel.Advertisments
+                .SingleOrDefault(a => a.Id == advertismentID);
+
+            if (advertisment == null)
+                throw new Exception("Advertisment not founded to remove");
+
+            advertisment.not_show_advertisment = true;
+
+            dataModel.SubmitChanges();
+
+            return Json("success");
+        }
+
+        [HttpPost]
+        public JsonResult NotifySubpurchaseAdvertisment(int advertismentID)
+        {
+            var dataModel = new DataModel();
+
+            var advertismentPhones = dataModel.AdvertismentPhones
+                .Where(ap => ap.AdvertismentId == advertismentID);
+
+            bool isExists = true;
+            foreach (var advertismentPhone in advertismentPhones)
+            {
+                if (!dataModel.SubPurchasePhones
+                    .Any(s => s.phone == advertismentPhone.phone))
+                {
+                    isExists = false;
+                    break;
+                }
+            }
+
+            if (!isExists)
+            {
+                Guid subpurchaseID = Guid.NewGuid();
+                var subpurchase = new SubPurchase()
+                {
+                    id = subpurchaseID,
+                    createDate = SystemUtils.Utils.Date.GetUkranianDateTimeNow(),
+                    modifyDate = SystemUtils.Utils.Date.GetUkranianDateTimeNow(),
+                    not_checked = true
+                };
+                dataModel.SubPurchases.InsertOnSubmit(subpurchase);
+
+                foreach (var advertismentPhone in advertismentPhones)
+                {
+                    var subpurchasePhone = new SubPurchasePhone()
+                    {
+                        Id = Guid.NewGuid(),
+                        createDate = SystemUtils.Utils.Date.GetUkranianDateTimeNow(),
+                        phone = advertismentPhone.phone,
+                        SubPurchaseId = subpurchaseID
+                    };
+                    dataModel.SubPurchasePhones.InsertOnSubmit(subpurchasePhone);
+                }
+
+                dataModel.SubmitChanges();
+            }
+
+            return Json("success");
+        }
+
+        [HttpPost]
+        public JsonResult NotifyNotByThemeAdvertisment(int advertismentID)
+        {
+            var dataModel = new DataModel();
+
+            var advertisment = dataModel.Advertisments
+                .SingleOrDefault(a => a.Id == advertismentID);
+
+            if (advertisment == null)
+                throw new Exception("Advertisment not founded to remove");
+
+            try
+            {
+                if (SystemUtils.Authorization.IsAdmin)
+                {
+                    advertisment.not_realestate = true;
+                    dataModel.SubmitChanges();
+                }
+                else
+                {
+                    var emailWorkflow = new SystemUtils.Email();
+                    emailWorkflow.SendMail("danielostapenko@gmail.com", "Отмечено новое объявление",
+                        string.Format(
+    @"Отмечено объявление меткой ""Не по теме"".
+Текст объявления: {0},
+Номер объявления: {1}
+Линк подтверждения: {2}",
+                            advertisment.text,
+                            advertisment.Id,
+                            "http://nedvijimost-ua.com/WebServices/AdvertismentsService.asmx/ForceMarkAsNotByTheme?password=gtycbz1990&advertisment_id=" + advertisment.Id));
+                }
+
+                return Json("success");
+            }
+            catch
+            {
+                return Json("failed");
+            }
+        }
     }
 }

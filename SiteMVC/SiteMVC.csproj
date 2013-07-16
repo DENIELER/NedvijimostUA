@@ -146,6 +146,7 @@
     <Compile Include="Models\Engine\Advertisment\AdvertismentsList.cs" />
     <Compile Include="SystemUtils\Authorization.cs" />
     <Compile Include="Models\Engine\AdvertismentsRequest.cs" />
+    <Compile Include="SystemUtils\Email.cs" />
     <Compile Include="ViewModels\Advertisments\Advertisment.cs" />
     <Compile Include="ViewModels\Article.cs" />
     <Compile Include="ViewModels\Controls\SearchResultsChart.cs" />

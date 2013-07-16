@@ -102,15 +102,41 @@
                         <div class="span7" style="text-align: right;">
                             @if(isAdmin)
                             {
-                                <a class="btn btn-mini" onclick="AdminRemoveAdvertisment(@i, this, @advertisment.Id);">
-                                    <i class="icon-trash"></i> Удалить объявление
-                                </a>
+                                @Ajax.ActionLink("Удалить объявление", "AdminRemoveAdvertisment",
+                                new { advertismentID = advertisment.Id },
+                                new AjaxOptions()
+                                {
+                                    HttpMethod = "POST",
+                                    Confirm = "Вы уверены, что хотите удалить объявление?",
+                                    OnSuccess = "HideAdvertisment(" + @i + ")",
+                                    OnFailure = "AjaxRequestFailed"
+                                }, new { @class = "btn btn-mini" })
                             }
                             <div class="btn-group">
                                 <button class="btn dropdown-toggle btn-mini" data-toggle="dropdown"><i class="icon-exclamation-sign"></i> Сообщить <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                    <li><a onclick="MarkAsSubpurchase(@i, this);">Объявление посредника</a></li>
-                                    <li><a onclick="MarkAsNotByTheme(@i, this, @advertisment.Id);">Объявление не по теме</a></li>
+                                    <li>
+                                        @Ajax.ActionLink("Объявление посредника", "NotifySubpurchaseAdvertisment",
+                                        new { advertismentID = advertisment.Id },
+                                        new AjaxOptions()
+                                        {
+                                            HttpMethod = "POST",
+                                            Confirm = "Вы уверены, что данное объявление является объявлением посредника?",
+                                            OnSuccess = "HideAdvertisment(" + @i + ", 900)",
+                                            OnFailure = "AjaxRequestFailed"
+                                        }, new { @class = "btn btn-mini" })
+                                    </li>
+                                    <li>
+                                        @Ajax.ActionLink("Объявление не по теме", "NotifyNotByThemeAdvertisment",
+                                        new { advertismentID = advertisment.Id },
+                                        new AjaxOptions()
+                                        {
+                                            HttpMethod = "POST",
+                                            Confirm = "Вы уверены, что данное объявление не является объявлением о недвижимости?",
+                                            OnSuccess = "HideAdvertisment(" + @i + ", 900)",
+                                            OnFailure = "AjaxRequestFailed"
+                                        }, new { @class = "btn btn-mini" })
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -179,6 +205,7 @@
 
 <script src="~/Scripts/blueimp-gallery.min.js"></script>
 <script src="~/Scripts/jquery.masonry.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -206,63 +233,12 @@
             });
         });
     });
-
-    function MarkAsSubpurchase(subpurchaseIndex, val) {
-        if (confirm("Вы уверены, что данное объявление является объявлением посредника?")) {
-            val.disabled = true;
-
-            var phonesList = new Array();
-            $("#phones_" + subpurchaseIndex + " li").each(function () {
-                phonesList.push($(this).text());
-            });
-
-            var jsonText = JSON.stringify({ phonesList: phonesList });
-
-            $.ajax({
-                type: "POST",
-                url: "/WebServices/SubpurchaseService.asmx/MarkAsSubpurchase",
-                data: jsonText,
-                contentType: "application/json;charset=urf-8",
-                dataType: "json",
-                success: function (result) {
-                    $("#advertisment_" + subpurchaseIndex).fadeOut(900);
-                }
-            });
-        }
+    
+    function HideAdvertisment(subpurchaseIndex, fadeOutTime) {
+        $("#advertisment_" + subpurchaseIndex).fadeOut(fadeOutTime);
     }
-    function AdminRemoveAdvertisment(subpurchaseIndex, val, advertisment_id) {
-        if (confirm("Вы уверены, что хотите удалить данное объявление?")) {
-            val.disabled = true;
-            var phonesList = new Array();
-
-            $.ajax({
-                type: "POST",
-                url: "/WebServices/AdvertismentsService.asmx/HideAdvertisment",
-                data: "{ advertisment_id: " + advertisment_id + "}",
-                contentType: "application/json;charset=urf-8",
-                dataType: "json",
-                success: function (result) {
-                    $("#advertisment_" + subpurchaseIndex).fadeOut(500);
-                }
-            });
-        }
-    }
-    function MarkAsNotByTheme(subpurchaseIndex, val, advertisment_id) {
-        if (confirm("Вы уверены, что данное объявление не является объявлением о недвижимости?")) {
-            val.disabled = true;
-            var phonesList = new Array();
-
-            $.ajax({
-                type: "POST",
-                url: "/WebServices/AdvertismentsService.asmx/MarkAsNotByTheme",
-                data: "{ advertisment_id: " + advertisment_id + "}",
-                contentType: "application/json;charset=urf-8",
-                dataType: "json",
-                success: function (result) {
-                    $("#advertisment_" + subpurchaseIndex).fadeOut(800);
-                }
-            });
-        }
+    function AjaxRequestFailed() {
+        alert("Возникла ошибка при действии с объявлением.");
     }
 </script>
 
