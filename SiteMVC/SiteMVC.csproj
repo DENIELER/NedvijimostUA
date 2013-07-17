@@ -133,6 +133,7 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AddAdvertismentsController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdvertismentsController.cs" />
     <Compile Include="Controllers\ArchiveController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="Models\Partials\User.cs" />
     <Compile Include="SystemUtils\Utils.cs" />
     <Compile Include="ViewModels\Advertisments\AddAdvertisment.cs" />
+    <Compile Include="ViewModels\SubPurchase.cs" />
     <Compile Include="ViewModels\User.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -251,6 +253,7 @@
     <Content Include="Views\Authentication\UserOptionsSaveSuccess.cshtml" />
     <Content Include="Views\Authentication\UserOptionsSaveFailed.cshtml" />
     <Content Include="Views\Authorization\FailedAuthorization.cshtml" />
+    <Content Include="Views\Admin\AddSubPurchases.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
