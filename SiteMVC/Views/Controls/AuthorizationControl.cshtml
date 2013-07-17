@@ -17,16 +17,30 @@
 </div>
 }else{
 <div id="user_info" style="background-color: white; height: 130px; padding: 5px 0;">
-    <div>
-        Здравствуйте, <br />
-        <strong>@Model.Login</strong>!
+    <div class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="font-weight: bold;">
+            <i class="icon-user"></i> @Model.Login <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            <li><a tabindex="-1" href="~/User-advertisments">Мои объявления</a></li>
+            <li class="divider"></li>
+            <li><a tabindex="-1" href="~/User-options">Настройки</a></li>
+        </ul>
     </div>
     @if(!Model.IsAdmin){
-    <div style="margin-top: 14px;">
+    <div style="margin-top: 20px;">
         Ваш телефон: <strong>@Model.Phone</strong>
     </div>
-    <div style="margin-bottom: 14px;">
-        Ваших объявлений: <strong>@Model.AdvertismentsCount</strong>
+    <div style="margin-bottom: 20px;">
+        Ваших объявлений: 
+        <strong>
+            @if (Model.AdvertismentsCount > 0)
+            {
+                <a href="~/User-advertisments">@Model.AdvertismentsCount</a>
+            }else{
+                @Model.AdvertismentsCount
+            }
+        </strong>
     </div>
     }else{
     <div style="margin-top: 14px;">

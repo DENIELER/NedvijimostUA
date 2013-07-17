@@ -259,6 +259,8 @@
     <Content Include="Views\Controls\FormSubmitSaveFailed.cshtml" />
     <Content Include="Views\Authentication\NotAdminUser.cshtml" />
     <Content Include="Views\Admin\CheckSubPurchases.cshtml" />
+    <Content Include="Views\Authentication\UserAdvertisments.cshtml" />
+    <Content Include="Views\Advertisments\EditAdvertisment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -9,11 +9,11 @@ namespace SiteMVC.Controllers
 {
     public class AuthenticationController : Controller
     {
+        #region Registration
         public ActionResult Registration()
         {
             return View();
         }
-
         [HttpPost]
         public ActionResult Register(ViewModels.User user)
         {
@@ -50,12 +50,22 @@ namespace SiteMVC.Controllers
         {
             return View();
         }
-
         public ActionResult FailedRegistration()
         {
             return View();
         }
+        #endregion Registration
 
+        public ActionResult NotAuthorizedUser()
+        {
+            return View();
+        }
+        public ActionResult NotAdminUser()
+        {
+            return View();
+        }
+
+        #region User Actions
         public ActionResult UserOptions()
         {
             if (!SystemUtils.Authorization.IsAuthorized)
@@ -67,17 +77,6 @@ namespace SiteMVC.Controllers
 
             return View(user);
         }
-
-        public ActionResult NotAuthorizedUser()
-        {
-            return View();
-        }
-
-        public ActionResult NotAdminUser()
-        {
-            return View();
-        }
-
         [HttpPost]
         public ActionResult SaveUserOptions(User user)
         {
@@ -101,5 +100,19 @@ namespace SiteMVC.Controllers
                 return PartialView("UserOptionsSaveFailed");
             }
         }
+
+        public ActionResult UserAdvertisments()
+        {
+            var currentUserID = SystemUtils.Authorization.UserID;
+
+            var dataModel = new DataModel();
+
+            var advertisments = dataModel.Advertisments
+                .Where(a => a.UserID == currentUserID
+                            && !a.not_show_advertisment);
+
+            return View(advertisments);
+        }
+        #endregion User Actions
     }
 }

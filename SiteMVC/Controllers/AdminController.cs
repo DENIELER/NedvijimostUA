@@ -192,9 +192,6 @@ namespace SiteMVC.Controllers
         [HttpPost]
         public JsonResult GetAdvertismentsBySubpurchase(Guid subpurchaseID, string phone)
         {
-            if (!SystemUtils.Authorization.IsAdmin)
-                return RedirectToAction("NotAdminUser", "Authentication");
-
             var dataModel = new DataModel();
 
             var subpurchaseAdvertismentsOld = dataModel.Advertisments

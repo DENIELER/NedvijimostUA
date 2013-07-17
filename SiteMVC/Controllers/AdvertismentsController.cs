@@ -56,5 +56,33 @@ namespace SiteMVC.Controllers
             return View(result);
         }
 
+        [HttpPost]
+        public JsonResult RemoveAdvertisment(int advertismentID)
+        {
+            var dataModel = new DataModel();
+
+            var advertisment = dataModel.Advertisments
+                .SingleOrDefault(a => a.Id == advertismentID);
+            if (advertisment == null)
+                return Json("failed");
+
+            advertisment.not_show_advertisment = true;
+
+            dataModel.SubmitChanges();
+
+            return Json("success");
+        }
+
+        public ActionResult EditAdvertisment(int advertismentID)
+        {
+            var dataModel = new DataModel();
+
+            var advertisment = dataModel.Advertisments
+                .SingleOrDefault(a => a.Id == advertismentID);
+            if (advertisment == null)
+                throw new Exception("Can not find advertisment with current ID.");
+
+            return View(advertisment);
+        }
     }
 }

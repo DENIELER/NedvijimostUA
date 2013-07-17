@@ -1,0 +1,66 @@
+﻿@model IEnumerable<SiteMVC.Models.Advertisment>
+
+@{
+    ViewBag.Title = "Объявления пользователя | Недвижимость-UA";
+    Layout = "~/Views/Shared/_AdvertismentsLayout.cshtml";
+}
+
+@section Head
+{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function removeAdvertisment(advertismentContainer) {
+            $('.' + advertismentContainer).fadeOut(500);
+        }
+    </script>
+}
+
+@section Body
+{
+    <h2>Управление моими объявлениями</h2>
+    <p>
+        Вы можете управлять своими объявлениями: удалять, редактировать, добавлять когда и 
+        где вам необходимо. Желаем удачных сделок в сфере недвижимости! :)
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Текст объявления</th>
+                <th>Дата добавления</th>
+                <th>Редактировать</th>
+                <th>Удалить</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 1;}
+            @foreach(var advertisment in Model)
+            {
+                <tr class="advertisment_@i">
+                    <td>@i</td>
+                    <td>@advertisment.text</td>
+                    <td>@advertisment.createDate.ToShortDateString()</td>
+                    <td>
+                        @Html.ActionLink("Редактировать", "EditAdvertisment", "Advertisments", new { advertismentID = advertisment.Id }, null)
+                    </td>
+                    <td>
+                        @Ajax.ActionLink(
+                            "Удалить",
+                            "RemoveAdvertisment",
+                            "Advertisments",
+                            new { advertismentID = advertisment.Id },
+                            new AjaxOptions()
+                            {
+                                HttpMethod = "POST",
+                                Confirm = "Вы уверены, что хотите удалить это объявление?",
+                                OnSuccess = "removeAdvertisment('advertisment_"+ i +"')"
+                            }
+                        )
+                    </td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+}

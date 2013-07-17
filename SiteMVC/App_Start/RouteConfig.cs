@@ -64,16 +64,25 @@ namespace SiteMVC
             );
 
             routes.MapRoute(
+                name: "Route_FailedAuthorization",
+                url: "Failed-authorization",
+                defaults: new { controller = "Authorization", action = "FailedAuthorization" }
+            );
+
+            #region User actions
+            routes.MapRoute(
                 name: "Route_UserOptions",
                 url: "User-options",
                 defaults: new { controller = "Authentication", action = "UserOptions" }
             );
 
             routes.MapRoute(
-                name: "Route_FailedAuthorization",
-                url: "Failed-authorization",
-                defaults: new { controller = "Authorization", action = "FailedAuthorization" }
+                name: "Route_UserAdvertisments",
+                url: "User-advertisments",
+                defaults: new { controller = "Authentication", action = "UserAdvertisments" }
             );
+            #endregion User actions
+
             #endregion Authentication
 
             routes.MapRoute(
