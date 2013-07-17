@@ -73,6 +73,11 @@ namespace SiteMVC.Controllers
             return View();
         }
 
+        public ActionResult NotAdminUser()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult SaveUserOptions(User user)
         {

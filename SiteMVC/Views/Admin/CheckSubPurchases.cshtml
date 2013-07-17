@@ -1,0 +1,108 @@
+﻿@model IEnumerable<SiteMVC.Models.SubPurchasePhone>
+
+@{
+    ViewBag.Title = "Проверка отмеченных пользователями посредников | Недвижимость-UA";
+    Layout = "~/Views/Shared/_AdvertismentsLayout.cshtml";
+}
+
+@section Head
+{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        function formSubmitResultAction(hideElement, fadeOutTime) {
+            $('#formResultContainer').fadeIn(100);
+            $('#formResultContainer').fadeOut(fadeOutTime);
+            $('.' + hideElement).fadeOut(fadeOutTime);
+        }
+        function getAdvertisments(data) {
+            $('#formResultContainer').fadeIn(100);
+            $('#formResultContainer').empty();
+
+            $.each(data, function (i, post) {
+                var content = '<div style="margin-top: 10px;" class="row-fluid">';
+                content += '<div class="span8">';
+                content += post.text;
+                content += '</div>';
+                content += '<div class="span2">';
+                var d = new Date(parseInt(post.date.slice(6, -2)));
+                content += d.getDate() + ' / ' + (1 + d.getMonth()) + ' / ' + d.getFullYear().toString().slice(-2);
+                content += '</div>';
+                content += '<div class="span2">';
+                content += '<strong>' + post.state + '</strong>';
+                content += '</div>';
+                content += '</div>';
+
+                $('#formResultContainer').append(content);
+            });
+        }
+    </script>
+}
+
+@section Body
+{
+    <h2>Проверка отмеченных пользователями телефонов посредников</h2>
+
+    <div id="formResultContainer"></div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td>#</td>
+                <td>Телефон</td>
+                <td colspan="3">Действия</td>
+            </tr>
+        </thead>
+        <tbody>
+        @{ int i = 1; }
+        @foreach(var phone in Model)
+        {
+            <tr class="subpurchase_@i">
+                <td>@i</td>
+                <td>@phone.phone</td>
+                <td>
+                    @Ajax.ActionLink(
+                                "Проверен",
+                                "SetSubpurchaseChecked",
+                                new { subpurchaseID = phone.SubPurchaseId, phone = phone.phone },
+                                new AjaxOptions()
+                                {
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "formResultContainer",
+                                    OnSuccess = "formSubmitResultAction('subpurchase_" + i + "', 500)",
+                                    OnFailure = "formSubmitResultAction(500)"
+                                },
+                                null)
+                </td>
+                <td>
+                    @Ajax.ActionLink(
+                                "Не посредник",
+                                "SetSubpurchaseNotChecked",
+                                new { subpurchaseID = phone.SubPurchaseId },
+                                new AjaxOptions()
+                                {
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "formResultContainer",
+                                    OnSuccess = "formSubmitResultAction('subpurchase_" + i + "', 500)",
+                                    OnFailure = "formSubmitResultAction(500)"
+                                },
+                                null)
+                </td>
+                <td>
+                    @Ajax.ActionLink(
+                                "Объявления посредника",
+                                "GetAdvertismentsBySubpurchase",
+                                new { subpurchaseID = phone.SubPurchaseId, phone = phone.phone },
+                                new AjaxOptions()
+                                {
+                                    HttpMethod = "POST",
+                                    OnSuccess = "getAdvertisments"
+                                },
+                                null)
+                </td>
+            </tr>
+            i++;
+        }
+        </tbody>
+    </table>
+}

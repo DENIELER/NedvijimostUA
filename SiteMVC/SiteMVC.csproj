@@ -145,6 +145,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Engine\Advertisment\AdvertismentsList.cs" />
+    <Compile Include="Models\Partials\SubPurchase.cs" />
     <Compile Include="SystemUtils\Authorization.cs" />
     <Compile Include="Models\Engine\AdvertismentsRequest.cs" />
     <Compile Include="SystemUtils\Email.cs" />
@@ -254,6 +255,10 @@
     <Content Include="Views\Authentication\UserOptionsSaveFailed.cshtml" />
     <Content Include="Views\Authorization\FailedAuthorization.cshtml" />
     <Content Include="Views\Admin\AddSubPurchases.cshtml" />
+    <Content Include="Views\Controls\FormSubmitSaveSuccess.cshtml" />
+    <Content Include="Views\Controls\FormSubmitSaveFailed.cshtml" />
+    <Content Include="Views\Authentication\NotAdminUser.cshtml" />
+    <Content Include="Views\Admin\CheckSubPurchases.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
