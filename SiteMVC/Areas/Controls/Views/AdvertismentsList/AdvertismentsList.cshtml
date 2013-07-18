@@ -1,5 +1,11 @@
 ﻿@model SiteMVC.Models.Engine.Advertisment.AdvertismentsList
 
+<div>
+    @{
+        Html.RenderAction("Index", "AdvertismentsFilter");
+    }
+</div>
+
 <div id="pnlAdvRentRecords">
 
     <noindex>

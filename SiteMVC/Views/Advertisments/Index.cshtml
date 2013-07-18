@@ -56,7 +56,7 @@
         
         <div class="advertisments">
             @{
-                Html.RenderAction("AdvertismentsList", "AdvertismentsList", Model);
+                Html.RenderAction("AdvertismentsList", "AdvertismentsList", new { area = "Controls", request = Model.Request });
             }
         </div>
 }

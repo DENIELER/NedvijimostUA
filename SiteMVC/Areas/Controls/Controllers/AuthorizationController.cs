@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SiteMVC.Controllers.Controls
+namespace SiteMVC.Areas.Controls.Controllers
 {
     public class AuthorizationController : Controller
     {
@@ -27,7 +27,7 @@ namespace SiteMVC.Controllers.Controls
                 authorization.IsAdmin = SystemUtils.Authorization.IsAdmin;
             }
 
-            return PartialView("~/Views/Controls/AuthorizationControl.cshtml", authorization);
+            return PartialView(authorization);
         }
 
         public ActionResult LogIn(string Login, string Password, bool RememberMe)

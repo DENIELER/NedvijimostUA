@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SiteMVC.Controllers.Controls
+namespace SiteMVC.Areas.Controls.Controllers
 {
     public class AdvertismentsListController : Controller
     {
@@ -41,7 +41,7 @@ namespace SiteMVC.Controllers.Controls
             advertisments.Offset = request.Offset;
             advertisments.Limit = request.Limit;
             
-            return PartialView("~/Views/Controls/AdvertismentsList.cshtml", advertisments);
+            return PartialView(advertisments);
         }
 
         #region Advertisments Loading

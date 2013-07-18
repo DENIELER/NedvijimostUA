@@ -132,14 +132,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Controls\Controllers\AdvertismentsFilterController.cs" />
+    <Compile Include="Areas\Controls\ControlsAreaRegistration.cs" />
     <Compile Include="Controllers\AddAdvertismentsController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdvertismentsController.cs" />
     <Compile Include="Controllers\ArchiveController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
-    <Compile Include="Controllers\Controls\AdvertismentsListController.cs" />
-    <Compile Include="Controllers\Controls\AuthorizationController.cs" />
-    <Compile Include="Controllers\Controls\SearchResultsChartController.cs" />
+    <Compile Include="Areas\Controls\Controllers\AdvertismentsListController.cs" />
+    <Compile Include="Areas\Controls\Controllers\AuthorizationController.cs" />
+    <Compile Include="Areas\Controls\Controllers\SearchResultsChartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -227,6 +229,8 @@
     <Content Include="Scripts\jquery.iframe-transport.js" />
     <Content Include="Scripts\jquery.masonry.min.js" />
     <Content Include="Scripts\three.min.js" />
+    <Content Include="Areas\Controls\Views\Web.config" />
+    <Content Include="Areas\Controls\Views\AdvertismentsFilter\Index.cshtml" />
     <None Include="Scripts\jquery-2.0.2.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.2.js" />
     <Content Include="Scripts\jquery-2.0.2.min.js" />
@@ -257,15 +261,17 @@
     <Content Include="Views\Authentication\UserOptionsSaveFailed.cshtml" />
     <Content Include="Views\Authorization\FailedAuthorization.cshtml" />
     <Content Include="Views\Admin\AddSubPurchases.cshtml" />
-    <Content Include="Views\Controls\FormSubmitSaveSuccess.cshtml" />
-    <Content Include="Views\Controls\FormSubmitSaveFailed.cshtml" />
     <Content Include="Views\Authentication\NotAdminUser.cshtml" />
     <Content Include="Views\Admin\CheckSubPurchases.cshtml" />
     <Content Include="Views\Authentication\UserAdvertisments.cshtml" />
     <Content Include="Views\Advertisments\EditAdvertisment.cshtml" />
+    <Content Include="Views\Controls\FormSubmitSaveFailed.cshtml" />
+    <Content Include="Views\Controls\FormSubmitSaveSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Controls\Models\" />
+    <Folder Include="Areas\Controls\Views\Shared\" />
     <Folder Include="Data\AdvertismentsPhotos\" />
   </ItemGroup>
   <ItemGroup>
@@ -285,15 +291,15 @@
     </None>
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Controls\AuthorizationControl.cshtml" />
-    <Content Include="Views\Controls\SearchResultsChart.cshtml" />
+    <Content Include="Areas\Controls\Views\Authorization\AuthorizationControl.cshtml" />
+    <Content Include="Areas\Controls\Views\SearchResultsChart\SearchResultsChartControl.cshtml" />
     <Content Include="Views\Home\Contacts.cshtml" />
     <Content Include="Views\Shared\_AdvertismentsLayout.cshtml" />
     <Content Include="Views\Home\Articles.cshtml" />
     <Content Include="Views\Home\Article.cshtml" />
     <Content Include="Views\Archive\Sections.cshtml" />
     <Content Include="Views\Archive\Section.cshtml" />
-    <Content Include="Views\Controls\AdvertismentsList.cshtml" />
+    <Content Include="Areas\Controls\Views\AdvertismentsList\AdvertismentsList.cshtml" />
     <Content Include="Views\AddAdvertisments\Index.cshtml" />
     <Content Include="Views\AddAdvertisments\GetSubSectionsEditList.cshtml" />
   </ItemGroup>

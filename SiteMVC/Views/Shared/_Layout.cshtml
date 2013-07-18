@@ -57,7 +57,7 @@
                                 <div style="width: 220px; background-color: #dbdbdb; height: 223px;">
                                     <div style="padding-top: 10px;">
                                         @{
-                                            Html.RenderAction("AuthorizationControl", "Authorization");
+                                            Html.RenderAction("AuthorizationControl", "Authorization", new { area = "Controls" });
                                         }
                                     </div>
 

@@ -31,7 +31,7 @@
     <h2>@(Model.DateFrom != null ? Model.DateFrom.Value.ToString("dd/MM/yyyy") : "")</h2>
 
     @{
-        Html.RenderAction("AdvertismentsList", "AdvertismentsList", Model);
+        Html.RenderAction("AdvertismentsList", "AdvertismentsList", new { area = "Controls", request = Model });
     }
     
     <script src="~/Content/js/bootstrap.calendar.js"></script>

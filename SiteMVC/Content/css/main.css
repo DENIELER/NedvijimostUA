@@ -338,4 +338,13 @@ ul.phoneList {
                 -moz-box-shadow: 0 8px 6px 0px #CCC;
                 box-shadow: 0 8px 6px 0px #CCC;
             }
-                
+
+/* Advertisments filter */
+a#filterLink {
+    cursor: pointer;
+}
+
+    a#filterLink .caret {
+        border-top-color: #0f6894;
+    }
+/* end Advertisments filter */

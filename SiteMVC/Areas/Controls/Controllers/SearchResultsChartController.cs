@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SiteMVC.Controllers.Controls
+namespace SiteMVC.Areas.Controls.Controllers
 {
     public class SearchResultsChartController : Controller
     {
@@ -40,7 +40,7 @@ namespace SiteMVC.Controllers.Controls
                                     order by createDate;")
                                 .ToList());
 
-            return PartialView("~/Views/Controls/SearchResultsChart.cshtml", searchResultsChart);
+            return PartialView(searchResultsChart);
         }
     }
 }
