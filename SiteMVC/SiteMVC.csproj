@@ -134,6 +134,7 @@
     </Compile>
     <Compile Include="Areas\Controls\Controllers\AdvertismentsFilterController.cs" />
     <Compile Include="Areas\Controls\ControlsAreaRegistration.cs" />
+    <Compile Include="Areas\Controls\ViewModel\FilterViewModel.cs" />
     <Compile Include="Controllers\AddAdvertismentsController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdvertismentsController.cs" />

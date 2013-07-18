@@ -46,8 +46,8 @@ namespace SiteMVC
                 defaults: new { controller = "Archive", action = "Sections" });
             routes.MapRoute(
                 name: "Route_AdvertismentsArchive", 
-                url: "Arhiv-Objyavlenij/{section}/{subpurchaseMode}", 
-                defaults: new { controller = "Archive", action = "Section", section = "Sdam-kvartiru", subpurchaseMode = "Bez-posrednikov" });
+                url: "Arhiv-Objyavlenij/{sectionUrl}/{subpurchaseMode}", 
+                defaults: new { controller = "Archive", action = "Section", sectionUrl = "Sdam-kvartiru", subpurchaseMode = "Bez-posrednikov" });
             
             routes.MapRoute(
                 name: "Route_Contacts",

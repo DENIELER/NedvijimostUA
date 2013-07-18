@@ -11,5 +11,7 @@ namespace SiteMVC.Models.Engine
         /// Show only advertisments with photos
         /// </summary>
         public bool? OnlyWithPhotos { get; set; }
+
+        public int Rooms { get; set; }
     }
 }

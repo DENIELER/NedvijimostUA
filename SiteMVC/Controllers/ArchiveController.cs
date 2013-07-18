@@ -14,7 +14,7 @@ namespace SiteMVC.Controllers
             return View();
         }
 
-        public ActionResult Section(string section, string subpurchaseMode, [System.Web.Http.FromUri] Models.Engine.AdvertismentsFilter advertismentsFilter)
+        public ActionResult Section(string sectionUrl, string subpurchaseMode, [System.Web.Http.FromUri] Models.Engine.AdvertismentsFilter advertismentsFilter)
         {
             string _sectionName;
             int _sectionID;
@@ -23,7 +23,7 @@ namespace SiteMVC.Controllers
             string _date = Request["date"];
 
             #region Section switch
-            switch (section)
+            switch (sectionUrl)
             {
                 case "Sdam-kvartiru":
                     _sectionName = "Сдам квартиру";
