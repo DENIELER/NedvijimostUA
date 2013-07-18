@@ -16,22 +16,23 @@
 
 @section Body
 {
-    <form id="MainForm" runat="server">
-        <div runat="server" id="pnlSites">
-            <h2 class="block_header">Архив объявлений. @Model.SectionName <hr/></h2>
-            <p>
-                Архив объявлений недвижимости @Model.SectionName в городе Харькове БЕЗ посредников. 
-                Советуем вам выбирать наиболее свежие объявления (1-2 дня) в связи с динамичностью рынка 
-                недвижимости в Харькове. Желаем вам найти свой уютный уголок наиболее выгодно и удобно.
-            </p>
+    <ul class="breadcrumb">
+        <li><a href="~/Arhiv-obyavlenij">Архив объявлений</a> <span class="divider">/</span></li>
+        <li class="active">@Model.SectionName</li>
+    </ul>
+    
+    <h2 class="block_header">Архив объявлений. @Model.SectionName<hr/></h2>
+    <p>
+        Архив объявлений недвижимости @Model.SectionName в городе Харькове БЕЗ посредников. 
+        Советуем вам выбирать наиболее свежие объявления (1-2 дня) в связи с динамичностью рынка 
+        недвижимости в Харькове. Желаем вам найти свой уютный уголок наиболее выгодно и удобно.
+    </p>
 
-            <h2>@(Model.DateFrom != null ? Model.DateFrom.Value.ToString("dd/MM/yyyy") : "")</h2>
+    <h2>@(Model.DateFrom != null ? Model.DateFrom.Value.ToString("dd/MM/yyyy") : "")</h2>
 
-            @{
-                Html.RenderAction("AdvertismentsList", "AdvertismentsList", Model);
-            }
-        </div>
-    </form>
+    @{
+        Html.RenderAction("AdvertismentsList", "AdvertismentsList", Model);
+    }
     
     <script src="~/Content/js/bootstrap.calendar.js"></script>
 }

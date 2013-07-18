@@ -286,6 +286,11 @@ ul.phoneList {
         display: inline-block;
     }
 
+.loading_small_container {
+    height: 32px;
+    text-align: left;
+}
+
 #userTopPanel {
     height: 80px; 
     width: 100%; 

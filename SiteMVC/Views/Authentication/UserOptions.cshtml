@@ -18,6 +18,10 @@
 
 @section Body
 {
+    <ul class="breadcrumb">
+      <li class="active">Настройки пользователя</li>
+    </ul>
+
     <h2>Настройки пользователя</h2>
 
     <p>
@@ -25,7 +29,18 @@
         недостающие контактные данные.
     </p>
 
-    @using (Ajax.BeginForm("SaveUserOptions", null, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "formResultContainer", OnSuccess = "UserOptionsResult", OnFailure = "UserOptionsResult" }, new { @class = "form-horizontal" }))
+    @using (Ajax.BeginForm(
+                "SaveUserOptions", 
+                null, 
+                new AjaxOptions() 
+                { 
+                    HttpMethod = "POST", 
+                    UpdateTargetId = "formResultContainer", 
+                    OnSuccess = "UserOptionsResult", 
+                    OnFailure = "UserOptionsResult",
+                    LoadingElementId = "loadingForm"
+                }, 
+                new { @class = "form-horizontal" }))
     {
         <div class="control-group">
             <label class="control-label">Email</label>
@@ -74,8 +89,11 @@
             </div>
         </div>
         <div class="control-group">
-            <div class="controls" id="formResultContainer">
-                
+            <div class="controls">
+                <div id="formResultContainer"></div>
+                <div class="loading_container loading_small_container" style="display:none;" id="loadingForm">
+                    <span class="loading">&nbsp;</span>
+                </div>
             </div>
         </div>
     }
