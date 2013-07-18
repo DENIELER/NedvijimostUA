@@ -86,9 +86,9 @@ namespace SiteMVC.Controllers.Controls
                 advertismentsToShowCount = advertisments.Count();
 
                 //--- special filters
-                if (request.OnlyWithPhotos)
-                    advertisments = advertisments.Where(adv => adv.AdvertismentsPhotos.Any());
-
+                if (request.Filter != null)
+                    ApplyFilters(request.Filter, ref advertisments);
+                
                 advertisments = advertisments.Skip(request.Offset).Take(request.Limit);
             }
 
@@ -98,6 +98,15 @@ namespace SiteMVC.Controllers.Controls
             else lastTimeUpdated = DateTime.Now;
 
             return new AdvertismentsList(advertisments, advertismentsCount, advertismentsToShowCount, lastTimeUpdated);
+        }
+
+        private void ApplyFilters(Models.Engine.AdvertismentsFilter filter, ref IQueryable<Advertisment> advertisments)
+        {
+            if (filter == null)
+                throw new Exception("Advertisments filter is null");
+
+            if (filter.OnlyWithPhotos.HasValue && filter.OnlyWithPhotos.Value)
+                advertisments = advertisments.Where(adv => adv.AdvertismentsPhotos.Any());
         }
 
         private IQueryable<Models.Advertisment> LoadAdvertismentsByDate(DateTime dateTimeFrom, DateTime dateTimeTo)
@@ -139,6 +148,7 @@ namespace SiteMVC.Controllers.Controls
         }
         #endregion Advertisments Loading
 
+        #region Ajax Action handlers for advertisments
         [HttpPost]
         public JsonResult AdminRemoveAdvertisment(int advertismentID)
         {
@@ -248,5 +258,6 @@ namespace SiteMVC.Controllers.Controls
                 return Json("failed");
             }
         }
+        #endregion Ajax Action handlers for advertisments
     }
 }

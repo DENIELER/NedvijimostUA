@@ -1,4 +1,4 @@
-﻿@model SiteMVC.Models.Engine.AdvertismentsRequest
+﻿@model SiteMVC.ViewModels.Advertisments.AdvertismentsPageViewModel
 
 @{
     ViewBag.Title = Model.SectionTitle + " | Недвижимость-UA";
@@ -17,11 +17,11 @@
 {
     <ul class="breadcrumb">
           <li>Объявления @SystemUtils.Utils.Date.GetUkranianDateTimeNow().ToString("dd/MM/yyyy") <span class="divider">/</span></li>
-          <li class="active">@Model.SectionName</li>
+          <li class="active">@Model.Request.SectionName</li>
         </ul>
 
         <div style="float:right; line-height: 50px;">
-            @if(Model.State == SiteMVC.Models.Engine.Advertisment.State.NotSubpurchase)
+            @if (Model.Request.State == SiteMVC.Models.Engine.Advertisment.State.NotSubpurchase)
             {
                 @Html.ActionLink(
                             "Объявления включая посредников",
@@ -49,9 +49,9 @@
             }
         </div>
     
-        <h2 class="page_header">@Model.SectionName</h2>
+        <h2 class="page_header">@Model.Request.SectionName</h2>
         <p>
-            @Html.Partial("Header", Model)
+            @Html.Partial("Header", Model.Request)
         </p>
         
         <div class="advertisments">

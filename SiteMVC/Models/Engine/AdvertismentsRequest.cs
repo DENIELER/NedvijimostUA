@@ -57,6 +57,7 @@ namespace SiteMVC.Models.Engine
         public string Url { get; set; }
         #endregion common parameters
 
+        #region special parameters
         /// <summary>
         /// Using to show section name in archive
         /// </summary>
@@ -73,19 +74,6 @@ namespace SiteMVC.Models.Engine
             }
         }
 
-        /// <summary>
-        /// Can be set title of page
-        /// </summary>
-        public string SectionTitle { get; set; }
-        /// <summary>
-        /// Page desciption
-        /// </summary>
-        public string SectionDescription { get; set; }
-        /// <summary>
-        /// Page Keywords
-        /// </summary>
-        public string SectionKeywords { get; set; }
-        
         private string _date;
         public string Date 
         {
@@ -137,7 +125,8 @@ namespace SiteMVC.Models.Engine
                 _dateTo = value;
             }
         }
+        #endregion #region special parameters
 
-        public bool OnlyWithPhotos { get; set; }
+        public AdvertismentsFilter Filter { get; set; }
     }
 }

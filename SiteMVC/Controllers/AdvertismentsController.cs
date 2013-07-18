@@ -10,9 +10,11 @@ namespace SiteMVC.Controllers
 {
     public class AdvertismentsController : Controller
     {
-        public ActionResult Index(string sectionUrl, string subSectionUrl, string subpurchaseMode)
+        public ActionResult Index(string sectionUrl, string subSectionUrl, string subpurchaseMode, [System.Web.Http.FromUri] Models.Engine.AdvertismentsFilter advertismentsFilter)
         {
-            var result = new SiteMVC.Models.Engine.AdvertismentsRequest();
+            var result = new SiteMVC.ViewModels.Advertisments.AdvertismentsPageViewModel();
+            result.Request = new SiteMVC.Models.Engine.AdvertismentsRequest();
+            result.Request.Filter = advertismentsFilter;
 
             var dataModel = new DataModel();
 
@@ -22,8 +24,9 @@ namespace SiteMVC.Controllers
                 throw new Exception("Not founded section with corresponded url.");
             else
             {
-                result.SectionId = section.Id;
-                result.SectionName = section.displayName;
+                result.Request.SectionId = section.Id;
+                result.Request.SectionName = section.displayName;
+
                 result.SectionTitle = section.Title;
                 result.SectionDescription = section.Description;
                 result.SectionKeywords = section.Keywords;
@@ -33,12 +36,13 @@ namespace SiteMVC.Controllers
                 .FirstOrDefault(s => s.friendlyUrl == subSectionUrl
                                     && s.AdvertismentSection_Id == section.Id);
             if (subSection == null)
-                result.SubSectionId = null;
+                result.Request.SubSectionId = null;
             else
             {
-                result.SubSectionId = subSection.Id;
+                result.Request.SubSectionId = subSection.Id;
                 if (!string.IsNullOrEmpty(subSection.displayName))
-                    result.SectionName = subSection.displayName;
+                    result.Request.SectionName = subSection.displayName;
+
                 if (!string.IsNullOrEmpty(subSection.Title))
                     result.SectionTitle = subSection.Title;
                 if (!string.IsNullOrEmpty(subSection.Description))
@@ -47,11 +51,11 @@ namespace SiteMVC.Controllers
                     result.SectionKeywords = subSection.Keywords;
             }
 
-            result.State = State.NotSubpurchase;
+            result.Request.State = State.NotSubpurchase;
             if (subpurchaseMode == Resources.Resource.VKLUCHAYA_POSREDNIKOV)
-                result.State = State.SubpurchaseWithNotSubpurchase;
+                result.Request.State = State.SubpurchaseWithNotSubpurchase;
 
-            result.Url = Request.RawUrl;
+            result.Request.Url = Request.RawUrl;
 
             return View(result);
         }

@@ -14,7 +14,7 @@ namespace SiteMVC.Controllers
             return View();
         }
 
-        public ActionResult Section(string section, string subpurchaseMode)
+        public ActionResult Section(string section, string subpurchaseMode, [System.Web.Http.FromUri] Models.Engine.AdvertismentsFilter advertismentsFilter)
         {
             string _sectionName;
             int _sectionID;
@@ -76,6 +76,7 @@ namespace SiteMVC.Controllers
                 SectionName = _sectionName,
                 Date = _date
             };
+            advertisments.Filter = advertismentsFilter;
 
             return View(advertisments);
         }
