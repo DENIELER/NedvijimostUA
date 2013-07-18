@@ -73,6 +73,7 @@ namespace SiteMVC.Controllers
             return Json("success");
         }
 
+        [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult EditAdvertisment(int advertismentID)
         {
             var dataModel = new DataModel();
@@ -83,6 +84,32 @@ namespace SiteMVC.Controllers
                 throw new Exception("Can not find advertisment with current ID.");
 
             return View(advertisment);
+        }
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditAdvertisment(Advertisment advertisment)
+        {
+            var dataModel = new DataModel();
+
+            try
+            {
+                var dbAdvertisment = dataModel.Advertisments
+                    .SingleOrDefault(a => a.Id == advertisment.Id);
+                if (dbAdvertisment == null)
+                    throw new Exception("Can not find advertisment with current ID.");
+
+                dbAdvertisment.modifyDate = SystemUtils.Utils.Date.GetUkranianDateTimeNow();
+                dbAdvertisment.Address1 = advertisment.Address1;
+                dbAdvertisment.text = advertisment.text;
+
+                dataModel.SubmitChanges();
+            }
+            catch(Exception e)
+            {
+                ViewBag.ErrorMessage = e.Message;
+                return PartialView("~/Views/Controls/FormSubmitSaveFailed.cshtml");
+            }
+
+            return PartialView("~/Views/Controls/FormSubmitSaveSuccess.cshtml");
         }
     }
 }
