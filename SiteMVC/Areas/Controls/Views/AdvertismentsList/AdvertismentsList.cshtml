@@ -2,7 +2,13 @@
 
 <div>
     @{
-        Html.RenderAction("Index", "AdvertismentsFilter");
+        Html.RenderAction("Index", "AdvertismentsFilter", 
+            new 
+            { 
+                actionName = ViewContext.ParentActionViewContext.RouteData.Values["Action"],
+                controllerName = ViewContext.ParentActionViewContext.RouteData.Values["Controller"],
+                routeData = ViewContext.ParentActionViewContext.RouteData.Values
+            });
     }
 </div>
 

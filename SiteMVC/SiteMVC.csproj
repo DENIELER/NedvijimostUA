@@ -149,6 +149,7 @@
     </Compile>
     <Compile Include="Models\Engine\AdvertismentsFilter.cs" />
     <Compile Include="Models\Engine\Advertisment\AdvertismentsList.cs" />
+    <Compile Include="Models\Engine\Advertisment\RoomsCountCategory.cs" />
     <Compile Include="Models\Partials\SubPurchase.cs" />
     <Compile Include="SystemUtils\Authorization.cs" />
     <Compile Include="Models\Engine\AdvertismentsRequest.cs" />

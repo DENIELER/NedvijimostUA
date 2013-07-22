@@ -105,7 +105,7 @@ namespace SiteMVC.Areas.Controls.Controllers
             if (filter == null)
                 throw new Exception("Advertisments filter is null");
 
-            if (filter.OnlyWithPhotos.HasValue && filter.OnlyWithPhotos.Value)
+            if (filter.OnlyWithPhotos)
                 advertisments = advertisments.Where(adv => adv.AdvertismentsPhotos.Any());
         }
 

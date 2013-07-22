@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SiteMVC.Models.Engine.Advertisment;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,8 +11,8 @@ namespace SiteMVC.Models.Engine
         /// <summary>
         /// Show only advertisments with photos
         /// </summary>
-        public bool? OnlyWithPhotos { get; set; }
+        public bool OnlyWithPhotos { get; set; }
 
-        public int Rooms { get; set; }
+        public RoomsCountCategory Rooms { get; set; }
     }
 }
