@@ -17,7 +17,8 @@
     @using (Ajax.BeginForm("AddSubpurchaseAndPhones", "Admin", null, new AjaxOptions()
         {
             HttpMethod = "POST",
-            UpdateTargetId = "formResultContainer"
+            UpdateTargetId = "formResultContainer",
+            LoadingElementId = "loadingForm"
         }, new { @class = "form-horizontal" }))
     {
         <div class="control-group">
@@ -46,8 +47,11 @@
             </div>
         </div>
         <div class="control-group">
-            <div class="controls" id="formResultContainer">
-                
+            <div class="controls">
+                <div id="formResultContainer"></div>
+                <div class="loading_container loading_small_container" style="display:none;" id="loadingForm">
+                    <span class="loading">&nbsp;</span>
+                </div>
             </div>
         </div>
     }
