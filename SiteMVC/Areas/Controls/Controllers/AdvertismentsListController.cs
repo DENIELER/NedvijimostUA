@@ -48,8 +48,9 @@ namespace SiteMVC.Areas.Controls.Controllers
         private AdvertismentsList LoadAdversitments(SiteMVC.Models.Engine.AdvertismentsRequest request)
         {
             IQueryable<Models.Advertisment> advertisments = LoadAdvertismentsByDate(request.DateFrom.Value, request.DateTo.Value);
-            int advertismentsCount = 0;
-            int advertismentsToShowCount = 0;
+            int fullCount = 0;
+            int countToShow = 0;
+            int countToShowAfterFilter = 0;
             if (advertisments != null)
             {
                 advertisments = advertisments.Where(adv => adv.AdvertismentSection_Id == request.SectionId);
@@ -57,7 +58,7 @@ namespace SiteMVC.Areas.Controls.Controllers
                 if (request.SubSectionId != null)
                     advertisments = advertisments.Where(adv => adv.AdvertismentSubSection_Id == request.SubSectionId.Value);
 
-                advertismentsCount = advertisments.Count();
+                fullCount = advertisments.Count();
 
                 switch (request.State)
                 {
@@ -83,12 +84,13 @@ namespace SiteMVC.Areas.Controls.Controllers
                         break;
                 }
 
-                advertismentsToShowCount = advertisments.Count();
+                countToShow = advertisments.Count();
 
                 //--- special filters
                 if (request.Filter != null)
                     ApplyFilters(request.Filter, ref advertisments);
-                
+
+                countToShowAfterFilter = advertisments.Count();
                 advertisments = advertisments.Skip(request.Offset).Take(request.Limit);
             }
 
@@ -97,7 +99,7 @@ namespace SiteMVC.Areas.Controls.Controllers
                 lastTimeUpdated = advertisments.Max(adv => adv.createDate);
             else lastTimeUpdated = DateTime.Now;
 
-            return new AdvertismentsList(advertisments, advertismentsCount, advertismentsToShowCount, lastTimeUpdated);
+            return new AdvertismentsList(advertisments, fullCount, countToShow, countToShowAfterFilter, lastTimeUpdated);
         }
 
         private void ApplyFilters(Models.Engine.AdvertismentsFilter filter, ref IQueryable<Advertisment> advertisments)
@@ -107,6 +109,9 @@ namespace SiteMVC.Areas.Controls.Controllers
 
             if (filter.OnlyWithPhotos)
                 advertisments = advertisments.Where(adv => adv.AdvertismentsPhotos.Any());
+
+            if (!string.IsNullOrWhiteSpace(filter.Text))
+                advertisments = advertisments.Where(adv => adv.text.Contains(filter.Text));
         }
 
         private IQueryable<Models.Advertisment> LoadAdvertismentsByDate(DateTime dateTimeFrom, DateTime dateTimeTo)

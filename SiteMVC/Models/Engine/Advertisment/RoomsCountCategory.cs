@@ -7,9 +7,10 @@ namespace SiteMVC.Models.Engine.Advertisment
 {
     public enum RoomsCountCategory
     {
-        OneRoom = 0,
-        TwoRooms = 1,
-        ThreeRooms = 2,
-        FourOrMoreRooms = 3
+        Any = 0,
+        OneRoom = 1,
+        TwoRooms = 2,
+        ThreeRooms = 3,
+        FourOrMoreRooms = 4
     }
 }

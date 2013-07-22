@@ -9,25 +9,28 @@ namespace SiteMVC.Models.Engine.Advertisment
     [DataContract]
     public class AdvertismentsList
     {
-        public AdvertismentsList(List<Models.ModelInterlayerObjects.Advertisment> advertisments, int fullCount, int advertismentsToShowCount, DateTime date)
+        public AdvertismentsList(List<Models.ModelInterlayerObjects.Advertisment> advertisments, int fullCount, int countToShow, int countToShowAfterFilters, DateTime date)
         {
             _advertisments = advertisments;
             _fullCount = fullCount;
-            _countToShow = advertismentsToShowCount;
+            _countToShow = countToShow;
+            _countToShowAfterFilter = countToShowAfterFilters;
             _date = date;
         }
 
-        public AdvertismentsList(IEnumerable<Models.Advertisment> advertisments, int fullCount, int advertismentsToShowCount, DateTime date)
+        public AdvertismentsList(IEnumerable<Models.Advertisment> advertisments, int fullCount, int countToShow, int countToShowAfterFilters, DateTime date)
         {
             _advertisments = advertisments.Select(x => new Models.ModelInterlayerObjects.Advertisment(x)).ToList();
             _fullCount = fullCount;
-            _countToShow = advertismentsToShowCount;
+            _countToShow = countToShow;
+            _countToShowAfterFilter = countToShowAfterFilters;
             _date = date;
         }
 
         private List<Models.ModelInterlayerObjects.Advertisment> _advertisments;
         private int _fullCount;
         private int _countToShow;
+        private int _countToShowAfterFilter;
         private DateTime _date;
 
         [DataMember]
@@ -45,6 +48,12 @@ namespace SiteMVC.Models.Engine.Advertisment
         {
             get { return _countToShow; }
         }
+        [DataMember]
+        public int CountToShowAfterFilter
+        {
+            get { return _countToShowAfterFilter; }
+        }
+
         [DataMember]
         public DateTime Date
         {

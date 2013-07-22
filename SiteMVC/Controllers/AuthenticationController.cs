@@ -93,11 +93,11 @@ namespace SiteMVC.Controllers
 
                 dataModel.SubmitChanges();
 
-                return PartialView("UserOptionsSaveSuccess");
+                return PartialView("~/Views/Controls/FormSubmitSaveSuccess.cshtml");
             }
             catch
             {
-                return PartialView("UserOptionsSaveFailed");
+                return PartialView("~/Views/Controls/FormSubmitSaveFailed.cshtml");
             }
         }
 

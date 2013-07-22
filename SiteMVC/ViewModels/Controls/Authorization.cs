@@ -11,7 +11,16 @@ namespace SiteMVC.ViewModels.Controls
         public bool IsAdmin { get; set; }
 
         public string Login { get; set; }
-
+        public string LoginDisplay 
+        {
+            get
+            {
+                if (this.Login.Length > 20)
+                    return this.Login.Substring(0, 19) + "..";
+                else return this.Login;
+            }
+        }
+        
         private string _phone;
         public string Phone 
         {

@@ -11,12 +11,12 @@
 
     <script type="text/javascript">
         function formSubmitResultAction(hideElement, fadeOutTime) {
-            $('#formResultContainer').fadeIn(100);
+            $('#formResultContainer').fadeIn(500);
             $('#formResultContainer').fadeOut(fadeOutTime);
             $('.' + hideElement).fadeOut(fadeOutTime);
         }
         function getAdvertisments(data) {
-            $('#formResultContainer').fadeIn(100);
+            $('#formResultContainer').fadeIn(500);
             $('#formResultContainer').empty();
 
             $.each(data, function (i, post) {

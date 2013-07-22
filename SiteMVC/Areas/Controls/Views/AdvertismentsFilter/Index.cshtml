@@ -2,8 +2,28 @@
 
 <script type="text/javascript">
     $(function () {
+        @if(Request["f"] == "1") {
+            <text>
+            $('#filterContainer').slideToggle(500);
+            </text>
+        }
+
         $('#filterLink').click(function () {
             $('#filterContainer').slideToggle(500);
+        });
+
+        $('#reset').click(function () {
+            $('#Text').val("");
+            $('#Rooms').val("0");
+            $('#OnlyWithPhotos').val("0");
+            $('#OnlyWithPhotos').prop("checked", false);
+            $('#NearUndeground').val("0");
+            $('#NearUndeground').prop("checked", false);
+            $('#f').val("0");
+        });
+
+        $('#findSubmit').click(function () {
+            $('.loading_container').show();
         });
     });
 </script>
@@ -13,19 +33,39 @@
 </div>
 
 <div class="well" id="filterContainer" style="display: none;">
-  <form method="get" action="@Request.Url.PathAndQuery">
-    <label>Количество комнат:</label>
-    @Html.DropDownList("Rooms", (List<SelectListItem>)ViewBag.RoomsFilterList, new { @class = "input-medium", value = ((int)Model.Filter.Rooms).ToString() })
+    <form method="get" action="@Request.Url.PathAndQuery" style="margin-bottom: 0;">
+        <div class="row-fluid">
+            <div class="span5">
+                <label>Поиск:</label>
+                @Html.TextBox("Text", Model.Filter.Text, new { placeholder = "Поиск", maxlength = 50 })
+            </div>
+            <div class="span4">
+                <label>Количество комнат:</label>
+                @Html.DropDownList("Rooms", (List<SelectListItem>)ViewBag.RoomsFilterList, new { @class = "input-medium", value = ((int)Model.Filter.Rooms).ToString(), disabled = true })
+            </div>
+            <div class="span3" style="padding: 15px 0;">
+                <label class="checkbox">
+                    @Html.CheckBox("OnlyWithPhotos", Model.Filter.OnlyWithPhotos) <i class="icon-camera" style="margin-top: 5px;"></i> С фото
+                </label>
+                <label class="checkbox">
+                    @Html.CheckBox("NearUndeground", Model.Filter.NearUndeground, new { disabled = true }) <i class="icon-random" style="margin-top: 5px;"></i> Возле метро
+                </label>
+            </div>
+        </div>
+        
+        <div class="form-actions text-right" style="margin-bottom:0;padding-bottom:0;">
+            <small>
+                <a id="reset" style="margin-right: 10px; border-bottom: 1px dotted #999999;">Сбросить</a> 
+            </small>
+            <button type="submit" class="btn btn-primary" id="findSubmit">
+                <i class="icon-search icon-white"></i> Поиск
+            </button>
+        </div>
 
-    <label class="checkbox">
-        @Html.CheckBox("OnlyWithPhotos", Model.Filter.OnlyWithPhotos) <i class="icon-camera"></i> Только с фото
-    </label>
+        @Html.Hidden("f", 1)
+    </form>
 
-    <div class="text-right">
-        <small>
-            <a href="#" style="margin-right: 10px; border-bottom: 1px dotted #999999;">Сбросить</a> 
-        </small>
-        <input type="submit" class="btn btn-primary" value="Подобрать" />
+    <div class="loading_container" style="display: none;">
+        <div class="loading"></div>
     </div>
-  </form>
 </div>
