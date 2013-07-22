@@ -15,13 +15,6 @@ namespace SiteMVC.Areas.Controls.ViewModel
             Filter = new AdvertismentsFilter();
         }
 
-        #region Redirect parameters
-        public string ActionName { get; set; }
-        public string ControllerName { get; set; }
-
-        public RouteValueDictionary RouteData { get; set; }
-        #endregion Redirect parameters
-
         public AdvertismentsFilter Filter { get; set; }
 
         internal List<System.Web.Mvc.SelectListItem> GetRoomsCountCategoriesList()

@@ -10,12 +10,13 @@ namespace SiteMVC.Areas.Controls.Controllers
 {
     public class AdvertismentsFilterController : Controller
     {
-        public ActionResult Index(string actionName, string controllerName, RouteValueDictionary routeData)
+        public ActionResult Index(SiteMVC.Models.Engine.AdvertismentsFilter filter)
         {
             var filterViewModel = new FilterViewModel();
-            filterViewModel.ActionName = actionName;
-            filterViewModel.ControllerName = controllerName;
-            filterViewModel.RouteData = routeData;
+
+            //--- copy filter from original
+            if (filter != null)
+                filterViewModel.Filter = filter;
             
             ViewBag.RoomsFilterList = filterViewModel.GetRoomsCountCategoriesList();
 

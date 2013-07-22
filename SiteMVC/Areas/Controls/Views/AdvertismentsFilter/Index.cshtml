@@ -13,20 +13,19 @@
 </div>
 
 <div class="well" id="filterContainer" style="display: none;">
-  @using (Html.BeginForm(Model.ActionName, Model.ControllerName, FormMethod.Get, new { style = "margin-bottom: 0;" }))
-  {
+  <form method="get" action="@Request.Url.PathAndQuery">
     <label>Количество комнат:</label>
-    @Html.DropDownListFor(m => m.Filter.Rooms, (List<SelectListItem>)ViewBag.RoomsFilterList, new { @class = "input-medium" })
-      
+    @Html.DropDownList("Rooms", (List<SelectListItem>)ViewBag.RoomsFilterList, new { @class = "input-medium", value = ((int)Model.Filter.Rooms).ToString() })
+
     <label class="checkbox">
-        @Html.CheckBoxFor(m => m.Filter.OnlyWithPhotos) <i class="icon-camera"></i> Только с фото
+        @Html.CheckBox("OnlyWithPhotos", Model.Filter.OnlyWithPhotos) <i class="icon-camera"></i> Только с фото
     </label>
-      
+
     <div class="text-right">
+        <small>
+            <a href="#" style="margin-right: 10px; border-bottom: 1px dotted #999999;">Сбросить</a> 
+        </small>
         <input type="submit" class="btn btn-primary" value="Подобрать" />
     </div>
-      
-    @Html.HiddenFor(m => m.ActionName)
-    @Html.HiddenFor(m => m.ControllerName)
-  }
+  </form>
 </div>

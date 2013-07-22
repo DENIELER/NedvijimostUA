@@ -11,25 +11,30 @@
     <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">
     <link rel="icon" href="~/favicon.ico" type="image/x-icon">
 
-    <script type="text/javascript" src="~/Scripts/jquery-2.0.2.min.js"></script>
-    
-    @RenderSection("Head", required:false)
-    
     <link href="~/Content/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/css/main.css" type="text/css" rel="stylesheet" />
+
+    @RenderSection("Head", required:false)
+    
+    <script type="text/javascript" src="~/Scripts/jquery-2.0.2.min.js"></script>
 
     <!-- Social network buttons -->
     <script type="text/javascript" src="http://userapi.com/js/api/openapi.js?52"></script>
     
-    <script type="text/javascript">
+    <script type="text/javascript" async="async">
         VK.init({ apiId: 3111027, onlyWidgets: true });
     </script>
 
-    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+    <script type="text/javascript">
+        (function () {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/plusone.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+</script>
     <!-- Social network buttons -->
 </head>
 <body>
-    <control:UserTopPanel runat="server" ID="TopUserPanel" />
     <div class="container" style="width: 1170px;">
             
             <div class="container" style="width: 1060px;">
