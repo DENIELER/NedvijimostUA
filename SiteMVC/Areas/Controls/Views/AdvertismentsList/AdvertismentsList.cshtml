@@ -176,10 +176,10 @@
                 <div>
                     <ul class="pager">
                         <li class="previous @( currentPage <= 1 ? "disabled" : "" )">
-                            <a href="@( currentPage <= 1 ? "" : SystemUtils.Utils.Url.InsertURLParam(Request.RawUrl, "page", prevPage.ToString()) )">&larr; Previous</a>
+                            <a href="@( currentPage <= 1 ? "" : SystemUtils.Utils.Url.InsertURLParam(Request.RawUrl, "page", prevPage.ToString()) )">&larr; Назад</a>
                         </li>
                         <li class="next @( currentPage >= lastPage ? "disabled" : "" )">
-                            <a href="@( currentPage >= lastPage ? "" : SystemUtils.Utils.Url.InsertURLParam(Request.RawUrl, "page", nextPage.ToString()) )">Next &rarr;</a>
+                            <a href="@( currentPage >= lastPage ? "" : SystemUtils.Utils.Url.InsertURLParam(Request.RawUrl, "page", nextPage.ToString()) )">Далее &rarr;</a>
                         </li>
                     </ul>
                 </div>

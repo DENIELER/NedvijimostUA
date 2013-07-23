@@ -234,6 +234,7 @@
     <Content Include="Scripts\three.min.js" />
     <Content Include="Areas\Controls\Views\Web.config" />
     <Content Include="Areas\Controls\Views\AdvertismentsFilter\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\Arvixe FTP.pubxml" />
     <None Include="Scripts\jquery-2.0.2.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.2.js" />
     <Content Include="Scripts\jquery-2.0.2.min.js" />
