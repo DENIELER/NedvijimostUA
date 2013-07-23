@@ -87,7 +87,7 @@ namespace SiteMVC
 
             routes.MapRoute(
                 name: "Route_AddAdvertisment",
-                url: "add-advertisment",
+                url: "Add-advertisment",
                 defaults: new { controller = "AddAdvertisments", action = "Index" });
 
             routes.MapRoute(
