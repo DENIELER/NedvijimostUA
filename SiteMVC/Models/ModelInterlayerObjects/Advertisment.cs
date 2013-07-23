@@ -7,7 +7,7 @@ namespace SiteMVC.Models.ModelInterlayerObjects
 {
     public class Advertisment
     {
-        public Advertisment(Models.Advertisment entity)
+        public Advertisment(viewAdvertisment entity)
         {
             this.Id = entity.Id;
             this.Text = entity.text;

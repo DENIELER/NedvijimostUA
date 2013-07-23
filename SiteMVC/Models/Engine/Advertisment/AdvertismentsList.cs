@@ -18,7 +18,7 @@ namespace SiteMVC.Models.Engine.Advertisment
             _date = date;
         }
 
-        public AdvertismentsList(IEnumerable<Models.Advertisment> advertisments, int fullCount, int countToShow, int countToShowAfterFilters, DateTime date)
+        public AdvertismentsList(IEnumerable<viewAdvertisment> advertisments, int fullCount, int countToShow, int countToShowAfterFilters, DateTime date)
         {
             _advertisments = advertisments.Select(x => new Models.ModelInterlayerObjects.Advertisment(x)).ToList();
             _fullCount = fullCount;

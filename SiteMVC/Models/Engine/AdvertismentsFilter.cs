@@ -15,6 +15,7 @@ namespace SiteMVC.Models.Engine
         /// </summary>
         public bool OnlyWithPhotos { get; set; }
         public bool NearUndeground { get; set; }
+        public bool OnlyNew { get; set; }
 
         public RoomsCountCategory Rooms { get; set; }
     }

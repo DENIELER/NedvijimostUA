@@ -13,6 +13,7 @@ namespace SiteMVC.ViewModels.Advertisments
         public int AdvertismentSubSection_Id { get; set; }
 
         public string Address { get; set; }
+        [Required(ErrorMessage="Не указаны телефоны для связи.")]
         public string Phones { get; set; }
 
         [Required(ErrorMessage = "Текст объявления не может быть пустым.")]

@@ -2,6 +2,7 @@
 using SiteMVC.Models.Engine.Advertisment;
 using System;
 using System.Collections.Generic;
+using System.Data.Objects.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -47,7 +48,7 @@ namespace SiteMVC.Areas.Controls.Controllers
         #region Advertisments Loading
         private AdvertismentsList LoadAdversitments(SiteMVC.Models.Engine.AdvertismentsRequest request)
         {
-            IQueryable<Models.Advertisment> advertisments = LoadAdvertismentsByDate(request.DateFrom.Value, request.DateTo.Value);
+            IQueryable<viewAdvertisment> advertisments = LoadAdvertismentsByDate(request.DateFrom.Value, request.DateTo.Value);
             int fullCount = 0;
             int countToShow = 0;
             int countToShowAfterFilter = 0;
@@ -102,7 +103,7 @@ namespace SiteMVC.Areas.Controls.Controllers
             return new AdvertismentsList(advertisments, fullCount, countToShow, countToShowAfterFilter, lastTimeUpdated);
         }
 
-        private void ApplyFilters(Models.Engine.AdvertismentsFilter filter, ref IQueryable<Advertisment> advertisments)
+        private void ApplyFilters(Models.Engine.AdvertismentsFilter filter, ref IQueryable<viewAdvertisment> advertisments)
         {
             if (filter == null)
                 throw new Exception("Advertisments filter is null");
@@ -112,16 +113,19 @@ namespace SiteMVC.Areas.Controls.Controllers
 
             if (!string.IsNullOrWhiteSpace(filter.Text))
                 advertisments = advertisments.Where(adv => adv.text.Contains(filter.Text));
+
+            if (filter.OnlyNew)
+                advertisments = advertisments.Where(adv => adv.CountByTextColumn == 1);
         }
 
-        private IQueryable<Models.Advertisment> LoadAdvertismentsByDate(DateTime dateTimeFrom, DateTime dateTimeTo)
+        private IQueryable<viewAdvertisment> LoadAdvertismentsByDate(DateTime dateTimeFrom, DateTime dateTimeTo)
         {
             var dataModel = new Models.DataModel();
 
             var specialFromDateTime = dateTimeFrom.Date.AddDays(-7);
 
-            IQueryable<Models.Advertisment> searchResults =
-                dataModel.Advertisments
+            IQueryable<viewAdvertisment> searchResults =
+                dataModel.viewAdvertisments
                 .Where(a =>
                     ((!a.isSpecial && a.createDate >= dateTimeFrom.Date) || (a.isSpecial && a.createDate >= specialFromDateTime.Date))
                     && a.createDate < dateTimeTo.Date

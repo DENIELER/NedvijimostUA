@@ -41,7 +41,8 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="phone" Type="System.String" DbType="VarChar(80)" CanBeNull="true" />
       <Column Name="AdvertismentId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Advertisment_AdvertismentPhone" Member="Advertisment" ThisKey="AdvertismentId" OtherKey="Id" Type="Advertisment" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="viewAdvertisment_AdvertismentPhone" Member="viewAdvertisment" ThisKey="AdvertismentId" OtherKey="Id" Type="viewAdvertisment" IsForeignKey="true" />
+      <Association Name="Advertisment_AdvertismentPhone" Member="Advertisment" ThisKey="AdvertismentId" OtherKey="Id" Type="Advertisment" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.WebSearchFilterAdvertisments" Member="WebSearchFilterAdvertisments">
@@ -53,8 +54,8 @@
       <Column Name="subPurchasePhone" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.Advertisments" Member="Advertisments">
-    <Type Name="Advertisment">
+  <Table Name="dbo.viewAdvertisments" Member="viewAdvertisments">
+    <Type Name="viewAdvertisment">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="text" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="createDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
@@ -72,9 +73,10 @@
       <Column Name="AdvertismentSubSection_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Address1" Type="System.String" CanBeNull="true" />
-      <Association Name="Advertisment_AdvertismentPhone" Member="AdvertismentPhones" ThisKey="Id" OtherKey="AdvertismentId" Type="AdvertismentPhone" />
-      <Association Name="Advertisment_AdvertismentsPhoto" Member="AdvertismentsPhotos" Storage="_AdvertismentsPhotoes" ThisKey="Id" OtherKey="Advertisment_Id" Type="AdvertismentsPhoto" />
-      <Association Name="SearchResult_Advertisment" Member="SearchResult" ThisKey="searchresult_id" OtherKey="Id" Type="SearchResult" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Column Name="CountByTextColumn" Type="System.Int32" IsReadOnly="true" CanBeNull="false" />
+      <Association Name="viewAdvertisment_AdvertismentPhone" Member="AdvertismentPhones" ThisKey="Id" OtherKey="AdvertismentId" Type="AdvertismentPhone" />
+      <Association Name="viewAdvertisment_AdvertismentsPhoto" Member="AdvertismentsPhotos" ThisKey="Id" OtherKey="Advertisment_Id" Type="AdvertismentsPhoto" />
+      <Association Name="SearchResult_viewAdvertisment" Member="SearchResult" ThisKey="searchresult_id" OtherKey="Id" Type="SearchResult" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.AdvertismentSections" Member="AdvertismentSections">
@@ -95,7 +97,8 @@
       <Column Name="filename" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="Advertisment_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="createDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="Advertisment_AdvertismentsPhoto" Member="Advertisment" ThisKey="Advertisment_Id" OtherKey="Id" Type="Advertisment" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="viewAdvertisment_AdvertismentsPhoto" Member="viewAdvertisment" ThisKey="Advertisment_Id" OtherKey="Id" Type="viewAdvertisment" IsForeignKey="true" />
+      <Association Name="Advertisment_AdvertismentsPhoto" Member="Advertisment" ThisKey="Advertisment_Id" OtherKey="Id" Type="Advertisment" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.AdvertismentSubSection" Member="AdvertismentSubSections">
@@ -131,6 +134,7 @@
       <Column Name="AdvertismentSection_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="modifyDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="SearchResult_Advertisment" Member="Advertisments" ThisKey="Id" OtherKey="searchresult_id" Type="Advertisment" />
+      <Association Name="SearchResult_viewAdvertisment" Member="viewAdvertisments" ThisKey="Id" OtherKey="searchresult_id" Type="viewAdvertisment" />
       <Association Name="AdvertismentSection_SearchResult" Member="AdvertismentSection" ThisKey="AdvertismentSection_Id" OtherKey="Id" Type="AdvertismentSection" IsForeignKey="true" />
     </Type>
   </Table>
@@ -169,6 +173,30 @@
       <Column Name="Login" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
       <Column Name="IsAdmin" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Phone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Advertisments" Member="Advertisments">
+    <Type Name="Advertisment">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="text" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="createDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="modifyDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="searchresult_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AdvertismentSection_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="link" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="siteName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="subpurchaseAdvertisment" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SubPurchase_Id" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="not_realestate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="not_show_advertisment" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="isSpecial" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="isSpecialDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="AdvertismentSubSection_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Address1" Type="System.String" CanBeNull="true" />
+      <Association Name="Advertisment_AdvertismentPhone" Member="AdvertismentPhones" ThisKey="Id" OtherKey="AdvertismentId" Type="AdvertismentPhone" />
+      <Association Name="Advertisment_AdvertismentsPhoto" Member="AdvertismentsPhotos" ThisKey="Id" OtherKey="Advertisment_Id" Type="AdvertismentsPhoto" />
+      <Association Name="SearchResult_Advertisment" Member="SearchResult" ThisKey="searchresult_id" OtherKey="Id" Type="SearchResult" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
