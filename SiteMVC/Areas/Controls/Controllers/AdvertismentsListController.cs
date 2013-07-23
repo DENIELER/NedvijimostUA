@@ -257,7 +257,7 @@ namespace SiteMVC.Areas.Controls.Controllers
 Линк подтверждения: {2}",
                             advertisment.text,
                             advertisment.Id,
-                            "http://nedvijimost-ua.com/WebServices/AdvertismentsService.asmx/ForceMarkAsNotByTheme?password=gtycbz1990&advertisment_id=" + advertisment.Id));
+                            "http://nedvijimost-ua.com/WebServices/AdminService.svc/RemoveAdvertisment/"+ advertisment.Id + "/gtycbz"));
                 }
 
                 return Json("success");
