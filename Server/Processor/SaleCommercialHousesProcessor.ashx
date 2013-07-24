@@ -19,7 +19,7 @@ public class SaleCommercialHousesProcessor : IHttpHandler {
         if (!string.IsNullOrWhiteSpace(context.Request["password"])
             && context.Request["password"] == "gtycbz")
         {
-            var parser = new ParsingController("sale_commercial", @"~/Logs/salecommercialhouseparse.log", "SaleCommercialHouses");
+            var parser = new ParsingController("sale_commercial", "SaleCommercialHousesCrawler", "SaleCommercialHouses");
             parser.StartParsing();
         }
     }

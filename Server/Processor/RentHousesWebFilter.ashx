@@ -19,7 +19,7 @@ public class RentHousesWebFilter : IHttpHandler {
         if (!string.IsNullOrWhiteSpace(context.Request["password"])
             && context.Request["password"] == "gtycbz")
         {
-            var filter = new FilteringController("rent", @"~/Logs/renthousefilter.log", "RentHousesFilter");
+            var filter = new FilteringController("rent", "RentHousesWebFilter", "RentHousesFilter");
             filter.StartFiltering();
         }    
     }

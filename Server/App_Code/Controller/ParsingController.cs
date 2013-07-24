@@ -21,14 +21,14 @@ public class ParsingController
     private delegate void LongRun();
     #endregion variables
 
-    public ParsingController(string advertismentSectionCode, string logFileName, string parsingProcessName, int? parsingProcessPart = null)
+    public ParsingController(string sectionCode, string logServiceCode, string parsingProcessName, int? parsingProcessPart = null)
 	{
-        _advertismentSectionCode = advertismentSectionCode;
+        _advertismentSectionCode = sectionCode;
 
         _parsingProcessName = parsingProcessName;
         _parsingProcessPart = parsingProcessPart;
 
-        _log = new Log(logFileName);
+        _log = new Log(logServiceCode, sectionCode);
 	}
 
     public void StartParsing()

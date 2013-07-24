@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 
@@ -34,5 +35,19 @@ public class Utils
     public static string StripAllTextBetweenTagsRegex(string source)
     {
         return Regex.Replace(source, "<.*?>.*</.*?>", string.Empty).Replace("•", "").Replace(@"\r\n", "").Trim();
+    }
+
+    /// <summary>
+    /// Leave server alive
+    /// </summary>
+    public static void PingServer()
+    {
+        try
+        {
+            WebClient http = new WebClient();
+            string Result = http.DownloadString(Resources.Constants.PingServerUrl);
+        }
+        catch
+        { }
     }
 }

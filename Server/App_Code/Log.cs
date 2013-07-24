@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,33 +10,53 @@ using System.Web;
 /// </summary>
 public class Log
 {
-    private string _logFile = @"~/Logs/renthouse_log.log";
+    private string _serviceCode;
+    private string _sectionCode;
+    private int? _sectionId;
 
-    public Log()
-	{}
+    private DataModel _dataModel;
 
-    public Log(string filename)
+    public Log(string serviceCode, string sectionCode, int sectionId)
     {
-        _logFile = filename;
+        _serviceCode = serviceCode;
+        _sectionCode = sectionCode;
+        _sectionId = sectionId;
+    }
+
+    public Log(string serviceCode, string sectionCode)
+    {
+        _serviceCode = serviceCode;
+        _sectionCode = sectionCode;
+
+        var section = _dataModel.AdvertismentSections
+                .SingleOrDefault(s => s.code == _sectionCode);
+        if (section == null)
+            throw new Exception("Can not found section by sectionCode");
+
+        _sectionId = section.Id;
+    }
+
+    public Log(string serviceCode)
+    {
+        _serviceCode = serviceCode;
     }
 
     public void WriteLog(string message)
     {
-        var sw = new StreamWriter(GetFilePath(_logFile), true);
-        try
-        {
-            var ukraineTimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("FLE Standard Time");
+        if (_dataModel == null)
+            _dataModel = new DataModel();
 
-            sw.WriteLine("[" + TimeZoneInfo.ConvertTime(DateTime.Now, ukraineTimeZoneInfo).ToString() + "] " + message);
-        }
-        finally
+        var serverLogMessage = new ServerLog()
         {
-            sw.Close();
-        }
-    }
+            Id = Guid.NewGuid(),
+            createDate = Utils.GetUkranianDateTimeNow(),
+            message = message,
+            sectionCode = _sectionCode,
+            sectionId = _sectionId,
+            serviceCode = _serviceCode
+        };
 
-    private string GetFilePath(string filename)
-    {
-        return System.Web.Hosting.HostingEnvironment.MapPath(filename);
+        _dataModel.ServerLogs.InsertOnSubmit(serverLogMessage);
+        _dataModel.SubmitChanges();
     }
 }

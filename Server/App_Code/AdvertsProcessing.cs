@@ -71,18 +71,20 @@ public class AdvertsProcessing
                 }
 
                 Log.WriteLog("Check whether need to divide advertisments into sub sections.");
+                Utils.PingServer();
                 var subSectionsSeparator = new SubSectionsSeparator(SectionCode, Context, Log);
                 if (subSectionsSeparator.NeedToDivideIntoSubSections)
                 {
                     subSectionsSeparator.DivideIntoSubSections(parsedAdvertisments);
                 }
 
-                PingServer();
+                Utils.PingServer();
                 Log.WriteLog("Saving advertisments in DB.");
                 searchResultsWorkflow.SaveAdvertismentsInSearchResult(searchResult, parsedAdvertisments);
                 searchResult.allParsedAdvertismentsCount += parsedAdvertisments.Count();
                 Context.SubmitChanges();
                 Log.WriteLog("Finished. Saving advertisments in DB.");
+                Utils.PingServer();
             }
             catch (Exception e)
             {
@@ -114,29 +116,6 @@ public class AdvertsProcessing
 
         Log.WriteLog("End filtering advertisments from subpurchases.");
         return goodDatabaseAdvertisments.Union(goodWebSearchAdvertisments).ToList();
-
-        //var goodAdvertismentsSet = adversitments;
-        ////--- if WebSearch ended less than in the end.. in some index - indexEndSearch
-        //if (indexEndSearch >= 0 && adversitments.Count > 0)
-        //{
-        //    Log.WriteLog("Web Search ended by Exception on index - " + indexEndSearch);
-        //    goodAdvertismentsSet = adversitments.GetRange(0, indexEndSearch);
-        //}
-
-        //IList<Advertisment> goodAdvertismentsTemp = goodAdvertismentsSet;
-        //if (badDatabaseAdvertisments != null && badDatabaseAdvertisments.Count > 0)
-        //{
-        //    goodAdvertismentsTemp =
-        //        goodAdvertismentsSet.Where(adversitment => !badDatabaseAdvertisments.Contains(adversitment));
-        //}
-
-        //if (badWebSearchAdvertisments != null && badWebSearchAdvertisments.Count > 0)
-        //{
-        //    goodAdvertismentsTemp =
-        //        goodAdvertismentsTemp.Where(adversitment => !badWebSearchAdvertisments.Contains(adversitment));
-        //}
-
-        //goodAdversitmentsWithPhoneses = goodAdvertismentsTemp.ToList();
     }
 
     /// <summary>
@@ -187,11 +166,6 @@ public class AdvertsProcessing
             }
             if (subpurchase == null)
             {
-                //adversitment.subpurchaseAdvertisment = false;
-                //adversitment.SubPurchase = null;
-
-                //Context.SaveChanges();
-
                 goodAdvList.Add(adversitment);
             }
             else
@@ -341,73 +315,5 @@ public class AdvertsProcessing
         }
 
         return goodAdvList;
-    }
-
-    //private void AddAllPhonesAsSubPuchases(List<Advertisment> adversitments)
-    //{
-    //    var subPurchasesList = (from subPurchaseObject in Context.SubPurchases
-    //                            join subPurchasePhoneObject in Context.SubPurchasePhones
-    //                               on subPurchaseObject.Id equals subPurchasePhoneObject.SubPurchaseId
-    //                            select new {SubPruchase = subPurchaseObject, SubPurchasePhone = subPurchasePhoneObject}).ToList();
-
-    //    foreach (var adversitment in adversitments)
-    //    {
-    //        foreach (var phone in adversitment.AdvertismentPhones)
-    //        {
-    //            if (subPurchasesList.Any(subPurchObject => subPurchObject.SubPurchasePhone.phone == phone.phone)) 
-    //                continue;
-
-    //            var subPurchaseByPhone = (from subPurchaseObject in subPurchasesList
-    //                                      where subPurchaseObject.SubPurchasePhone.phone == phone.phone
-    //                                      select subPurchaseObject.SubPruchase).SingleOrDefault();
-
-    //            Model.SubPurchase subPurchase;
-    //            if (subPurchaseByPhone == null)
-    //            {
-    //                subPurchase = new Model.SubPurchase()
-    //                {
-    //                    Id = Guid.NewGuid(),
-    //                    not_checked = false,
-    //                    createDate = Utils.GetUkranianDateTimeNow()
-    //                };
-    //                Context.AddToSubPurchases(subPurchase);
-    //                Context.SaveChanges();
-
-    //                //--- maybe need to replace it some right code
-    //                subPurchasesList = (from subPurchaseObject in Context.SubPurchases
-    //                                    join subPurchasePhoneObject in Context.SubPurchasePhones
-    //                                       on subPurchaseObject.Id equals subPurchasePhoneObject.SubPurchaseId
-    //                                    select new { SubPruchase = subPurchaseObject, SubPurchasePhone = subPurchasePhoneObject }).ToList();
-    //            }
-    //            else
-    //                subPurchase = subPurchaseByPhone;
-
-    //            var newSubPurchasePhone = new Model.SubPurchasePhone()
-    //            {
-    //                Id = Guid.NewGuid(),
-    //                phone = phone.phone,
-    //                createDate = Utils.GetUkranianDateTimeNow(),
-    //                SubPurchase = subPurchase
-    //            };
-    //            Context.AddToSubPurchasePhones(newSubPurchasePhone);
-    //            Context.SaveChanges();
-    //        }            
-    //    }
-    //}
-
-    /// <summary>
-    /// Leave server alive
-    /// </summary>
-    public void PingServer()
-    {
-        try
-        {
-            WebClient http = new WebClient();
-            string Result = http.DownloadString(Resources.Constants.PingServerUrl);
-        }
-        catch (Exception ex)
-        {
-            Log.WriteLog("Ping server error: " + ex.Message);
-        }
     }
 }

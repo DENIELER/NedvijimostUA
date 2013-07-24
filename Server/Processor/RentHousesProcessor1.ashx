@@ -19,7 +19,7 @@ public class RentHousesProcessor1 : IHttpHandler {
         if (!string.IsNullOrWhiteSpace(context.Request["password"])
             && context.Request["password"] == "gtycbz")
         {
-            var parser = new ParsingController("rent", @"~/Logs/renthouseparse_1.log", "RentHouses", 1);
+            var parser = new ParsingController("rent", "RentHousesCrawler_1", "RentHouses", 1);
             parser.StartParsing();
         }
     }

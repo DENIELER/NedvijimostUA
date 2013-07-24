@@ -72,6 +72,7 @@ public class SiteParser
                 }
                 
                 pageNum++;
+                Utils.PingServer();
 
                 if (CurrentSiteSetting.pagesCount > 0 
                     && pageNum > CurrentSiteSetting.pagesCount) 

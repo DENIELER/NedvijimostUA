@@ -172,4 +172,14 @@
       <Column Name="SectionFriendlyUrl" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.ServerLog" Member="ServerLogs">
+    <Type Name="ServerLog">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="createDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="message" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="serviceCode" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="sectionCode" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="sectionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

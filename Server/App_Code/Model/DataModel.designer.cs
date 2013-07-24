@@ -63,6 +63,9 @@ namespace Model
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
+    partial void InsertServerLog(ServerLog instance);
+    partial void UpdateServerLog(ServerLog instance);
+    partial void DeleteServerLog(ServerLog instance);
     #endregion
 		
 		public DataModel() : 
@@ -196,6 +199,14 @@ namespace Model
 			get
 			{
 				return this.GetTable<viewAdvertismentPhoto>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ServerLog> ServerLogs
+		{
+			get
+			{
+				return this.GetTable<ServerLog>();
 			}
 		}
 	}
@@ -3533,6 +3544,188 @@ namespace Model
 				{
 					this._SectionFriendlyUrl = value;
 				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ServerLog")]
+	public partial class ServerLog : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private System.DateTime _createDate;
+		
+		private string _message;
+		
+		private string _serviceCode;
+		
+		private string _sectionCode;
+		
+		private System.Nullable<int> _sectionId;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OncreateDateChanging(System.DateTime value);
+    partial void OncreateDateChanged();
+    partial void OnmessageChanging(string value);
+    partial void OnmessageChanged();
+    partial void OnserviceCodeChanging(string value);
+    partial void OnserviceCodeChanged();
+    partial void OnsectionCodeChanging(string value);
+    partial void OnsectionCodeChanged();
+    partial void OnsectionIdChanging(System.Nullable<int> value);
+    partial void OnsectionIdChanged();
+    #endregion
+		
+		public ServerLog()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_createDate", DbType="DateTime NOT NULL")]
+		public System.DateTime createDate
+		{
+			get
+			{
+				return this._createDate;
+			}
+			set
+			{
+				if ((this._createDate != value))
+				{
+					this.OncreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._createDate = value;
+					this.SendPropertyChanged("createDate");
+					this.OncreateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_message", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string message
+		{
+			get
+			{
+				return this._message;
+			}
+			set
+			{
+				if ((this._message != value))
+				{
+					this.OnmessageChanging(value);
+					this.SendPropertyChanging();
+					this._message = value;
+					this.SendPropertyChanged("message");
+					this.OnmessageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceCode", DbType="VarChar(100)")]
+		public string serviceCode
+		{
+			get
+			{
+				return this._serviceCode;
+			}
+			set
+			{
+				if ((this._serviceCode != value))
+				{
+					this.OnserviceCodeChanging(value);
+					this.SendPropertyChanging();
+					this._serviceCode = value;
+					this.SendPropertyChanged("serviceCode");
+					this.OnserviceCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sectionCode", DbType="VarChar(30)")]
+		public string sectionCode
+		{
+			get
+			{
+				return this._sectionCode;
+			}
+			set
+			{
+				if ((this._sectionCode != value))
+				{
+					this.OnsectionCodeChanging(value);
+					this.SendPropertyChanging();
+					this._sectionCode = value;
+					this.SendPropertyChanged("sectionCode");
+					this.OnsectionCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sectionId", DbType="Int NOT NULL")]
+		public System.Nullable<int> sectionId
+		{
+			get
+			{
+				return this._sectionId;
+			}
+			set
+			{
+				if ((this._sectionId != value))
+				{
+					this.OnsectionIdChanging(value);
+					this.SendPropertyChanging();
+					this._sectionId = value;
+					this.SendPropertyChanged("sectionId");
+					this.OnsectionIdChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

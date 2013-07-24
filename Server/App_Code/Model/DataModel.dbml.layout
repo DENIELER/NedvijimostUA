@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.375, 15.625" name="DataModel">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 17.375, 15.625" name="DataModel">
   <DataContextMoniker Name="/DataModel" />
   <nestedChildShapes>
     <classShape Id="835a2730-b149-4f1d-aa8b-c94d42d7fbec" absoluteBounds="9.125, 1.125, 2, 1.3862939453125003">
@@ -75,14 +75,14 @@
         <classShapeMoniker Id="835a2730-b149-4f1d-aa8b-c94d42d7fbec" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.875 : 1.88544840494792); (6.25 : 1.88544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.875 : 1.88544840494792); (6.25 : 1.88544840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataModel/SearchResult/SearchResult_Advertisment" />
       <nodes>
         <classShapeMoniker Id="e99565db-327c-4004-8c96-19a42faedf0e" />
         <classShapeMoniker Id="e8757b66-aa63-447e-b454-43097f70d63b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 2.44794840494792); (3.5 : 2.44794840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 2.44794840494792); (3.5 : 2.44794840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataModel/AdvertismentSection/AdvertismentSection_SearchResult" />
       <nodes>
         <classShapeMoniker Id="b10c1c7c-5b9b-4ca4-ba30-416e71946c67" />
@@ -108,7 +108,7 @@
         <classShapeMoniker Id="01a1c007-59ad-4d1e-ae32-453dfc365171" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 3.26849609375); (6.25 : 3.26849609375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 3.26849609375); (6.25 : 3.26849609375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataModel/AdvertismentSection/AdvertismentSection_Advertisment" />
       <nodes>
         <classShapeMoniker Id="b10c1c7c-5b9b-4ca4-ba30-416e71946c67" />
@@ -143,5 +143,11 @@
         <classShapeMoniker Id="1f9b92ff-f241-4919-9122-94e14832238e" />
       </nodes>
     </associationConnector>
+    <classShape Id="bd992a52-bacf-4051-8538-3977269e280f" absoluteBounds="15.125, 1, 2, 1.9631982421875">
+      <DataClassMoniker Name="/DataModel/ServerLog" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5f550b36-531e-451d-a7db-f24070ed3410" absoluteBounds="15.14, 1.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

@@ -19,7 +19,7 @@ public class SaleHousesWebFilter : IHttpHandler {
         if (!string.IsNullOrWhiteSpace(context.Request["password"])
             && context.Request["password"] == "gtycbz")
         {
-            var filter = new FilteringController("sale", @"~/Logs/salehousefilter.log", "SaleHousesFilter");
+            var filter = new FilteringController("sale", "SaleHousesWebFilter", "SaleHousesFilter");
             filter.StartFiltering();
         }    
     }

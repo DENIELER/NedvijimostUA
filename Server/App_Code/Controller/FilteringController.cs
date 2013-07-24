@@ -20,12 +20,12 @@ public class FilteringController
     private delegate void LongRun();
     #endregion variables
 
-    public FilteringController(string advertismentSectionCode, string logFileName, string webFilterProcessName)
+    public FilteringController(string sectionCode, string logServiceCode, string webFilterProcessName)
 	{
-        _advertismentSectionCode = advertismentSectionCode;
+        _advertismentSectionCode = sectionCode;
         _webFilterProcessName = webFilterProcessName;
 
-        _log = new Log(logFileName);
+        _log = new Log(logServiceCode, sectionCode);
 	}
 
     public void StartFiltering()

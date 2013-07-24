@@ -19,9 +19,9 @@ public class SetAdvSubSectionController
     private delegate void LongRun();
     #endregion variables
 
-    public SetAdvSubSectionController(string logFileName)
+    public SetAdvSubSectionController(string logServiceCode)
     {
-        _log = new Log(logFileName);
+        _log = new Log(logServiceCode);
     }
 
     public void StartSettingSubSections()

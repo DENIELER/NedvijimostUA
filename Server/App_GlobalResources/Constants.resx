@@ -121,7 +121,7 @@
     <value>NedvijimostDBEntities</value>
   </data>
   <data name="PingServerUrl" xml:space="preserve">
-    <value>http://nedvijimost-ua.azurewebsites.net/processor/PingUrl.aspx</value>
+    <value>http://nedvijimost-ua.azurewebsites.net/PingUrl.aspx</value>
   </data>
   <data name="SettingsFile" xml:space="preserve">
     <value>~/xmlSettings/settings.xml</value>

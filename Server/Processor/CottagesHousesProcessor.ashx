@@ -19,7 +19,7 @@ public class CottagesHousesProcessor : IHttpHandler {
         if (!string.IsNullOrWhiteSpace(context.Request["password"])
             && context.Request["password"] == "gtycbz")
         {
-            var parser = new ParsingController("cottages", @"~/Logs/cottagesparse.log", "Cottages&Houses");
+            var parser = new ParsingController("cottages", "CottagesHousesCrawler", "Cottages&Houses");
             parser.StartParsing();
         }
     }
