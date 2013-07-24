@@ -41,7 +41,7 @@ public class FilteringController
             {
                 HttpContext.Current.Application[_webFilterProcessName + "_TaskExecuted"] = true;
 
-                _log.WriteLog("---------------------------------------------------------------------------" +
+                _log.WriteLog("------------------" +
                              Environment.NewLine +
                              "Start " + _webFilterProcessName + " Web Filter processing.");
                 //var Long = new LongRun(Filter);
@@ -72,11 +72,14 @@ public class FilteringController
                 var advertsProcessing = new AdvertsProcessing(context);
                 advertsProcessing.Log = _log;
                 var adversitmentsWithoutSubpurchasers = advertsProcessing.FilterSubpurchasers(adversitmentsView.Advertisments, _advertismentSectionCode);
+                _log.WriteLog("Filtering finished.");
             }
         }
         catch (Exception e)
         {
-            _log.WriteLog("Filtering inner error! Error message: " + e.Message + ". Trace:" + e.StackTrace);
+            _log.WriteLog("Filtering inner error!" + Environment.NewLine +
+                "Error message: " + e.Message + Environment.NewLine + 
+                ". Trace:" + e.StackTrace);
         }
         finally
         {

@@ -53,8 +53,10 @@ public class AdvertsProcessing
                 }
                 catch (ThreadAbortException e)
                 {
-                    Log.WriteLog("Site parser parse error ThreadAbortException. Site: " + siteSetting.name + Environment.NewLine
-                        + e.Message + ". Trace:" + e.StackTrace);
+                    Log.WriteLog("Site parser parse error ThreadAbortException." + Environment.NewLine 
+                        + "Site: " + siteSetting.name + Environment.NewLine
+                        + e.Message + Environment.NewLine +
+                        ". Trace:" + e.StackTrace);
 
                     if (e.InnerException != null)
                         Log.WriteLog("Inner exception: " + e.InnerException.Message);
@@ -83,7 +85,7 @@ public class AdvertsProcessing
                 searchResultsWorkflow.SaveAdvertismentsInSearchResult(searchResult, parsedAdvertisments);
                 searchResult.allParsedAdvertismentsCount += parsedAdvertisments.Count();
                 Context.SubmitChanges();
-                Log.WriteLog("Finished. Saving advertisments in DB.");
+                Log.WriteLog("Finished. Saved advertisments in DB.");
                 Utils.PingServer();
             }
             catch (Exception e)
@@ -118,7 +120,7 @@ public class AdvertsProcessing
         List<Advertisment> goodWebSearchAdvertisments = WebSearchFilter(goodDatabaseAdvertisments, sectionCode);
         Log.WriteLog("Web Search filtering has ended.");
 
-        Log.WriteLog("End filtering advertisments from subpurchases.");
+        Log.WriteLog("Founded good - " + goodWebSearchAdvertisments.Count);
         return goodDatabaseAdvertisments.Union(goodWebSearchAdvertisments).ToList();
     }
 

@@ -44,7 +44,7 @@ public class ParsingController
             {
                 HttpContext.Current.Application[_parsingProcessName + _parsingProcessPart ?? string.Empty + "_TaskExecuted"] = true;
 
-                _log.WriteLog("---------------------------------------------------------------------------" +
+                _log.WriteLog("------------------" +
                                 Environment.NewLine +
                                 "Start " + _parsingProcessName + " parse processing.");
                 //var Long = new LongRun(Parse);
@@ -76,10 +76,13 @@ public class ParsingController
             advertsProcessing.Log = _log;
             // capture advertismens from web sites
             advertsProcessing.CaptureAdvertisments(siteSettings);
+            _log.WriteLog("Parsing finished.");
         }
         catch (Exception e)
         {
-            _log.WriteLog("Parsing inner error! Error message: " + e.Message + ". Trace:" + e.StackTrace);
+            _log.WriteLog("Parsing inner error!" + Environment.NewLine +
+                "Error message: " + e.Message + Environment.NewLine + 
+                ". Trace:" + e.StackTrace);
         }
         finally
         {
