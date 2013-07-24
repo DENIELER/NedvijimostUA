@@ -28,6 +28,9 @@ public class Log
         _serviceCode = serviceCode;
         _sectionCode = sectionCode;
 
+        if (_dataModel == null)
+            _dataModel = new DataModel();
+
         var section = _dataModel.AdvertismentSections
                 .SingleOrDefault(s => s.code == _sectionCode);
         if (section == null)
