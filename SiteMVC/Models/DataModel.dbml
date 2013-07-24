@@ -133,8 +133,8 @@
       <Column Name="allParsedAdvertismentsCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="AdvertismentSection_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="modifyDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Association Name="SearchResult_Advertisment" Member="Advertisments" ThisKey="Id" OtherKey="searchresult_id" Type="Advertisment" />
       <Association Name="SearchResult_viewAdvertisment" Member="viewAdvertisments" ThisKey="Id" OtherKey="searchresult_id" Type="viewAdvertisment" />
+      <Association Name="SearchResult_Advertisment" Member="Advertisments" ThisKey="Id" OtherKey="searchresult_id" Type="Advertisment" />
       <Association Name="AdvertismentSection_SearchResult" Member="AdvertismentSection" ThisKey="AdvertismentSection_Id" OtherKey="Id" Type="AdvertismentSection" IsForeignKey="true" />
     </Type>
   </Table>
@@ -197,6 +197,16 @@
       <Association Name="Advertisment_AdvertismentPhone" Member="AdvertismentPhones" ThisKey="Id" OtherKey="AdvertismentId" Type="AdvertismentPhone" />
       <Association Name="Advertisment_AdvertismentsPhoto" Member="AdvertismentsPhotos" ThisKey="Id" OtherKey="Advertisment_Id" Type="AdvertismentsPhoto" />
       <Association Name="SearchResult_Advertisment" Member="SearchResult" ThisKey="searchresult_id" OtherKey="Id" Type="SearchResult" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ServerLog" Member="ServerLogs">
+    <Type Name="ServerLog">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="createDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="message" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="serviceCode" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="sectionCode" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="sectionId" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

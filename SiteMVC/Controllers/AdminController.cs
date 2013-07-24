@@ -1,4 +1,5 @@
 ﻿using SiteMVC.Models;
+using SiteMVC.ViewModels.Admin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,7 @@ namespace SiteMVC.Controllers
 {
     public class AdminController : Controller
     {
-        //
-        // GET: /Admin/
-
+     
         public ActionResult AddSubPurchases()
         {
             if (!SystemUtils.Authorization.IsAdmin)
@@ -215,6 +214,31 @@ namespace SiteMVC.Controllers
             if (subpurchaseAdvertisments.Any())
                 return Json(subpurchaseAdvertisments);
             else return Json(new { text = "Нет объявлений", state = "new", date = "none" });
+        }
+
+        public ActionResult ServerLogs()
+        {
+            var dataModel = new DataModel();
+
+            var serverLogs = new ServerLogsViewModel();
+
+            serverLogs.ServiceCodes = dataModel.ServerLogs
+                .Select(l => l.serviceCode)
+                .Distinct()
+                .OrderBy(l => l);
+            
+            foreach (var serviceCode in serverLogs.ServiceCodes)
+            {
+                serverLogs.LogMessages.Add(
+                    serviceCode,
+                    dataModel.ServerLogs
+                        .Where(l => l.serviceCode == serviceCode)
+                        .OrderByDescending(l => l.createDate)
+                        .Take(100)
+                        .Select(l => new Tuple<string, DateTime>(l.message, l.createDate)));
+            }
+
+            return View(serverLogs);
         }
     }
 }

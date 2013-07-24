@@ -1,0 +1,40 @@
+﻿@model SiteMVC.ViewModels.Admin.ServerLogsViewModel
+
+@{
+    ViewBag.Title = "Логи сервера | Недвижимость-UA";
+    Layout = "~/Views/Shared/_AdvertismentsLayout.cshtml";
+}
+
+@section Body
+{
+    <h2>Логи сервера</h2>    
+    <ul class="nav nav-tabs" id="tab">
+        @foreach(var serviceCode in Model.ServiceCodes)
+        {
+        <li><a href="#@serviceCode" data-toggle="tab">@serviceCode</a></li>
+        }
+    </ul>
+
+    <div class="tab-content">
+        @{ bool first = true; }
+        @foreach(var logMessageList in Model.LogMessages)
+        {
+        <div class="tab-pane@( first ? " active" : "" )" id="@logMessageList.Key">
+            <ul class="unstyled">
+            @foreach(var messages in logMessageList.Value)
+            {
+                <li style="line-height: 1.7em;">
+                    <strong>@messages.Item2</strong> @messages.Item1
+                </li>
+            }
+            </ul>
+        </div>
+        }
+    </div>
+ 
+    <script>
+        $(function () {
+            $('#tab a:last').tab('show');
+        })
+    </script>
+}
