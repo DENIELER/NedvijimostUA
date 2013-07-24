@@ -2,7 +2,7 @@
 
 @if(!Model.IsAuthorized)
 {
-<div id="authorization" style="background-color: white; height: 130px; padding: 5px 0;">
+<div id="authorization" style="height: 130px; padding: 5px 0;">
     <div style="clear:both; margin-bottom: 5px;">Вход: <a href="~/Registration" style="float:right;">Регистрация</a></div>
     @using(Html.BeginForm("LogIn", "Authorization", FormMethod.Post, new { id="authorizationForm", @class="form-inline"}))
     {
