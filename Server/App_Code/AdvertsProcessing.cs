@@ -88,8 +88,10 @@ public class AdvertsProcessing
             }
             catch (Exception e)
             {
-                Log.WriteLog("Site parser full error. Site: " + siteSetting.name + Environment.NewLine
-                        + e.Message + ". Trace:" + e.StackTrace);
+                Log.WriteLog("Site parser full error." + Environment.NewLine +
+                    "Site: " + siteSetting.name + Environment.NewLine
+                    + e.Message + Environment.NewLine 
+                    + ". Trace:" + e.StackTrace);
 
                 if (e.InnerException != null)
                     Log.WriteLog("Inner exception: " + e.InnerException.Message);
@@ -108,6 +110,8 @@ public class AdvertsProcessing
         List<Advertisment> goodDatabaseAdvertisments = DatabaseFilter(listAdvertisments);
         var badDatabaseAdvCount = adversitments.Count - goodDatabaseAdvertisments.Count;
         Log.WriteLog("Database filtering has ended. Bad founded - " + badDatabaseAdvCount);
+
+        Utils.PingServer();
 
         Log.WriteLog("Web Search filtering.");
         Log.WriteLog("Advertisments for filtering - " + goodDatabaseAdvertisments.Count);
@@ -178,8 +182,11 @@ public class AdvertsProcessing
 
             tempCounter++;
             if (tempCounter % 50 == 0)
-                Log.WriteLog("Database filtering..." + tempCounter.ToString() + " advertisments. Good have founded " +
-                             goodAdvList.Count.ToString() + " adv.");
+            {
+                Log.WriteLog("Database filtering..." + tempCounter.ToString() + " advertisments. " + 
+                        "Good have founded " + goodAdvList.Count.ToString() + " adv.");
+                Utils.PingServer();
+            }
         }
 
         return goodAdvList;
@@ -282,6 +289,8 @@ public class AdvertsProcessing
                         
                         if (webSearchRequestCount % webSearchSubPurchasesSaveIteration == 0)
                         {
+                            Utils.PingServer();
+
                             //--- add all bad web search advertisments into db
                             //AddAllPhonesAsSubPuchases(badAdvList);
                             //---
@@ -304,12 +313,12 @@ public class AdvertsProcessing
         }
         catch (Exception e)
         {
-            Log.WriteLog("Web Search filtering EXCEPTION.");
-            Log.WriteLog("Error message: " + e.Message);
+            Log.WriteLog("Web Search filtering EXCEPTION." + Environment.NewLine +
+                        "Error message: " + e.Message + Environment.NewLine +
+                        "Trace: " + e.StackTrace);
             
             if(e.InnerException != null)
                 Log.WriteLog("Inner error: " + e.InnerException.Message);
-            Log.WriteLog("Trace: " + e.StackTrace);
 
             return goodAdvList;
         }

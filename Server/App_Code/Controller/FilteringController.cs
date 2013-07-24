@@ -44,12 +44,14 @@ public class FilteringController
                 _log.WriteLog("---------------------------------------------------------------------------" +
                              Environment.NewLine +
                              "Start " + _webFilterProcessName + " Web Filter processing.");
-                var Long = new LongRun(Filter);
-                var thread = new System.Threading.Thread(new System.Threading.ThreadStart(Long));
+                //var Long = new LongRun(Filter);
+                //var thread = new System.Threading.Thread(new System.Threading.ThreadStart(Long));
 
-                var jobHost = new JobHost(_log);
-                jobHost.DoWork(thread.Start);
+                //var jobHost = new JobHost(_log);
+                //jobHost.DoWork(thread.Start);
 
+                var thread = new System.Threading.Thread(new System.Threading.ThreadStart(Filter));
+                thread.Start();
             }
             catch (Exception exc)
             {

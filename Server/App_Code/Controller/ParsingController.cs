@@ -47,11 +47,14 @@ public class ParsingController
                 _log.WriteLog("---------------------------------------------------------------------------" +
                                 Environment.NewLine +
                                 "Start " + _parsingProcessName + " parse processing.");
-                var Long = new LongRun(Parse);
-                var thread = new System.Threading.Thread(new System.Threading.ThreadStart(Long));
+                //var Long = new LongRun(Parse);
+                //var thread = new System.Threading.Thread(new System.Threading.ThreadStart(Long));
 
-                var jobHost = new JobHost(_log);
-                jobHost.DoWork(thread.Start);
+                //var jobHost = new JobHost(_log);
+                //jobHost.DoWork(thread.Start);
+
+                var thread = new System.Threading.Thread(new System.Threading.ThreadStart(Parse));
+                thread.Start();
             }
             catch (Exception exc)
             {
