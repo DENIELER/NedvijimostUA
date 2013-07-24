@@ -11,8 +11,8 @@
     <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">
     <link rel="icon" href="~/favicon.ico" type="image/x-icon">
 
-    <link href="~/Content/css/bootstrap.css?version=2" rel="stylesheet" type="text/css" />
-    <link href="~/Content/css/main.css?version=2" type="text/css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.css?version=3" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/main.css?version=3" type="text/css" rel="stylesheet" />
 
     <script type="text/javascript" src="~/Scripts/jquery-2.0.2.min.js"></script>
 
@@ -46,21 +46,24 @@
 
                     <div style="float:left; width: 675px;height: 223px;">
                         <div class="row-fluid" style="height: 223px;">
-                            <div class="span7">
-                                <div style="height: 120px;">
-                                    <h1 style="color: #b8b8b8;position: relative; top: 20px; left: 10px;">Недвижимость</h1>
-                                    <h2 style="color: #dbdbdb;position: relative; top: 20px; left: 130px; font-size: 16px; width: 267px;">Каталог без посредников</h2>
+                            <div class="span7" style="color: #B4B4B4;">
+                                <div>
+                                    <h1>
+                                        Недвижимость
+                                        <br />
+                                        <small>Каталог без посредников</small>
+                                    </h1>
                                 </div>
 
-                                <div style="height: 65px; position:relative; top:28px;">
-                                    <h3 style="color: #b8b8b8; position: relative; left: 10px; top: 25px; z-index: 2; display: block;">Харьков</h3>
-                                    <img style="height: 66px; max-width: 222px; display: block; top: -31px; position: relative; z-index: 1;" src="~/Content/img/header_squares.png" alt="Squares"/> 
+                                <div style="position: relative; top: 37px;">
+                                    <h2 style="position:relative; top: 48px;">Харьков</h2>
+                                    <img style="height: 66px; width: 222px;" src="~/Content/img/header_squares.png" alt="Squares"/> 
                                 </div>
                             </div>
 
-                            <div class="span5" style="height: 223px;">
-                                <div style="width: 220px; background-color: #dbdbdb; height: 223px;">
-                                    <div style="padding-top: 10px;">
+                            <div class="span5 text-right" style="height: 223px;">
+                                <div style="width: 220px; background-color: #dbdbdb; height: 223px; display: inline-block;" class="text-left">
+                                    <div>
                                         @{
                                             Html.RenderAction("AuthorizationControl", "Authorization", new { area = "Controls" });
                                         }
@@ -84,15 +87,13 @@
                 </div>
             </div>
             
-            <div class="container" style="height: 43px; width: 1060px;">
-                    <div style="float:right; width: 682px; height: 43px;">
-                        <div id="mainMenu">
-                            <a href="@Url.Content("~/")" class="first">Главная</a>
-                            <a href="@Url.Content("~/Arhiv-obyavlenij")">Архив объявлений</a>
-                            <a href="@Url.Content("~/Novosti-nedvijimosti")">Новости и статьи</a>
-                            <a href="@Url.Content("~/Kontakti")" class="last">Контакты</a>
-                        </div>
-                    </div>
+            <div class="container" style="height: 55px; width: 1060px;">
+                <div id="mainMenu">
+                    <a href="@Url.Content("~/")">Главная</a>
+                    <a href="@Url.Content("~/Arhiv-obyavlenij")">Архив объявлений</a>
+                    <a href="@Url.Content("~/Novosti-nedvijimosti")">Новости и статьи</a>
+                    <a href="@Url.Content("~/Kontakti")">Контакты</a>
+                </div>
             </div>
 
     </div>

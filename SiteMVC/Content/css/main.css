@@ -68,40 +68,28 @@ a {
 /* Main menu */
 #mainMenu
 {
-    height: 36px;
-    background-color: #c5c5c5; 
-    border-radius: 7px; 
-    -moz-border-radius: 7px; 
+    background-color: #b4b4b4; 
     color: white; 
     font-size: 0;
+    height: 100%;
+    margin: 5px 0;
 }
     #mainMenu > a 
     {
         display: inline-block;
-        background-color: #acacac; 
+        background-color: #b4b4b4;
         width: 180px; 
-        height: 36px; 
+        height: 100%; 
         color: white; 
         text-decoration: none; 
-        line-height: 36px; 
         text-align: center;
-        font-size: 16px;
-        margin: 0 1px 0 1px;
+        line-height: 55px;
+        font-size: 18px;
+        margin: 0 1px;
     }
     #mainMenu > a:hover 
     {
-        background-color: #c5c5c5; 
-    }
-    #mainMenu > a.first 
-    {
-        border-radius: 7px 0 0 7px; 
-        -moz-border-radius: 7px 0 0 7px; 
-    }
-    #mainMenu > a.last
-    {
-        border-radius: 0 7px 7px 0; 
-        -moz-border-radius: 0 7px 7px 0; 
-        width: 134px;
+        background-color: #949494; 
     }
 /* END Main menu */
 
@@ -347,3 +335,18 @@ a#filterLink {
         border-top-color: #0f6894;
     }
 /* end Advertisments filter */
+
+#authorizationEnterButton {
+    background-color: #B4B4B4;
+    color: white;
+    height: 42px;
+    line-height: 42px;
+    border: none;
+    width: 100%;
+    display: block;
+    margin-top: 5px;
+}
+
+    #authorizationEnterButton:hover {
+        background-color: #949494;
+    }

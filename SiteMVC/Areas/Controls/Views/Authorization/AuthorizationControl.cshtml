@@ -2,16 +2,19 @@
 
 @if(!Model.IsAuthorized)
 {
-<div id="authorization" style="background-color: white; height: 110px; padding: 5px 0;">
-    <div style="clear:both;">Вход: <a href="~/Registration" style="float:right;">Регистрация</a></div>
+<div id="authorization" style="background-color: white; height: 130px; padding: 5px 0;">
+    <div style="clear:both; margin-bottom: 5px;">Вход: <a href="~/Registration" style="float:right;">Регистрация</a></div>
     @using(Html.BeginForm("LogIn", "Authorization", FormMethod.Post, new { id="authorizationForm", @class="form-inline"}))
     {
         @Html.TextBox("Login", null, new { @class = "input", placeholder = "Email/Логин" })
         @Html.Password("Password", null, new { @class = "input", placeholder = "Пароль" })
-        <label class="checkbox">
+        
+        <button type="submit" id="authorizationEnterButton">Войти</button>
+        
+        @Html.Hidden("RememberMe", false)
+        @*<label class="checkbox">
             @Html.CheckBox("RememberMe", false) Запомнить меня
-        </label>
-      <button type="submit" class="btn" style="float:right;">Войти</button>
+        </label>*@
     }
     <div style="clear:both;"></div>
 </div>
