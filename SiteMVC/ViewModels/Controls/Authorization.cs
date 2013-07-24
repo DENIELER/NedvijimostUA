@@ -15,8 +15,8 @@ namespace SiteMVC.ViewModels.Controls
         {
             get
             {
-                if (this.Login.Length > 20)
-                    return this.Login.Substring(0, 19) + "..";
+                if (this.Login.Length > 19)
+                    return this.Login.Substring(0, 17) + "..";
                 else return this.Login;
             }
         }
