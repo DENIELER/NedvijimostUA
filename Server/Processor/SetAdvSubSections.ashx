@@ -20,7 +20,7 @@ public class SetAdvSubSections : IHttpHandler
         if (!string.IsNullOrWhiteSpace(context.Request["password"])
             && context.Request["password"] == "gtycbz")
         {
-            var parser = new SetAdvSubSectionController(@"~/Logs/subsections.log");
+            var parser = new SetAdvSubSectionController("SubSectionsSetter");
             parser.StartSettingSubSections();
         }
     }
