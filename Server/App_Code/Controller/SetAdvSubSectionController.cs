@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 /// <summary>
@@ -40,11 +41,13 @@ public class SetAdvSubSectionController
                 _log.WriteLog("---------------------------------------------------------------------------" +
                                 Environment.NewLine +
                                 "Start " + TaskExecutedName + " setting processing.");
-                var Long = new LongRun(Parse);
-                var thread = new System.Threading.Thread(new System.Threading.ThreadStart(Long));
+                //var Long = new LongRun(Parse);
+                //var thread = new System.Threading.Thread(new System.Threading.ThreadStart(Long));
 
-                var jobHost = new JobHost(_log);
-                jobHost.DoWork(thread.Start);
+                //var jobHost = new JobHost(_log);
+                //jobHost.DoWork(thread.Start);
+
+                Task.Factory.StartNew(Parse);
             }
             catch (Exception exc)
             {

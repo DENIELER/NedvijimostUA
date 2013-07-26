@@ -6,6 +6,7 @@ using System.Web;
 using Model;
 using System.Threading;
 using System.Net;
+using System.Xml.Linq;
 
 public class AdvertsProcessing
 {
@@ -133,59 +134,59 @@ public class AdvertsProcessing
     {
         var goodAdvList = new List<Advertisment>();
 
-        var allDatabaseSubpurchases = (from subPurchaseObject in Context.SubPurchases
-                                       join subPurchasePhoneObject in Context.SubPurchasePhones
-                                          on subPurchaseObject.id equals subPurchasePhoneObject.SubPurchaseId
-                                       select new { SubPurchase = subPurchaseObject, SubPurchasePhone = subPurchasePhoneObject }).ToList();
+        int advertismentsCount = adversitments.Count;
 
-        if (!allDatabaseSubpurchases.Any())
+        List<Tuple<int, string>> advertismentsPhonesToFilter = new List<Tuple<int, string>>();
+        for(int i = 0; i < advertismentsCount; i++)
         {
-            Log.WriteLog("Database filtering...No advertisments was loaded from databae.");
-            return null;
-        }
-        else
-            Log.WriteLog("Database filtering... Loaded " + allDatabaseSubpurchases.Count() + " advertisments.");
-        
-        int tempCounter = 0;
-        foreach (var adversitment in adversitments)
-        {
-            SubPurchase subpurchase = null;
-            foreach (var advPhone in adversitment.AdvertismentPhones)
+            Advertisment adversitment = adversitments[i];
+            if (i == 0 || i % 50 == 0)
+                advertismentsPhonesToFilter.Clear();
+
+            foreach (var advertismentPhone in adversitment.AdvertismentPhones
+                .Where(p => !string.IsNullOrEmpty(p.phone)))
             {
-                if (!string.IsNullOrEmpty(advPhone.phone))
+                advertismentsPhonesToFilter
+                    .Add(
+                        new Tuple<int, string>
+                            (
+                                adversitment.Id, 
+                                SubpurchasesWorkflow.MakePhoneLikeExpression(advertismentPhone.phone)
+                            )
+                    );
+            }
+
+            if ((i + 1) % 50 == 0 || (i + 1) == advertismentsCount)
+            {
+                // The XML
+                XElement xml = new XElement("root",
+                    from adv in advertismentsPhonesToFilter
+                    select new XElement("a",
+                        new XElement("Id", adv.Item1),
+                        new XElement("p", adv.Item2)));
+                IQueryable<SubPurchaseCheckResult> goodAdvertismentsList = Context.CheckSubPurchases(xml);
+
+                foreach (var resultElement in goodAdvertismentsList)
                 {
-                    var advPhoneExpression = SubpurchasesWorkflow.MakePhoneLikeExpression(advPhone.phone);
-                    Regex regex = new Regex(string.Format("^{0}$", advPhoneExpression.Replace("%", ".*")), RegexOptions.IgnoreCase);
-                    
-                    var subpurchasePhonePair = allDatabaseSubpurchases.FirstOrDefault(
-                        sp =>
-                        {
-                            return regex.IsMatch(sp.SubPurchasePhone.phone);
-                        });
-                    
-                    if (subpurchasePhonePair != null && subpurchasePhonePair.SubPurchase != null)
+                    var currentAdvertisment = adversitments.SingleOrDefault(a => a.Id == resultElement.Id);
+                    if (currentAdvertisment != null)
                     {
-                        subpurchase = subpurchasePhonePair.SubPurchase;
-                        break;
+                        if (resultElement.SubPurchaseID == null)
+                            goodAdvList.Add(adversitment);
+                        else
+                        {
+                            adversitment.subpurchaseAdvertisment = true;
+                            adversitment.SubPurchase_Id = resultElement.SubPurchaseID;
+                        }
                     }
                 }
-            }
-            if (subpurchase == null)
-            {
-                goodAdvList.Add(adversitment);
-            }
-            else
-            {
-                adversitment.subpurchaseAdvertisment = true;
-                adversitment.SubPurchase = subpurchase;
 
                 Context.SubmitChanges();
             }
 
-            tempCounter++;
-            if (tempCounter % 50 == 0)
+            if (i % 50 == 0)
             {
-                Log.WriteLog("Database filtering..." + tempCounter.ToString() + " advertisments. " + 
+                Log.WriteLog("Database filtering..." + i.ToString() + " advertisments. " + 
                         "Good have founded " + goodAdvList.Count.ToString() + " adv.");
                 Utils.PingServer();
             }

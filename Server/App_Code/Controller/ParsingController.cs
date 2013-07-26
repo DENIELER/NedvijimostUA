@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 /// <summary>
@@ -53,8 +54,7 @@ public class ParsingController
                 //var jobHost = new JobHost(_log);
                 //jobHost.DoWork(thread.Start);
 
-                var thread = new System.Threading.Thread(new System.Threading.ThreadStart(Parse));
-                thread.Start();
+                Task.Factory.StartNew(Parse);
             }
             catch (Exception exc)
             {

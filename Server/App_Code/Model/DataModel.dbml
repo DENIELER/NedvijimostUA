@@ -182,4 +182,14 @@
       <Column Name="sectionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="" Member="SubPurchaseCheckResults">
+    <Type Name="SubPurchaseCheckResult" Id="ID1">
+      <Column Member="Id" Type="System.Int32" CanBeNull="false" />
+      <Column Member="SubPurchaseID" Type="System.Guid" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.CheckSubPurchases" Method="CheckSubPurchases" IsComposable="true">
+    <Parameter Name="advertismentPhones" Type="System.Xml.Linq.XElement" DbType="Xml" />
+    <ElementType IdRef="ID1" />
+  </Function>
 </Database>

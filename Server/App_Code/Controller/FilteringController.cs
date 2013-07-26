@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 /// <summary>
@@ -50,8 +51,7 @@ public class FilteringController
                 //var jobHost = new JobHost(_log);
                 //jobHost.DoWork(thread.Start);
 
-                var thread = new System.Threading.Thread(new System.Threading.ThreadStart(Filter));
-                thread.Start();
+                Task.Factory.StartNew(Filter);
             }
             catch (Exception exc)
             {
