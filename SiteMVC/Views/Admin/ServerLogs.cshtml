@@ -5,14 +5,48 @@
     Layout = "~/Views/Shared/_AdvertismentsLayout.cshtml";
 }
 
+@section Head
+{
+    <script type="text/javascript">
+        $(function () {
+            $('a.refreshServiceLink').click(function (e) {
+                e.preventDefault();
+
+                var url = $(this).data('url');
+                var linkImage = $(this).children('img');
+                linkImage.css({ '-webkit-transform': 'rotate(90deg)' });
+                linkImage.css({ '-moz-transform': 'rotate(90deg)' });
+                linkImage.css({ '-webkit-transition': '-webkit-transform 0.5s ease-in' });
+                linkImage.css({ '-moz-transition': '-moz-transform 0.5s ease-in' });
+                
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    cache: false,
+                    crossDomain: 'true',
+                    dataType: 'jsonp',
+                    data: null,
+                    success:
+                        function (data) {
+                            linkImage.css({ '-webkit-transform': 'rotate(-90deg)' });
+                            linkImage.css({ '-moz-transform': 'rotate(-90deg)' });
+                        }
+                });
+            });
+        });
+    </script>
+}
+
 @section Body
 {
     <h2>Логи сервера</h2>    
     <div class="tabbable tabs-left">
         <ul class="nav nav-tabs" id="tab">
-            @foreach(var serviceCode in Model.ServiceCodes)
+            @foreach(var serviceDescription in Model.ServiceCodes)
             {
-            <li><a href="#@serviceCode" data-toggle="tab" style="line-height:40px;">@serviceCode</a></li>
+            <li>
+                <a href="#@serviceDescription.ServiceCode" data-toggle="tab" style="line-height:40px;">@serviceDescription.ServiceCode</a>
+            </li>
             }
         </ul>
 
@@ -20,12 +54,18 @@
             @{ bool first = true; }
             @foreach(var logMessageList in Model.LogMessages)
             {
-            <div class="tab-pane@( first ? " active" : "" )" id="@logMessageList.Key">
+            <div class="tab-pane@( first ? " active" : "" )" id="@logMessageList.Key.ServiceCode">
+                <div style="margin-bottom: 30px;">
+                    <a class="refreshServiceLink" data-url="@logMessageList.Key.Url" style="cursor: pointer;">
+                        <img src="~/Content/img/Admin_ServerLog_refresh_icon.png" width="16" height="16" />
+                        Restart task
+                    </a>
+                </div>
                 <ul class="unstyled">
                 @foreach(var messages in logMessageList.Value)
                 {
                     <li style="line-height: 1.7em;">
-                        <strong>@messages.Item2</strong> @messages.Item1
+                        <strong>@messages.Date</strong> @messages.Message
                     </li>
                 }
                 </ul>

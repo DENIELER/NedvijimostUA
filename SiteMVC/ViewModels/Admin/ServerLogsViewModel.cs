@@ -9,10 +9,23 @@ namespace SiteMVC.ViewModels.Admin
     {
         public ServerLogsViewModel()
         {
-            LogMessages = new Dictionary<string, IEnumerable<Tuple<string, DateTime>>>();
+            LogMessages = new Dictionary<SeviceDescription, IEnumerable<LogLine>>();
         }
 
-        public IEnumerable<string> ServiceCodes { get; set; }
-        public Dictionary<string, IEnumerable<Tuple<string, DateTime>>> LogMessages { get; set; }
+        public IEnumerable<SeviceDescription> ServiceCodes { get; set; }
+
+        public Dictionary<SeviceDescription, IEnumerable<LogLine>> LogMessages { get; set; }
+
+        public class SeviceDescription
+        {
+            public string ServiceCode { get; set; }
+            public string Url { get; set; }
+        }
+
+        public class LogLine
+        {
+            public string Message { get; set; }
+            public DateTime Date { get; set; }
+        }
     }
 }

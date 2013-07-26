@@ -222,20 +222,26 @@ namespace SiteMVC.Controllers
 
             var serverLogs = new ServerLogsViewModel();
 
-            serverLogs.ServiceCodes = dataModel.ServerLogs
-                .Select(l => l.serviceCode)
-                .Distinct()
-                .OrderBy(l => l);
-            
-            foreach (var serviceCode in serverLogs.ServiceCodes)
+            serverLogs.ServiceCodes = dataModel.ServerTasks
+                .Select(x => new ServerLogsViewModel.SeviceDescription()
+                {
+                    ServiceCode = x.serviceCode, 
+                    Url = x.taskUrl
+                });
+
+            foreach (var serviceDescription in serverLogs.ServiceCodes)
             {
                 serverLogs.LogMessages.Add(
-                    serviceCode,
+                    serviceDescription,
                     dataModel.ServerLogs
-                        .Where(l => l.serviceCode == serviceCode)
+                        .Where(l => l.serviceCode == serviceDescription.ServiceCode)
                         .OrderByDescending(l => l.createDate)
                         .Take(100)
-                        .Select(l => new Tuple<string, DateTime>(l.message, l.createDate)));
+                        .Select(l => new ServerLogsViewModel.LogLine()
+                        {
+                            Message = l.message,
+                            Date = l.createDate
+                        }));
             }
 
             return View(serverLogs);

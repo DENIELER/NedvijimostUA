@@ -217,6 +217,14 @@ namespace SiteMVC.Models
 				return this.GetTable<ServerLog>();
 			}
 		}
+		
+		public System.Data.Linq.Table<ServerTask> ServerTasks
+		{
+			get
+			{
+				return this.GetTable<ServerTask>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.viewAdvertismentPhones")]
@@ -4205,6 +4213,51 @@ namespace SiteMVC.Models
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ServerTasks")]
+	public partial class ServerTask
+	{
+		
+		private string _serviceCode;
+		
+		private string _taskUrl;
+		
+		public ServerTask()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceCode", DbType="VarChar(100)")]
+		public string serviceCode
+		{
+			get
+			{
+				return this._serviceCode;
+			}
+			set
+			{
+				if ((this._serviceCode != value))
+				{
+					this._serviceCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_taskUrl", DbType="VarChar(MAX)")]
+		public string taskUrl
+		{
+			get
+			{
+				return this._taskUrl;
+			}
+			set
+			{
+				if ((this._taskUrl != value))
+				{
+					this._taskUrl = value;
+				}
 			}
 		}
 	}

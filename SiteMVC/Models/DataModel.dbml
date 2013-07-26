@@ -209,4 +209,10 @@
       <Column Name="sectionId" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.ServerTasks" Member="ServerTasks">
+    <Type Name="ServerTask">
+      <Column Name="serviceCode" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="taskUrl" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>
