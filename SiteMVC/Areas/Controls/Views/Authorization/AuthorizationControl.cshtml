@@ -6,8 +6,8 @@
     <div style="clear:both; margin-bottom: 5px;">Вход: <a href="~/Registration" style="float:right;">Регистрация</a></div>
     @using(Html.BeginForm("LogIn", "Authorization", FormMethod.Post, new { id="authorizationForm", @class="form-inline"}))
     {
-        @Html.TextBox("Login", null, new { @class = "input", placeholder = "Email/Логин" })
-        @Html.Password("Password", null, new { @class = "input", placeholder = "Пароль" })
+        @Html.TextBox("Login", null, new { @class = "input input-xlarge", placeholder = "Email/Логин" })
+        @Html.Password("Password", null, new { @class = "input input-xlarge", placeholder = "Пароль" })
         
         <button type="submit" id="authorizationEnterButton">Войти</button>
         
