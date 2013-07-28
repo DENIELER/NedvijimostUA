@@ -227,7 +227,8 @@ namespace SiteMVC.Controllers
                 {
                     ServiceCode = x.serviceCode, 
                     Url = x.taskUrl
-                });
+                })
+                .OrderBy(x => x.ServiceCode);
 
             foreach (var serviceDescription in serverLogs.ServiceCodes)
             {
