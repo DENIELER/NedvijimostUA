@@ -7,15 +7,15 @@ using System.Web;
 /// <summary>
 /// Сводное описание для SubpurchasesWorkflow
 /// </summary>
-public class SubpurchasesWorkflow
+public class SubPurchases
 {
     private Model.DataModel _context;
-	public SubpurchasesWorkflow()
+	public SubPurchases()
 	{
         _context = new Model.DataModel();
 	}
 
-    public SubpurchasesWorkflow(Model.DataModel context)
+    public SubPurchases(Model.DataModel context)
     {
         _context = context;
     }

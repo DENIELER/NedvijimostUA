@@ -64,15 +64,16 @@ public class FilteringController
         {
             var context = new Model.DataModel();
 
-            var advertismentsWorkflow = new AdvertismentsWorkflow(context);
-            var adversitmentsView = advertismentsWorkflow.LoadTodayAdversitments(AdvertismentsState.JustParsed, _advertismentSectionCode);
+            var advertismentsWorkflow = new AdvertismentsLoadingWorkflow(context);
+            var advertisments = advertismentsWorkflow.LoadTodayAdversitments(AdvertismentState.JustParsed, _advertismentSectionCode);
 
-            if (adversitmentsView != null)
+            if (advertisments != null)
             {
-                var advertsProcessing = new AdvertsProcessing(context);
-                advertsProcessing.Log = _log;
-                var adversitmentsWithoutSubpurchasers = advertsProcessing.FilterSubpurchasers(adversitmentsView.Advertisments, _advertismentSectionCode);
-                _log.WriteLog("Filtering finished.");
+                var advertsProcessing = new FilterWorkflow(_advertismentSectionCode, context);
+                advertsProcessing.SetLog(_log);
+
+                int goodAdvertismentsCount = advertsProcessing.FilterFromRealtors(advertisments);
+                _log.WriteLog("Filtering finished. Good - " + goodAdvertismentsCount);
             }
         }
         catch (Exception e)

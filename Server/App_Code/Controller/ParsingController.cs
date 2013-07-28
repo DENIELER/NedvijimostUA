@@ -72,11 +72,11 @@ public class ParsingController
                 : new SiteSettingsWorkflow(Resources.Constants.SiteSettingsFile, _advertismentSectionCode);
             System.Collections.Generic.IList<SiteSetting> siteSettings = siteSettingsWorkflow.getSiteSettings();
 
-            var advertsProcessing = new AdvertsProcessing(_advertismentSectionCode);
-            advertsProcessing.Log = _log;
+            var advertsProcessing = new CrawlWorkflow(_advertismentSectionCode);
+            advertsProcessing.SetLog(_log);
             // capture advertismens from web sites
-            advertsProcessing.CaptureAdvertisments(siteSettings);
-            _log.WriteLog("Parsing finished.");
+            var crawledCount = advertsProcessing.Crawl(siteSettings);
+            _log.WriteLog("Parsing finished. Crawled - " + crawledCount);
         }
         catch (Exception e)
         {

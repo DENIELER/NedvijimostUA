@@ -3,43 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-class SubSectionsSeparator
+class SubSectionsSeparationWorkflow : BaseContextWorkflow
 {
-    private Model.DataModel _context;
-    private Log _log;
-    private string _sectionCode;
+    private string sectionCode;
 
-    public SubSectionsSeparator(string SectionCode, Model.DataModel Context, Log Log)
+    public SubSectionsSeparationWorkflow(string sectionCode, Model.DataModel context)
+        : base(context)
     {
-        // TODO: Complete member initialization
-        this._sectionCode = SectionCode;
-        this._context = Context;
-        this._log = Log;
+        this.sectionCode = sectionCode;
     }
 
     public bool NeedToDivideIntoSubSections
     {
         get
         {
-            return _context.AdvertismentSubSections
-                .Where(s => s.AdvertismentSection.code == _sectionCode)
+            return context.AdvertismentSubSections
+                .Where(s => s.AdvertismentSection.code == sectionCode)
                 .Any();
         }
     }
 
-    public void DivideIntoSubSections(IList<ParsedAdvertisment> advertisments)
+    public void DivideIntoSubSections(ref List<Server.Entities.Advertisment> advertisments)
     {
-        List<Model.AdvertismentSubSection> subSections = _context.AdvertismentSubSections
-                .Where(s => s.AdvertismentSection.code == _sectionCode)
+        List<Model.AdvertismentSubSection> subSections = context.AdvertismentSubSections
+                .Where(s => s.AdvertismentSection.code == sectionCode)
                 .ToList();
 
         List<string> subSectionCodes = subSections.Select(s => s.code).ToList();
 
         Dictionary<string, List<string>> subSectionDeterminationWords =
             Settings.SubSectionDeterminationWordsSettings.Instance
-            .getSubSectionsDeterminationWords(_sectionCode, subSectionCodes);
+            .getSubSectionsDeterminationWords(sectionCode, subSectionCodes);
 
-        foreach (ParsedAdvertisment advertisment in advertisments)
+        foreach (Server.Entities.Advertisment advertisment in advertisments)
         {
             foreach (var subSectionWords in subSectionDeterminationWords)
             {
