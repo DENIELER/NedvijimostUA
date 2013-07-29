@@ -224,6 +224,11 @@ namespace SiteMVC.Areas.Controls.Controllers
 
                 dataModel.SubmitChanges();
             }
+            else
+            {
+                if (SystemUtils.Authorization.IsAdmin)
+                    return Json("Already exists in db");
+            }
 
             return Json("success");
         }

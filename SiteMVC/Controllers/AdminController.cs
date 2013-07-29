@@ -70,6 +70,23 @@ namespace SiteMVC.Controllers
             }
 
             dataModel.SubmitChanges();
+
+            foreach(var subpurchasePhone in dbSubpurchase.SubPurchasePhones)
+            {
+                var advertismentIDs = dataModel.AdvertismentPhones
+                                    .Where(ap => ap.phone == subpurchasePhone.phone)
+                                    .Select(ap => ap.AdvertismentId);
+                foreach (var advertismentID in advertismentIDs)
+                {
+                    var advertisment = dataModel.Advertisments
+                                        .SingleOrDefault(a => a.Id == advertismentID);
+                    if (advertisment != null)
+                    {
+                        advertisment.not_show_advertisment = true;
+                        dataModel.SubmitChanges();
+                    }
+                }
+            }   
             return PartialView("~/Views/Controls/FormSubmitSaveSuccess.cshtml");
         }
 
@@ -218,6 +235,9 @@ namespace SiteMVC.Controllers
 
         public ActionResult ServerLogs()
         {
+            if (!SystemUtils.Authorization.IsAdmin)
+                return RedirectToAction("NotAdminUser", "Authentication");
+
             var dataModel = new DataModel();
 
             var serverLogs = new ServerLogsViewModel();
