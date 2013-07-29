@@ -90,11 +90,11 @@ public class FilterWorkflow : BaseContextWorkflow
                     if (currentAdvertisment != null)
                     {
                         if (resultElement.SubPurchaseID == null)
-                            goodAdvList.Add(adversitment);
+                            goodAdvList.Add(currentAdvertisment);
                         else
                         {
-                            adversitment.subpurchaseAdvertisment = true;
-                            adversitment.SubPurchase_Id = resultElement.SubPurchaseID;
+                            currentAdvertisment.subpurchaseAdvertisment = true;
+                            currentAdvertisment.SubPurchase_Id = resultElement.SubPurchaseID;
                         }
                     }
                 }

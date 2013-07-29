@@ -74,19 +74,20 @@ public class SubPurchases
         if (subpurchase == null)
             return null;
 
-        List<string> formatedPhones = GetPhoneFormatsList(phone);
-        foreach (string formatedPhone in formatedPhones)
-        {
+        //List<string> formatedPhones = GetPhoneFormatsList(phone);
+        //foreach (string formatedPhone in formatedPhones)
+        //{
             var newSubpurchasePhone = new Model.SubPurchasePhone()
             {
                 Id = Guid.NewGuid(),
-                phone = formatedPhone,
+                //phone = formatedPhone,
+                phone = phone,
                 createDate = Utils.GetUkranianDateTimeNow(),
                 SubPurchaseId = subpurchase.id
             };
             _context.SubPurchasePhones.InsertOnSubmit(newSubpurchasePhone);
             _context.SubmitChanges();
-        }
+        //}
 
         return subpurchase;
     }
