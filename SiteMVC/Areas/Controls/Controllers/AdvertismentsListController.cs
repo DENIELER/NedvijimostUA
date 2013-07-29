@@ -227,7 +227,16 @@ namespace SiteMVC.Areas.Controls.Controllers
             else
             {
                 if (SystemUtils.Authorization.IsAdmin)
+                {
+                    var advertisment = dataModel.Advertisments
+                                       .SingleOrDefault(a => a.Id == advertismentID);
+                    if (advertisment != null)
+                    {
+                        advertisment.not_show_advertisment = true;
+                        dataModel.SubmitChanges();
+                    }
                     return Json("Already exists in db");
+                }
             }
 
             return Json("success");
