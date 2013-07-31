@@ -223,6 +223,8 @@ public class CrawlWorkflow : BaseContextWorkflow
         if (textPhones != null)
             resultPhones.AddRange(textPhones);
 
+        resultPhones.ForEach(p => p = Phone.RemoveWrongSymbols(p));
+
         return resultPhones.Distinct().ToList();
     }
     private List<string> CrawlPhonesFromContainer(HtmlNode advertismentsContainer, SiteSetting siteSetting)
