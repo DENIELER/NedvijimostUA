@@ -168,4 +168,25 @@
     <remove_image>/classes/estobjava-html/icon/metro-red.png</remove_image>
     <remove_image>/Resources/images/content/link-act-ico.png</remove_image>
   </remove_images>
+
+  <priceFormats>
+    <priceFormat format="x.xxxгрн">\d{1}.\d{3}грн</priceFormat>
+    <priceFormat format="x.xxxгр">\d{1}.\d{3}гр</priceFormat>
+    <priceFormat format="x.xxx грн">\d{1}.\d{3} грн</priceFormat>
+    <priceFormat format="x.xxx гр">\d{1}.\d{3} гр</priceFormat>
+    <priceFormat format="цена x.xxx">цена \d{1}.\d{3}</priceFormat>
+    <priceFormat format="x.xxx/мес">\d{1}.\d{3}/мес</priceFormat>
+    <priceFormat format="xxxxгрн">\d{4}грн</priceFormat>
+    <priceFormat format="xxxxгр">\d{4}гр</priceFormat>
+    <priceFormat format="xxxгрн">\d{3}грн</priceFormat>
+    <priceFormat format="xxxгр">\d{3}гр</priceFormat>
+    <priceFormat format="xxxx грн">\d{4} грн</priceFormat>
+    <priceFormat format="xxxx гр">\d{4} гр</priceFormat>
+    <priceFormat format="цена xxxx">цена \d{4}</priceFormat>
+    <priceFormat format="xxxx/мес">\d{4}/мес</priceFormat>
+    <priceFormat format="xxx грн">\d{3} грн</priceFormat>
+    <priceFormat format="xxx гр">\d{3} гр</priceFormat>
+    <priceFormat format="цена xxx">цена \d{3}</priceFormat>
+    <priceFormat format="xxx/мес">\d{3}/мес</priceFormat>
+  </priceFormats>
 </settings>

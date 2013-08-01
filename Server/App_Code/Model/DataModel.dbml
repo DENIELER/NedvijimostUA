@@ -35,6 +35,8 @@
       <Column Name="isSpecialDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="AdvertismentSubSection_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" CanBeNull="true" />
+      <Column Member="Address1" Type="System.String" CanBeNull="true" />
       <Association Name="Advertisment_AdvertismentPhone" Member="AdvertismentPhones" ThisKey="Id" OtherKey="AdvertismentId" Type="AdvertismentPhone" />
       <Association Name="Advertisment_AdvertismentsPhoto" Member="AdvertismentsPhotos" Storage="_AdvertismentsPhotoes" ThisKey="Id" OtherKey="Advertisment_Id" Type="AdvertismentsPhoto" />
       <Association Name="SearchResult_Advertisment" Member="SearchResult" ThisKey="searchresult_id" OtherKey="Id" Type="SearchResult" IsForeignKey="true" DeleteRule="CASCADE" />
@@ -184,8 +186,8 @@
   </Table>
   <Table Name="" Member="SubPurchaseCheckResults">
     <Type Name="SubPurchaseCheckResult" Id="ID1">
-      <Column Member="Id" Type="System.Int32" CanBeNull="false" />
-      <Column Member="SubPurchaseID" Type="System.Guid" CanBeNull="true" />
+      <Column Name="Id" Type="System.Int32" CanBeNull="false" />
+      <Column Name="SubPurchaseID" Type="System.Guid" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.CheckSubPurchases" Method="CheckSubPurchases" IsComposable="true">

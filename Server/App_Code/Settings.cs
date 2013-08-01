@@ -59,6 +59,22 @@ public class Settings
         return researchPhoneFormatsResult;
     }
 
+    public static string getPricesFormatsRegexTemplate()
+    {
+        string regexTemplate = "";
+
+        var xmlDocument = new XmlDocument();
+        xmlDocument.Load(System.Web.Hosting.HostingEnvironment.MapPath(settingsFileName));
+
+        XmlNodeList priceFormats = xmlDocument.GetElementsByTagName("priceFormat");
+        foreach (XmlNode priceFormat in priceFormats)
+        {
+            regexTemplate += priceFormat.InnerText + "|";
+        }
+
+        return regexTemplate.Remove(regexTemplate.Length - 1);
+    }
+
     public class SubSectionDeterminationWordsSettings
     {
         private static SubSectionDeterminationWordsSettings _instance;

@@ -184,7 +184,9 @@ public class CrawlWorkflow : BaseContextWorkflow
                             Phones = CrawlPhones(advertismentContainerNode, advertismentText, siteSetting),
                             PhotoUrls = CrawlPhotos(advertismentContainerNode, siteSetting),
                             Link = pageUrl,
-                            SiteName = siteSetting.name
+                            SiteName = siteSetting.name,
+                            Price = CrawlPrice(advertismentText, siteSetting),
+                            Address1 = CrawlAddress(advertismentText, siteSetting)
                         };
 
                         advertismentsCrawledCount++;
@@ -298,6 +300,38 @@ public class CrawlWorkflow : BaseContextWorkflow
         return imageUrls;
     }
     #endregion Crawl photos
+    #region Crawl price
+    private decimal? CrawlPrice(string advertismentText, SiteSetting siteSetting)
+    {
+        if (!string.IsNullOrEmpty(advertismentText))
+        {
+            string pricesRegexList = Settings.getPricesFormatsRegexTemplate();
+            var parsingRegex = new Regex(pricesRegexList);
+
+            var matchCollection = parsingRegex.Matches(advertismentText);
+            List<string> matchedPrices =
+                (from Match match in matchCollection
+                 select match.Value).ToList();
+
+            var decimalRegex = new Regex(@"\d+");
+            decimal price;
+            foreach (string matchedPrice in matchedPrices)
+            {
+                Match decimalPriceMatch = decimalRegex.Match(matchedPrice.Replace(".", ""));
+                if (decimal.TryParse(decimalPriceMatch.Value, out price))
+                    return price;
+            }
+        }
+
+        return null;
+    }
+    #endregion Crawlprice
+    #region Crawl address
+    private string CrawlAddress(string advertismentText, SiteSetting siteSetting)
+    {
+        return null;
+    }
+    #endregion Crawl address
     #endregion Get Advertisments
 
     private void PrepairAdvertisments(string sectionCode, Model.DataModel context, ref List<Server.Entities.Advertisment> advertisments)
@@ -344,7 +378,9 @@ public class CrawlWorkflow : BaseContextWorkflow
                         link = advertisment.Link,
                         siteName = advertisment.SiteName,
                         subpurchaseAdvertisment = true,
-                        AdvertismentSubSection = subSectionObject
+                        AdvertismentSubSection = subSectionObject,
+                        Price = advertisment.Price,
+                        Address1 = advertisment.Address1
                     };
                     context.Advertisments.InsertOnSubmit(advertismentEntity);
 

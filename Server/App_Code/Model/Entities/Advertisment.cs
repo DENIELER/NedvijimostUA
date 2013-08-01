@@ -17,6 +17,9 @@ namespace Server.Entities
         public int? SectionID { get; set; }
         public int? SubSectionID { get; set; }
 
+        public decimal? Price { get; set; }
+        public string Address1 { get; set; }
+
         public Advertisment()
         {
 
