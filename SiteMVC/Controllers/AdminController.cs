@@ -227,7 +227,8 @@ namespace SiteMVC.Controllers
             var subpurchaseAdvertisments = subpurchaseAdvertismentsOld
                 .Union(subpurchaseAdvertismentsNew)
                 .OrderBy(x => x.state)
-                .OrderByDescending(x => x.date);
+                .OrderByDescending(x => x.date)
+                .Take(10);
             if (subpurchaseAdvertisments.Any())
                 return Json(subpurchaseAdvertisments);
             else return Json(new { text = "Нет объявлений", state = "new", date = "none" });
