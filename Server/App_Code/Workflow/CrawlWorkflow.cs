@@ -329,6 +329,26 @@ public class CrawlWorkflow : BaseContextWorkflow
     #region Crawl address
     private string CrawlAddress(string advertismentText, SiteSetting siteSetting)
     {
+        if (!string.IsNullOrEmpty(advertismentText))
+        {
+            string addressRegexList = Settings.getAddressFormatsRegexTemplate();
+            var parsingRegex = new Regex(addressRegexList);
+
+            var matchCollection = parsingRegex.Matches(advertismentText);
+            List<string> matchedPrices =
+                (from Match match in matchCollection
+                 select match.Value).ToList();
+
+            var decimalRegex = new Regex(@"\d+");
+            decimal price;
+            foreach (string matchedPrice in matchedPrices)
+            {
+                Match decimalPriceMatch = decimalRegex.Match(matchedPrice.Replace(".", ""));
+                if (decimal.TryParse(decimalPriceMatch.Value, out price))
+                    return price;
+            }
+        }
+
         return null;
     }
     #endregion Crawl address

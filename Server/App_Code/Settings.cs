@@ -75,6 +75,22 @@ public class Settings
         return regexTemplate.Remove(regexTemplate.Length - 1);
     }
 
+    public static string getAddressFormatsRegexTemplate()
+    {
+        string regexTemplate = "";
+
+        var xmlDocument = new XmlDocument();
+        xmlDocument.Load(System.Web.Hosting.HostingEnvironment.MapPath(settingsFileName));
+
+        XmlNodeList addressFormats = xmlDocument.GetElementsByTagName("addressFormat");
+        foreach (XmlNode addressFormat in addressFormats)
+        {
+            regexTemplate += addressFormat.InnerText + "|";
+        }
+
+        return regexTemplate.Remove(regexTemplate.Length - 1);
+    }
+
     public class SubSectionDeterminationWordsSettings
     {
         private static SubSectionDeterminationWordsSettings _instance;

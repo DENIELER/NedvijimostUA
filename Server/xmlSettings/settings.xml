@@ -189,4 +189,8 @@
     <priceFormat format="цена xxx">цена \d{3}</priceFormat>
     <priceFormat format="xxx/мес">\d{3}/мес</priceFormat>
   </priceFormats>
+
+  <addressFormats>
+    
+  </addressFormats>
 </settings>
