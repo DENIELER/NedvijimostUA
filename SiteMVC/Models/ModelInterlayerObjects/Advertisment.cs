@@ -18,6 +18,9 @@ namespace SiteMVC.Models.ModelInterlayerObjects
             this.SiteName = entity.siteName;
             this.IsSpecial = entity.isSpecial;
 
+            this.Price = entity.Price;
+            this.Address1 = entity.Address1;
+
             this.Phones = entity.AdvertismentPhones.Select(p => new Phone(p)).ToList();
             this.Photos = entity.AdvertismentsPhotos.Select(p => new Photo(p)).ToList();
         }
@@ -37,6 +40,9 @@ namespace SiteMVC.Models.ModelInterlayerObjects
         public string Link { get; set; }
         public string SiteName { get; set; }
         public bool IsSpecial { get; set; }
+
+        public decimal? Price { get; set; }
+        public string Address1 { get; set; }
 
         public List<Phone> Phones { get; set; }
         public List<Photo> Photos { get; set; }

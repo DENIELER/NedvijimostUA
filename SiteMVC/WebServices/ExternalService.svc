@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="SiteMVC.WebServices.ExternalService" CodeBehind="ExternalService.svc.cs" %>

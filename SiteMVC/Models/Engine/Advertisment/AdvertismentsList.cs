@@ -68,4 +68,13 @@ namespace SiteMVC.Models.Engine.Advertisment
             _advertisments = list;
         }
     }
+
+    [DataContract]
+    public class ExternalAdvertisment
+    {
+        [DataMember]
+        public string Text { get; set; }
+        [DataMember]
+        public decimal? Price { get; set; }
+    }
 }

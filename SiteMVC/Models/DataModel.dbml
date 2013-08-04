@@ -74,6 +74,7 @@
       <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Address1" Type="System.String" CanBeNull="true" />
       <Column Name="CountByTextColumn" Type="System.Int32" IsReadOnly="true" CanBeNull="false" />
+      <Column Member="Price" Type="System.Decimal" CanBeNull="true" />
       <Association Name="viewAdvertisment_AdvertismentPhone" Member="AdvertismentPhones" ThisKey="Id" OtherKey="AdvertismentId" Type="AdvertismentPhone" />
       <Association Name="viewAdvertisment_AdvertismentsPhoto" Member="AdvertismentsPhotos" ThisKey="Id" OtherKey="Advertisment_Id" Type="AdvertismentsPhoto" />
       <Association Name="SearchResult_viewAdvertisment" Member="SearchResult" ThisKey="searchresult_id" OtherKey="Id" Type="SearchResult" IsForeignKey="true" />
@@ -194,6 +195,7 @@
       <Column Name="AdvertismentSubSection_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Address1" Type="System.String" CanBeNull="true" />
+      <Column Member="Price" Type="System.Decimal" CanBeNull="true" />
       <Association Name="Advertisment_AdvertismentPhone" Member="AdvertismentPhones" ThisKey="Id" OtherKey="AdvertismentId" Type="AdvertismentPhone" />
       <Association Name="Advertisment_AdvertismentsPhoto" Member="AdvertismentsPhotos" ThisKey="Id" OtherKey="Advertisment_Id" Type="AdvertismentsPhoto" />
       <Association Name="SearchResult_Advertisment" Member="SearchResult" ThisKey="searchresult_id" OtherKey="Id" Type="SearchResult" IsForeignKey="true" />
