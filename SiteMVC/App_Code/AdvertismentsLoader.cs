@@ -108,6 +108,9 @@ namespace SiteMVC.App_Code
 
             if (filter.OnlyNew)
                 advertisments = advertisments.Where(adv => adv.CountByTextColumn == 1);
+
+            if (filter.NearUndeground)
+                advertisments = advertisments.Where(adv => adv.UndergroundStationID != null);
         }
 
         private IQueryable<viewAdvertisment> LoadAdvertismentsByDate(DateTime dateTimeFrom, DateTime dateTimeTo)

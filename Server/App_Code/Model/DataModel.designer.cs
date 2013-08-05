@@ -66,6 +66,9 @@ namespace Model
     partial void InsertServerLog(ServerLog instance);
     partial void UpdateServerLog(ServerLog instance);
     partial void DeleteServerLog(ServerLog instance);
+    partial void InsertUndergroundStation(UndergroundStation instance);
+    partial void UpdateUndergroundStation(UndergroundStation instance);
+    partial void DeleteUndergroundStation(UndergroundStation instance);
     #endregion
 		
 		public DataModel() : 
@@ -215,6 +218,14 @@ namespace Model
 			get
 			{
 				return this.GetTable<SubPurchaseCheckResult>();
+			}
+		}
+		
+		public System.Data.Linq.Table<UndergroundStation> UndergroundStations
+		{
+			get
+			{
+				return this.GetTable<UndergroundStation>();
 			}
 		}
 		
@@ -576,6 +587,8 @@ namespace Model
 		
 		private string _Address1;
 		
+		private System.Nullable<int> _UndergroundStationID;
+		
 		private EntitySet<AdvertismentPhone> _AdvertismentPhones;
 		
 		private EntitySet<AdvertismentsPhoto> _AdvertismentsPhotoes;
@@ -628,6 +641,8 @@ namespace Model
     partial void OnPriceChanged();
     partial void OnAddress1Changing(string value);
     partial void OnAddress1Changed();
+    partial void OnUndergroundStationIDChanging(System.Nullable<int> value);
+    partial void OnUndergroundStationIDChanged();
     #endregion
 		
 		public Advertisment()
@@ -1013,6 +1028,26 @@ namespace Model
 					this._Address1 = value;
 					this.SendPropertyChanged("Address1");
 					this.OnAddress1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UndergroundStationID")]
+		public System.Nullable<int> UndergroundStationID
+		{
+			get
+			{
+				return this._UndergroundStationID;
+			}
+			set
+			{
+				if ((this._UndergroundStationID != value))
+				{
+					this.OnUndergroundStationIDChanging(value);
+					this.SendPropertyChanging();
+					this._UndergroundStationID = value;
+					this.SendPropertyChanged("UndergroundStationID");
+					this.OnUndergroundStationIDChanged();
 				}
 			}
 		}
@@ -3833,6 +3868,140 @@ namespace Model
 				{
 					this._SubPurchaseID = value;
 				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UndergroundStations")]
+	public partial class UndergroundStation : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _StationID;
+		
+		private string _Name;
+		
+		private string _Filter;
+		
+		private System.Nullable<System.Guid> _CityID;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnStationIDChanging(int value);
+    partial void OnStationIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnFilterChanging(string value);
+    partial void OnFilterChanged();
+    partial void OnCityIDChanging(System.Nullable<System.Guid> value);
+    partial void OnCityIDChanged();
+    #endregion
+		
+		public UndergroundStation()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StationID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int StationID
+		{
+			get
+			{
+				return this._StationID;
+			}
+			set
+			{
+				if ((this._StationID != value))
+				{
+					this.OnStationIDChanging(value);
+					this.SendPropertyChanging();
+					this._StationID = value;
+					this.SendPropertyChanged("StationID");
+					this.OnStationIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Filter", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Filter
+		{
+			get
+			{
+				return this._Filter;
+			}
+			set
+			{
+				if ((this._Filter != value))
+				{
+					this.OnFilterChanging(value);
+					this.SendPropertyChanging();
+					this._Filter = value;
+					this.SendPropertyChanged("Filter");
+					this.OnFilterChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CityID", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> CityID
+		{
+			get
+			{
+				return this._CityID;
+			}
+			set
+			{
+				if ((this._CityID != value))
+				{
+					this.OnCityIDChanging(value);
+					this.SendPropertyChanging();
+					this._CityID = value;
+					this.SendPropertyChanged("CityID");
+					this.OnCityIDChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

@@ -362,6 +362,10 @@ public class CrawlWorkflow : BaseContextWorkflow
         var subSectionsSeparator = new SubSectionsSeparationWorkflow(sectionCode, context);
         if (subSectionsSeparator.NeedToDivideIntoSubSections)
             subSectionsSeparator.DivideIntoSubSections(ref advertisments);
+
+        WriteLog("Underground stations detection.");
+        var undergroundStationsDetectionWorkflow = new UndergroundStationDetectionWorkflow();
+        undergroundStationsDetectionWorkflow.GetUndergroundStations(ref advertisments);
     }
 
     private int SaveAdvertisments(Model.SearchResult searchResult, IList<Server.Entities.Advertisment> advertisments)
@@ -400,7 +404,8 @@ public class CrawlWorkflow : BaseContextWorkflow
                         subpurchaseAdvertisment = true,
                         AdvertismentSubSection = subSectionObject,
                         Price = advertisment.Price,
-                        Address1 = advertisment.Address1
+                        Address1 = advertisment.Address1,
+                        UndergroundStationID = advertisment.UndergroundStationID
                     };
                     context.Advertisments.InsertOnSubmit(advertismentEntity);
 

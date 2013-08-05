@@ -20,6 +20,8 @@ namespace Server.Entities
         public decimal? Price { get; set; }
         public string Address1 { get; set; }
 
+        public int? UndergroundStationID { get; set; }
+
         public Advertisment()
         {
 

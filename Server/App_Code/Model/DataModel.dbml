@@ -36,7 +36,8 @@
       <Column Name="AdvertismentSubSection_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Price" Type="System.Decimal" CanBeNull="true" />
-      <Column Member="Address1" Type="System.String" CanBeNull="true" />
+      <Column Name="Address1" Type="System.String" CanBeNull="true" />
+      <Column Member="UndergroundStationID" Type="System.Int32" CanBeNull="true" />
       <Association Name="Advertisment_AdvertismentPhone" Member="AdvertismentPhones" ThisKey="Id" OtherKey="AdvertismentId" Type="AdvertismentPhone" />
       <Association Name="Advertisment_AdvertismentsPhoto" Member="AdvertismentsPhotos" Storage="_AdvertismentsPhotoes" ThisKey="Id" OtherKey="Advertisment_Id" Type="AdvertismentsPhoto" />
       <Association Name="SearchResult_Advertisment" Member="SearchResult" ThisKey="searchresult_id" OtherKey="Id" Type="SearchResult" IsForeignKey="true" DeleteRule="CASCADE" />
@@ -188,6 +189,14 @@
     <Type Name="SubPurchaseCheckResult" Id="ID1">
       <Column Name="Id" Type="System.Int32" CanBeNull="false" />
       <Column Name="SubPurchaseID" Type="System.Guid" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UndergroundStations" Member="UndergroundStations">
+    <Type Name="UndergroundStation">
+      <Column Name="StationID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Filter" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="CityID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.CheckSubPurchases" Method="CheckSubPurchases" IsComposable="true">

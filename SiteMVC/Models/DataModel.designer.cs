@@ -1139,6 +1139,8 @@ namespace SiteMVC.Models
 		
 		private System.Nullable<decimal> _Price;
 		
+		private System.Nullable<int> _UndergroundStationID;
+		
 		private EntitySet<AdvertismentPhone> _AdvertismentPhones;
 		
 		private EntitySet<AdvertismentsPhoto> _AdvertismentsPhotos;
@@ -1185,6 +1187,8 @@ namespace SiteMVC.Models
     partial void OnAddress1Changed();
     partial void OnPriceChanging(System.Nullable<decimal> value);
     partial void OnPriceChanged();
+    partial void OnUndergroundStationIDChanging(System.Nullable<int> value);
+    partial void OnUndergroundStationIDChanged();
     #endregion
 		
 		public viewAdvertisment()
@@ -1564,6 +1568,26 @@ namespace SiteMVC.Models
 					this._Price = value;
 					this.SendPropertyChanged("Price");
 					this.OnPriceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UndergroundStationID")]
+		public System.Nullable<int> UndergroundStationID
+		{
+			get
+			{
+				return this._UndergroundStationID;
+			}
+			set
+			{
+				if ((this._UndergroundStationID != value))
+				{
+					this.OnUndergroundStationIDChanging(value);
+					this.SendPropertyChanging();
+					this._UndergroundStationID = value;
+					this.SendPropertyChanged("UndergroundStationID");
+					this.OnUndergroundStationIDChanged();
 				}
 			}
 		}
@@ -3558,6 +3582,8 @@ namespace SiteMVC.Models
 		
 		private System.Nullable<decimal> _Price;
 		
+		private System.Nullable<int> _UndergroundStationID;
+		
 		private EntitySet<AdvertismentPhone> _AdvertismentPhones;
 		
 		private EntitySet<AdvertismentsPhoto> _AdvertismentsPhotos;
@@ -3604,6 +3630,8 @@ namespace SiteMVC.Models
     partial void OnAddress1Changed();
     partial void OnPriceChanging(System.Nullable<decimal> value);
     partial void OnPriceChanged();
+    partial void OnUndergroundStationIDChanging(System.Nullable<int> value);
+    partial void OnUndergroundStationIDChanged();
     #endregion
 		
 		public Advertisment()
@@ -3974,6 +4002,26 @@ namespace SiteMVC.Models
 					this._Price = value;
 					this.SendPropertyChanged("Price");
 					this.OnPriceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UndergroundStationID")]
+		public System.Nullable<int> UndergroundStationID
+		{
+			get
+			{
+				return this._UndergroundStationID;
+			}
+			set
+			{
+				if ((this._UndergroundStationID != value))
+				{
+					this.OnUndergroundStationIDChanging(value);
+					this.SendPropertyChanging();
+					this._UndergroundStationID = value;
+					this.SendPropertyChanged("UndergroundStationID");
+					this.OnUndergroundStationIDChanged();
 				}
 			}
 		}
