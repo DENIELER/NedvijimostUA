@@ -11,7 +11,7 @@
 
 @section Body
 {
-    <div id="row-fluid">
+    <div class="row-fluid" id="adv_list">
         <div class="span8">
             @RenderSection("Body", required: true)
         </div>
@@ -27,4 +27,20 @@
             @RenderSection("RightColumn", required: false)
         </div>
     </div>
+
+    <a href="#top_container" class="scroll_arrow">
+        <span class="arrow">↑</span>
+    </a>
+
+    <script type="text/javascript">
+        $(function () {
+            $(document).scroll(function () {
+                var scrollTop = $(document).scrollTop();
+                if (scrollTop >= $('#adv_list').offset().top + 100)
+                    $('.scroll_arrow').css('display', 'block');
+                else
+                    $('.scroll_arrow').css('display', 'none');
+            });
+        });
+    </script>
 }
