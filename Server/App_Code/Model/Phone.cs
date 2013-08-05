@@ -20,6 +20,18 @@ public class Phone
         if (phone.StartsWith("8"))
             return phone.Remove(0, 1);
 
+        if (phone.StartsWith("+38-"))
+            return phone.Remove(0, 4);
+
+        if (phone.StartsWith("38-"))
+            return phone.Remove(0, 3);
+
+        if (phone.StartsWith("+38"))
+            return phone.Remove(0, 3);
+
+        if (phone.StartsWith("38"))
+            return phone.Remove(0, 2);
+
         return phone;
     }
 }
