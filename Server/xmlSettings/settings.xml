@@ -66,6 +66,7 @@
     <stopWord>архив газеты премьер</stopWord>
     <stopWord>риелтер</stopWord>
     <stopWord>риелтор</stopWord>
+    <stopWord>премьер</stopWord>
   </rentStopSearchWords>
 
   <saleStopSearchWords>
@@ -75,9 +76,14 @@
     <stopWord>комната</stopWord>
     <stopWord>комнаты</stopWord>
     <stopWord>комнату</stopWord>
+    <stopWord>дом</stopWord>
     <stopWord>комн</stopWord>
     <stopWord>куплю</stopWord>
     <stopWord>продам</stopWord>
+    <stopWord>продажа</stopWord>
+    <stopWord>продаже</stopWord>
+    <stopWord>аренда</stopWord>
+    <stopWord>сдам</stopWord>
     <stopWord>гостинку</stopWord>
     <stopWord>недвижимость</stopWord>
     <stopWord>продается</stopWord>
@@ -88,6 +94,7 @@
     <stopWord>архив газеты премьер</stopWord>
     <stopWord>риелтер</stopWord>
     <stopWord>риелтор</stopWord>
+    <stopWord>премьер</stopWord>
   </saleStopSearchWords>
 
   <sale_commercialStopSearchWords>
