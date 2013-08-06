@@ -54,6 +54,8 @@ public class AdvertismentsLoadingWorkflow : BaseContextWorkflow
             }
         }
 
+        advertisments = advertisments.Where(a => a.AdvertismentPhones.Any());
+
         return advertisments.ToList();
     }
     #endregion Public Methods

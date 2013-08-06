@@ -82,7 +82,8 @@ public class FilterWorkflow : BaseContextWorkflow
                     select new XElement("a",
                         new XElement("Id", adv.Item1),
                         new XElement("p", adv.Item2)));
-                IQueryable<Model.SubPurchaseCheckResult> goodAdvertismentsList = context.CheckSubPurchases(xml);
+                IEnumerable<Model.SubPurchaseCheckResult> goodAdvertismentsList = context.CheckSubPurchases(xml);
+                goodAdvertismentsList = goodAdvertismentsList.ToList();
 
                 foreach (var resultElement in goodAdvertismentsList)
                 {
@@ -90,7 +91,13 @@ public class FilterWorkflow : BaseContextWorkflow
                     if (currentAdvertisment != null)
                     {
                         if (resultElement.SubPurchaseID == null)
-                            goodAdvList.Add(currentAdvertisment);
+                        {
+                            if (!goodAdvertismentsList.Any(ga => ga.Id == resultElement.Id 
+                                                                 && ga.SubPurchaseID != null))
+                            {
+                                goodAdvList.Add(currentAdvertisment);
+                            }
+                        }
                         else
                         {
                             currentAdvertisment.subpurchaseAdvertisment = true;
@@ -115,16 +122,16 @@ public class FilterWorkflow : BaseContextWorkflow
 
     private List<Model.Advertisment> WebSearchFilter(IList<Model.Advertisment> adversitments)
     {
+        var goodAdvList = new List<Model.Advertisment>();
+        var badAdvList = new List<Model.Advertisment>();
+
         if (adversitments.Count <= 0)
         {
             WriteLog("Web Search filtering.. No data to find. Adv count is zero.");
-            return null;
+            return goodAdvList;
         }
         else
             WriteLog("Web Search filtering.. Adv count is ." + adversitments.Count);
-
-        var goodAdvList = new List<Model.Advertisment>();
-        var badAdvList = new List<Model.Advertisment>();
 
         int currentAdvIndex = 0;
         try
@@ -156,27 +163,14 @@ public class FilterWorkflow : BaseContextWorkflow
                         int badWebResultsCount = 0;
                         foreach (var webResult in results.Where(r => !r.website.Contains("nedvijimost-ua.com")))
                         {
-                            bool isBadResult = false;
                             foreach (var stopWord in stopWords)
                             {
-                                if (webResult.title.ToLower().Contains(stopWord))
-                                    isBadResult = true;
-                            }
-
-                            if (isBadResult)
-                            {
-                                badWebResultsCount++;
-
-                                var filterAdvertisment = new Model.WebSearchFilterAdvertisment()
+                                if (webResult.title.ToLower().Contains(stopWord)
+                                    || webResult.content.ToLower().Contains(stopWord))
                                 {
-                                    title = webResult.title ?? "",
-                                    text = webResult.content ?? "",
-                                    createDate = Utils.GetUkranianDateTimeNow(),
-                                    subPurchasePhone = phone.phone
-                                };
-                                
-                                context.WebSearchFilterAdvertisments.InsertOnSubmit(filterAdvertisment);
-                                context.SubmitChanges();
+                                    badWebResultsCount++;
+                                    break;
+                                }
                             }
 
                             if (badWebResultsCount == 3)
