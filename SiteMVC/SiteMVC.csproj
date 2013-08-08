@@ -132,6 +132,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Code\AdvertismentsLoader.cs" />
+    <Compile Include="Models\ModelInterlayerObjects\Comment.cs" />
+    <Compile Include="Models\ModelInterlayerObjects\User.cs" />
     <Compile Include="ViewModels\Admin\ServerLogsViewModel.cs" />
     <Compile Include="WebServices\AdminService.svc.cs">
       <DependentUpon>AdminService.svc</DependentUpon>
@@ -194,6 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="app_offline-temp.htm" />
+    <Content Include="Areas\Controls\Views\AdvertismentsList\AddComment.html" />
     <Content Include="Content\img\Admin_ServerLog_refresh_icon.png" />
     <Content Include="WebServices\AdminService.svc" />
     <Content Include="Content\css\blueimp-gallery.css" />

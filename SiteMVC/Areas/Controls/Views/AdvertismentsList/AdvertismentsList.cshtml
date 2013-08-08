@@ -53,14 +53,10 @@
     </div>
 
     <div class="row-fluid">
-        <div class="span12">
-            <div class="row-fluid">
-                <div class="span8" style="text-align: center;"><strong>Текст объявления</strong></div>
-                <div class="span4" style="text-align: center;"><strong>Телефоны</strong></div>
-            </div>
-            <hr class="advSeparator"/>
-        </div>
+        <div class="span8" style="text-align: center;"><strong>Текст объявления</strong></div>
+        <div class="span4" style="text-align: center;"><strong>Телефоны</strong></div>
     </div>
+    <hr class="advSeparator"/>
     
     <div id="advertisments">
 
@@ -73,42 +69,40 @@
             <div style="margin-top: 10px;" id="advertisment_@i">
                 <div class="@( advertisment.IsSpecial ? "special_advertisment " : "")advertisment_block">
                     <div class="row-fluid">
-                        <div class="row-fluid">
-                            <div class="span9">@advertisment.Text</div>
+                        <div class="span9">@advertisment.Text</div>
 
-                            @*      Phones    *@
-                            <div class="span3">
-                                <ul class="unstyled phones" id="phones_@i">
-                                    @foreach (var phone in advertisment.Phones)
-                                    {
-                                        <li><strong>@phone.phone</strong></li>
-                                    }
-                                </ul>
-                            </div>
-
+                        @*      Phones    *@
+                        <div class="span3">
+                            <ul class="unstyled phones" id="phones_@i">
+                                @foreach (var phone in advertisment.Phones)
+                                {
+                                    <li><strong>@phone.phone</strong></li>
+                                }
+                            </ul>
                         </div>
-
-                        @*      Photos    *@
-                        @if(advertisment.Photos.Any())
-                        {
-                        <div class="row-fluid" @(advertisment.Photos.Count <= 3 ? "style=\"min-height: 80px;\"" : "")>
-                            <div class="span8">
-                                <strong>Фото:</strong>
-                                <div class="gallery" data-toggle="modal-gallery" data-target="#modal-gallery" data-selector="div.gallery-item">
-                                    @{ int photo_index = 0; }
-                                    @foreach (var photo in advertisment.Photos)
-                                    {
-                                        <div class="gallery-item" data-href="@Html.Raw(HttpUtility.HtmlDecode(photo.filenameFormated))" data-index="@photo_index">
-                                            <img src="@Html.Raw(HttpUtility.HtmlDecode(photo.filename))" alt="Фото объекта недвижимости @photo_index"/>
-                                        </div>
-                                        photo_index++;
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        }
 
                     </div>
+
+                    @*      Photos    *@
+                    @if(advertisment.Photos.Any())
+                    {
+                    <div class="row-fluid" @(advertisment.Photos.Count <= 3 ? "style=\"min-height: 80px;\"" : "")>
+                        <div class="span8">
+                            <strong>Фото:</strong>
+                            <div class="gallery" data-toggle="modal-gallery" data-target="#modal-gallery" data-selector="div.gallery-item">
+                                @{ int photo_index = 0; }
+                                @foreach (var photo in advertisment.Photos)
+                                {
+                                    <div class="gallery-item" data-href="@Html.Raw(HttpUtility.HtmlDecode(photo.filenameFormated))" data-index="@photo_index">
+                                        <img src="@Html.Raw(HttpUtility.HtmlDecode(photo.filename))" alt="Фото объекта недвижимости @photo_index"/>
+                                    </div>
+                                    photo_index++;
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    }
+
                     <div class="clear:both">&nbsp;</div>
                     <div class="advertisment_info_footer row-fluid">
                         <div class="span5">
@@ -127,6 +121,9 @@
                                     OnFailure = "AjaxRequestFailed"
                                 }, new { @class = "btn btn-mini" })
                             }
+
+                            <a href="#/add-comment/@advertisment.Id" class="btn btn-mini"><i class="icon-edit"></i> Оставить комментарий</a>
+
                             <div class="btn-group">
                                 <button class="btn dropdown-toggle btn-mini" data-toggle="dropdown"><i class="icon-exclamation-sign"></i> Сообщить <span class="caret"></span></button>
                                 <ul class="dropdown-menu" style="text-align: left;">
@@ -156,6 +153,27 @@
                             </div>
                         </div>
                     </div>
+
+                    @if (advertisment.Comments.Any())
+                    {
+                        <hr />
+                        <div class="comments">
+                            @foreach(var comment in advertisment.Comments)
+                            {
+                            <div class="comment">
+                                <div class="left">
+                                    @comment.DisplayLogin
+                                </div>
+
+                                <div class="right">
+                                    <span class="date">@comment.CreateDate</span>
+                                    @comment.Message
+                                </div>
+                            </div>
+                            }
+                            <div class="add_comment"></div>
+                        </div>
+                    }
                 </div>
             </div>
         }
@@ -254,6 +272,7 @@
     function AjaxRequestFailed() {
         alert("Возникла ошибка при действии с объявлением.");
     }
+
 </script>
 
 <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
