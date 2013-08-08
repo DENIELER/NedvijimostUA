@@ -1,0 +1,8 @@
+﻿User-agent: *
+Disallow: /WebServices/
+Disallow: /Auth/
+Disallow: /Controls/
+Disallow: /Kharkiv/
+Disallow: /GetAdvertisments
+Disallow: /Arhiv-Objyavlenij/Arhiv-Objyavlenij/Arhiv-Objyavlenij/Prodam-kommercheskuu-nedvijimost
+Disallow: /Kak-videlit-obyavlenie
