@@ -173,13 +173,23 @@
                 var prevPage = currentPage - 1;
                 var nextPage = currentPage + 1;
                 
+                var prevPageUrl = currentPage <= 1 ? "" : SystemUtils.Utils.Url.InsertURLParam(Request.RawUrl, "page", prevPage.ToString());
+                var nextPageUrl = currentPage >= lastPage ? "" : SystemUtils.Utils.Url.InsertURLParam(Request.RawUrl, "page", nextPage.ToString());
+                
+                <script type="text/javascript">
+                    if ('@prevPageUrl' != '')
+                        $('head').append('<link rel="prev" href="@prevPageUrl" />');
+                    if ('@nextPageUrl' != '')
+                        $('head').append('<link rel="next" href="@nextPageUrl" />');
+                </script>
+                
                 <div>
                     <ul class="pager">
                         <li class="previous @( currentPage <= 1 ? "disabled" : "" )">
-                            <a href="@( currentPage <= 1 ? "" : SystemUtils.Utils.Url.InsertURLParam(Request.RawUrl, "page", prevPage.ToString()) )">&larr; Назад</a>
+                            <a href="@prevPageUrl">&larr; Назад</a>
                         </li>
                         <li class="next @( currentPage >= lastPage ? "disabled" : "" )">
-                            <a href="@( currentPage >= lastPage ? "" : SystemUtils.Utils.Url.InsertURLParam(Request.RawUrl, "page", nextPage.ToString()) )">Далее &rarr;</a>
+                            <a href="@nextPageUrl">Далее &rarr;</a>
                         </li>
                     </ul>
                 </div>
