@@ -132,6 +132,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Code\AdvertismentsLoader.cs" />
+    <Compile Include="Models\ModelInterlayerObjects\Comment.cs" />
+    <Compile Include="Models\ModelInterlayerObjects\User.cs" />
     <Compile Include="ViewModels\Admin\ServerLogsViewModel.cs" />
     <Compile Include="WebServices\AdminService.svc.cs">
       <DependentUpon>AdminService.svc</DependentUpon>
@@ -195,6 +197,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="app_offline-temp.htm" />
     <Content Include="Content\img\Admin_ServerLog_refresh_icon.png" />
+    <Content Include="Scripts\AddComment.js" />
     <Content Include="robots.txt" />
     <Content Include="WebServices\AdminService.svc" />
     <Content Include="Content\css\blueimp-gallery.css" />
@@ -252,6 +255,7 @@
     <Content Include="Areas\Controls\Views\Web.config" />
     <Content Include="Areas\Controls\Views\AdvertismentsFilter\Index.cshtml" />
     <Content Include="WebServices\ExternalService.svc" />
+    <Content Include="Areas\Controls\Views\AdvertismentsList\AddComment.cshtml" />
     <None Include="Properties\PublishProfiles\Arvixe FTP.pubxml" />
     <None Include="Scripts\jquery-2.0.2.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.2.js" />

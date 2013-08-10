@@ -66,6 +66,9 @@ namespace SiteMVC.Models
     partial void InsertServerLog(ServerLog instance);
     partial void UpdateServerLog(ServerLog instance);
     partial void DeleteServerLog(ServerLog instance);
+    partial void InsertAdvertismentComment(AdvertismentComment instance);
+    partial void UpdateAdvertismentComment(AdvertismentComment instance);
+    partial void DeleteAdvertismentComment(AdvertismentComment instance);
     #endregion
 		
 		public DataModel() : 
@@ -223,6 +226,14 @@ namespace SiteMVC.Models
 			get
 			{
 				return this.GetTable<ServerTask>();
+			}
+		}
+		
+		public System.Data.Linq.Table<AdvertismentComment> AdvertismentComments
+		{
+			get
+			{
+				return this.GetTable<AdvertismentComment>();
 			}
 		}
 	}
@@ -1145,6 +1156,8 @@ namespace SiteMVC.Models
 		
 		private EntitySet<AdvertismentsPhoto> _AdvertismentsPhotos;
 		
+		private EntitySet<AdvertismentComment> _AdvertismentComments;
+		
 		private EntityRef<SearchResult> _SearchResult;
 		
     #region Extensibility Method Definitions
@@ -1195,6 +1208,7 @@ namespace SiteMVC.Models
 		{
 			this._AdvertismentPhones = new EntitySet<AdvertismentPhone>(new Action<AdvertismentPhone>(this.attach_AdvertismentPhones), new Action<AdvertismentPhone>(this.detach_AdvertismentPhones));
 			this._AdvertismentsPhotos = new EntitySet<AdvertismentsPhoto>(new Action<AdvertismentsPhoto>(this.attach_AdvertismentsPhotos), new Action<AdvertismentsPhoto>(this.detach_AdvertismentsPhotos));
+			this._AdvertismentComments = new EntitySet<AdvertismentComment>(new Action<AdvertismentComment>(this.attach_AdvertismentComments), new Action<AdvertismentComment>(this.detach_AdvertismentComments));
 			this._SearchResult = default(EntityRef<SearchResult>);
 			OnCreated();
 		}
@@ -1618,6 +1632,19 @@ namespace SiteMVC.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="viewAdvertisment_AdvertismentComment", Storage="_AdvertismentComments", ThisKey="Id", OtherKey="AdvertismentID")]
+		public EntitySet<AdvertismentComment> AdvertismentComments
+		{
+			get
+			{
+				return this._AdvertismentComments;
+			}
+			set
+			{
+				this._AdvertismentComments.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SearchResult_viewAdvertisment", Storage="_SearchResult", ThisKey="searchresult_id", OtherKey="Id", IsForeignKey=true)]
 		public SearchResult SearchResult
 		{
@@ -1691,6 +1718,18 @@ namespace SiteMVC.Models
 		}
 		
 		private void detach_AdvertismentsPhotos(AdvertismentsPhoto entity)
+		{
+			this.SendPropertyChanging();
+			entity.viewAdvertisment = null;
+		}
+		
+		private void attach_AdvertismentComments(AdvertismentComment entity)
+		{
+			this.SendPropertyChanging();
+			entity.viewAdvertisment = this;
+		}
+		
+		private void detach_AdvertismentComments(AdvertismentComment entity)
 		{
 			this.SendPropertyChanging();
 			entity.viewAdvertisment = null;
@@ -3266,6 +3305,8 @@ namespace SiteMVC.Models
 		
 		private string _Phone;
 		
+		private EntitySet<AdvertismentComment> _AdvertismentComments;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -3296,6 +3337,7 @@ namespace SiteMVC.Models
 		
 		public User()
 		{
+			this._AdvertismentComments = new EntitySet<AdvertismentComment>(new Action<AdvertismentComment>(this.attach_AdvertismentComments), new Action<AdvertismentComment>(this.detach_AdvertismentComments));
 			OnCreated();
 		}
 		
@@ -3519,6 +3561,19 @@ namespace SiteMVC.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_AdvertismentComment", Storage="_AdvertismentComments", ThisKey="UserID", OtherKey="UserID")]
+		public EntitySet<AdvertismentComment> AdvertismentComments
+		{
+			get
+			{
+				return this._AdvertismentComments;
+			}
+			set
+			{
+				this._AdvertismentComments.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -3537,6 +3592,18 @@ namespace SiteMVC.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_AdvertismentComments(AdvertismentComment entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_AdvertismentComments(AdvertismentComment entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
 		}
 	}
 	
@@ -3588,6 +3655,8 @@ namespace SiteMVC.Models
 		
 		private EntitySet<AdvertismentsPhoto> _AdvertismentsPhotos;
 		
+		private EntitySet<AdvertismentComment> _AdvertismentComments;
+		
 		private EntityRef<SearchResult> _SearchResult;
 		
     #region Extensibility Method Definitions
@@ -3638,6 +3707,7 @@ namespace SiteMVC.Models
 		{
 			this._AdvertismentPhones = new EntitySet<AdvertismentPhone>(new Action<AdvertismentPhone>(this.attach_AdvertismentPhones), new Action<AdvertismentPhone>(this.detach_AdvertismentPhones));
 			this._AdvertismentsPhotos = new EntitySet<AdvertismentsPhoto>(new Action<AdvertismentsPhoto>(this.attach_AdvertismentsPhotos), new Action<AdvertismentsPhoto>(this.detach_AdvertismentsPhotos));
+			this._AdvertismentComments = new EntitySet<AdvertismentComment>(new Action<AdvertismentComment>(this.attach_AdvertismentComments), new Action<AdvertismentComment>(this.detach_AdvertismentComments));
 			this._SearchResult = default(EntityRef<SearchResult>);
 			OnCreated();
 		}
@@ -4052,6 +4122,19 @@ namespace SiteMVC.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Advertisment_AdvertismentComment", Storage="_AdvertismentComments", ThisKey="Id", OtherKey="AdvertismentID")]
+		public EntitySet<AdvertismentComment> AdvertismentComments
+		{
+			get
+			{
+				return this._AdvertismentComments;
+			}
+			set
+			{
+				this._AdvertismentComments.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SearchResult_Advertisment", Storage="_SearchResult", ThisKey="searchresult_id", OtherKey="Id", IsForeignKey=true)]
 		public SearchResult SearchResult
 		{
@@ -4125,6 +4208,18 @@ namespace SiteMVC.Models
 		}
 		
 		private void detach_AdvertismentsPhotos(AdvertismentsPhoto entity)
+		{
+			this.SendPropertyChanging();
+			entity.Advertisment = null;
+		}
+		
+		private void attach_AdvertismentComments(AdvertismentComment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Advertisment = this;
+		}
+		
+		private void detach_AdvertismentComments(AdvertismentComment entity)
 		{
 			this.SendPropertyChanging();
 			entity.Advertisment = null;
@@ -4354,6 +4449,307 @@ namespace SiteMVC.Models
 				{
 					this._taskUrl = value;
 				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AdvertismentComments")]
+	public partial class AdvertismentComment : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _CommentID;
+		
+		private string _Message;
+		
+		private System.DateTime _CreateDate;
+		
+		private int _AdvertismentID;
+		
+		private System.Nullable<int> _UserID;
+		
+		private string _Login;
+		
+		private EntityRef<Advertisment> _Advertisment;
+		
+		private EntityRef<viewAdvertisment> _viewAdvertisment;
+		
+		private EntityRef<User> _User;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCommentIDChanging(System.Guid value);
+    partial void OnCommentIDChanged();
+    partial void OnMessageChanging(string value);
+    partial void OnMessageChanged();
+    partial void OnCreateDateChanging(System.DateTime value);
+    partial void OnCreateDateChanged();
+    partial void OnAdvertismentIDChanging(int value);
+    partial void OnAdvertismentIDChanged();
+    partial void OnUserIDChanging(System.Nullable<int> value);
+    partial void OnUserIDChanged();
+    partial void OnLoginChanging(string value);
+    partial void OnLoginChanged();
+    #endregion
+		
+		public AdvertismentComment()
+		{
+			this._Advertisment = default(EntityRef<Advertisment>);
+			this._viewAdvertisment = default(EntityRef<viewAdvertisment>);
+			this._User = default(EntityRef<User>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommentID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid CommentID
+		{
+			get
+			{
+				return this._CommentID;
+			}
+			set
+			{
+				if ((this._CommentID != value))
+				{
+					this.OnCommentIDChanging(value);
+					this.SendPropertyChanging();
+					this._CommentID = value;
+					this.SendPropertyChanged("CommentID");
+					this.OnCommentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Message", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Message
+		{
+			get
+			{
+				return this._Message;
+			}
+			set
+			{
+				if ((this._Message != value))
+				{
+					this.OnMessageChanging(value);
+					this.SendPropertyChanging();
+					this._Message = value;
+					this.SendPropertyChanged("Message");
+					this.OnMessageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdvertismentID", DbType="Int NOT NULL")]
+		public int AdvertismentID
+		{
+			get
+			{
+				return this._AdvertismentID;
+			}
+			set
+			{
+				if ((this._AdvertismentID != value))
+				{
+					if ((this._Advertisment.HasLoadedOrAssignedValue || this._viewAdvertisment.HasLoadedOrAssignedValue))
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAdvertismentIDChanging(value);
+					this.SendPropertyChanging();
+					this._AdvertismentID = value;
+					this.SendPropertyChanged("AdvertismentID");
+					this.OnAdvertismentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int")]
+		public System.Nullable<int> UserID
+		{
+			get
+			{
+				return this._UserID;
+			}
+			set
+			{
+				if ((this._UserID != value))
+				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnUserIDChanging(value);
+					this.SendPropertyChanging();
+					this._UserID = value;
+					this.SendPropertyChanged("UserID");
+					this.OnUserIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Login")]
+		public string Login
+		{
+			get
+			{
+				return this._Login;
+			}
+			set
+			{
+				if ((this._Login != value))
+				{
+					this.OnLoginChanging(value);
+					this.SendPropertyChanging();
+					this._Login = value;
+					this.SendPropertyChanged("Login");
+					this.OnLoginChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Advertisment_AdvertismentComment", Storage="_Advertisment", ThisKey="AdvertismentID", OtherKey="Id", IsForeignKey=true)]
+		public Advertisment Advertisment
+		{
+			get
+			{
+				return this._Advertisment.Entity;
+			}
+			set
+			{
+				Advertisment previousValue = this._Advertisment.Entity;
+				if (((previousValue != value) 
+							|| (this._Advertisment.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Advertisment.Entity = null;
+						previousValue.AdvertismentComments.Remove(this);
+					}
+					this._Advertisment.Entity = value;
+					if ((value != null))
+					{
+						value.AdvertismentComments.Add(this);
+						this._AdvertismentID = value.Id;
+					}
+					else
+					{
+						this._AdvertismentID = default(int);
+					}
+					this.SendPropertyChanged("Advertisment");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="viewAdvertisment_AdvertismentComment", Storage="_viewAdvertisment", ThisKey="AdvertismentID", OtherKey="Id", IsForeignKey=true)]
+		public viewAdvertisment viewAdvertisment
+		{
+			get
+			{
+				return this._viewAdvertisment.Entity;
+			}
+			set
+			{
+				viewAdvertisment previousValue = this._viewAdvertisment.Entity;
+				if (((previousValue != value) 
+							|| (this._viewAdvertisment.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._viewAdvertisment.Entity = null;
+						previousValue.AdvertismentComments.Remove(this);
+					}
+					this._viewAdvertisment.Entity = value;
+					if ((value != null))
+					{
+						value.AdvertismentComments.Add(this);
+						this._AdvertismentID = value.Id;
+					}
+					else
+					{
+						this._AdvertismentID = default(int);
+					}
+					this.SendPropertyChanged("viewAdvertisment");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_AdvertismentComment", Storage="_User", ThisKey="UserID", OtherKey="UserID", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.AdvertismentComments.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.AdvertismentComments.Add(this);
+						this._UserID = value.UserID;
+					}
+					else
+					{
+						this._UserID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

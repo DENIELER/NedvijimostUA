@@ -23,6 +23,8 @@ namespace SiteMVC.Models.ModelInterlayerObjects
 
             this.Phones = entity.AdvertismentPhones.Select(p => new Phone(p)).ToList();
             this.Photos = entity.AdvertismentsPhotos.Select(p => new Photo(p)).ToList();
+
+            this.Comments = entity.AdvertismentComments.Select(c => new Comment(c)).ToList();
         }
 
         public int Id { get; set; }
@@ -46,5 +48,7 @@ namespace SiteMVC.Models.ModelInterlayerObjects
 
         public List<Phone> Phones { get; set; }
         public List<Photo> Photos { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 }
