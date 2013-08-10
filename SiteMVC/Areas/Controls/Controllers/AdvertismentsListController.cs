@@ -171,5 +171,32 @@ namespace SiteMVC.Areas.Controls.Controllers
             }
         }
         #endregion Ajax Action handlers for advertisments
+
+        [HttpGet]
+        public ActionResult AddComment(int advertismentID)
+        {
+            return PartialView(advertismentID);
+        }
+        [HttpPost]
+        public ActionResult AddComment(string message, int advertismentID)
+        {
+            var dataModel = new DataModel();
+
+            var commentDB = new AdvertismentComment()
+            {
+                CommentID = Guid.NewGuid(),
+                AdvertismentID = advertismentID,
+                CreateDate = SystemUtils.Utils.Date.GetUkranianDateTimeNow(),
+                UserID = SystemUtils.Authorization.UserID,
+                Login = SystemUtils.Authorization.Login,
+                Message = message
+            };
+
+            dataModel.AdvertismentComments.InsertOnSubmit(commentDB);
+            dataModel.SubmitChanges();
+
+            var comment = new SiteMVC.Models.ModelInterlayerObjects.Comment(commentDB);
+            return Json(comment);
+        }
     }
 }

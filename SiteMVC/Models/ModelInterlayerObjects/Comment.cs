@@ -30,11 +30,23 @@ namespace SiteMVC.Models.ModelInterlayerObjects
         {
             get
             {
+                string resultLogin = "Аноним";
                 if (!string.IsNullOrEmpty(Login))
-                    return Login;
+                    resultLogin = Login;
                 else if (User != null)
-                    return User.DisplayLogin;
-                else return "Аноним";
+                    resultLogin = User.DisplayLogin;
+
+                return resultLogin.Length > 16 
+                    ? resultLogin.Substring(0, 15) + ".."
+                    : resultLogin;
+            }
+        }
+
+        public string CreateDateDisplay
+        {
+            get
+            {
+                return this.CreateDate.ToShortDateString() + " " + this.CreateDate.ToShortTimeString();
             }
         }
     }

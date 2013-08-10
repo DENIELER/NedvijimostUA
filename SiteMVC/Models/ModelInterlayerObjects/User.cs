@@ -9,9 +9,12 @@ namespace SiteMVC.Models.ModelInterlayerObjects
     {
         public User(Models.User user)
         {
-            this.UserID = user.UserID;
-            this.Login = user.Login;
-            this.Email = user.Email;
+            if (user != null)
+            {
+                this.UserID = user.UserID;
+                this.Login = user.Login;
+                this.Email = user.Email;
+            }
         }
 
         private string Login { get; set; }
@@ -27,10 +30,13 @@ namespace SiteMVC.Models.ModelInterlayerObjects
                     return Login;
                 else
                 {
-                    int emailSeparatorIndex = this.Email.IndexOf("@");
-                    if (emailSeparatorIndex > 0)
-                        return this.Email.Substring(0, emailSeparatorIndex);
-                    else return "Аноним";
+                    if (this.Email != null)
+                    {
+                        int emailSeparatorIndex = this.Email.IndexOf("@");
+                        if (emailSeparatorIndex > 0)
+                            return this.Email.Substring(0, emailSeparatorIndex);
+                    }
+                    return "Аноним";
                 }
             }
         }

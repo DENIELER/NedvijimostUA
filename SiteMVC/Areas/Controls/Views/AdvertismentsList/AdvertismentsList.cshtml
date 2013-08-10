@@ -66,14 +66,14 @@
         {
             var advertisment = Model.Advertisments[i];
 
-            <div style="margin-top: 10px;" id="advertisment_@i">
+            <div style="margin-top: 10px;" id="advertisment_@advertisment.Id">
                 <div class="@( advertisment.IsSpecial ? "special_advertisment " : "")advertisment_block">
                     <div class="row-fluid">
                         <div class="span9">@advertisment.Text</div>
 
                         @*      Phones    *@
                         <div class="span3">
-                            <ul class="unstyled phones" id="phones_@i">
+                            <ul class="unstyled phones" id="phones_@advertisment.Id">
                                 @foreach (var phone in advertisment.Phones)
                                 {
                                     <li><strong>@phone.phone</strong></li>
@@ -117,12 +117,12 @@
                                 {
                                     HttpMethod = "POST",
                                     Confirm = "Вы уверены, что хотите удалить объявление?",
-                                    OnSuccess = "HideAdvertisment(" + @i + ")",
+                                    OnSuccess = "HideAdvertisment(" + @advertisment.Id + ")",
                                     OnFailure = "AjaxRequestFailed"
                                 }, new { @class = "btn btn-mini" })
                             }
 
-                            <a href="#/add-comment/@advertisment.Id" class="btn btn-mini"><i class="icon-edit"></i> Оставить комментарий</a>
+                            <a class="btn btn-mini" onclick="AddComment(@advertisment.Id)"><i class="icon-edit"></i> Оставить комментарий</a>
 
                             <div class="btn-group">
                                 <button class="btn dropdown-toggle btn-mini" data-toggle="dropdown"><i class="icon-exclamation-sign"></i> Сообщить <span class="caret"></span></button>
@@ -134,7 +134,7 @@
                                         {
                                             HttpMethod = "POST",
                                             Confirm = "Вы уверены, что данное объявление является объявлением посредника?",
-                                            OnSuccess = "HideAdvertisment(" + @i + ", 900)",
+                                            OnSuccess = "HideAdvertisment(" + @advertisment.Id + ", 900)",
                                             OnFailure = "AjaxRequestFailed"
                                         })
                                     </li>
@@ -145,7 +145,7 @@
                                         {
                                             HttpMethod = "POST",
                                             Confirm = "Вы уверены, что данное объявление не является объявлением о недвижимости?",
-                                            OnSuccess = "HideAdvertisment(" + @i + ", 900)",
+                                            OnSuccess = "HideAdvertisment(" + @advertisment.Id + ", 900)",
                                             OnFailure = "AjaxRequestFailed"
                                         })
                                     </li>
@@ -154,26 +154,33 @@
                         </div>
                     </div>
 
-                    @if (advertisment.Comments.Any())
-                    {
-                        <hr />
-                        <div class="comments">
-                            @foreach(var comment in advertisment.Comments)
+                    <div class="text-right">
+                        <a class="dropdown @(!advertisment.Comments.Any() ? "muted" : "")" onclick="ShowComments(@advertisment.Id)">Комментарии (@advertisment.Comments.Count)<b class="caret"></b></a>
+                    </div>
+                    <div class="comments_container">
+                        @if (advertisment.Comments.Any())
+                        {
+                            <hr />
+                            <h4>Комментарии</h4>
+                            foreach(var comment in advertisment.Comments)
                             {
-                            <div class="comment">
-                                <div class="left">
+                            <div class="comment row-fluid">
+                                <div class="left span4">
                                     @comment.DisplayLogin
+                                    <span class="date muted" style="font-size: 0.8em;">@comment.CreateDateDisplay</span>
                                 </div>
 
-                                <div class="right">
-                                    <span class="date">@comment.CreateDate</span>
+                                <div class="right span8">
                                     @comment.Message
                                 </div>
                             </div>
                             }
-                            <div class="add_comment"></div>
-                        </div>
-                    }
+                        }
+                    </div>
+                    <div class="add_comment_container">
+                        <hr />
+                        <div class="add_comment"></div>
+                    </div>
                 </div>
             </div>
         }
@@ -273,6 +280,32 @@
         alert("Возникла ошибка при действии с объявлением.");
     }
 
+    @*Commentaries*@
+
+    function AddComment(advertismentID) {
+        var add_comment = $('#advertisment_' + advertismentID + ' .add_comment');
+        var add_comment_container = $('#advertisment_' + advertismentID + ' .add_comment_container');
+        if (add_comment_container.css('display') == 'none') {
+
+            add_comment.load('@Url.Action("AddComment","AdvertismentsList")?' +
+                            $.param({ 'advertismentID': advertismentID }));
+            $.getScript('/Scripts/AddComment.js');
+
+            add_comment_container.fadeIn(300);
+        } else {
+            add_comment_container.fadeOut(300);
+            add_comment.empty();
+        }
+    }
+
+    function ShowComments(advertismentID) {
+        var comments_container = $('#advertisment_' + advertismentID + ' .comments_container');
+        if (comments_container.css('display') == 'none') {
+            comments_container.fadeIn(300);
+        } else {
+            comments_container.fadeOut(300);
+        }
+    }
 </script>
 
 <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
