@@ -197,6 +197,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="app_offline-temp.htm" />
     <Content Include="Content\img\Admin_ServerLog_refresh_icon.png" />
+    <Content Include="googlecc22d1e45e5cb73d.html" />
     <Content Include="Scripts\AddComment.js" />
     <Content Include="robots.txt" />
     <Content Include="WebServices\AdminService.svc" />
