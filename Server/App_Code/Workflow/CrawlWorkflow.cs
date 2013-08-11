@@ -378,16 +378,18 @@ public class CrawlWorkflow : BaseContextWorkflow
         {
             try
             {
-                bool existsAdvertisment = context.Advertisments
-                                            .Any(a => a.searchresult_id == searchResult.Id
-                                                      && a.text == advertisment.Text);
-                if (!existsAdvertisment)
+                var textHash = Utils.CalculateMD5Hash(advertisment.Text);
+                Model.Advertisment existsAdvertisment = context.Advertisments
+                                                        .Where(a => a.TextHashValue == textHash)
+                                                        .FirstOrDefault();
+                if (existsAdvertisment == null)
                 {
+                    #region New Advertisment
                     Model.AdvertismentSubSection subSectionObject = null;
                     if (advertisment.SubSectionID != null)
                     {
                         subSectionObject = context.AdvertismentSubSections
-                                            .SingleOrDefault(s => s.Id == advertisment.SubSectionID.Value);
+                                           .SingleOrDefault(s => s.Id == advertisment.SubSectionID.Value);
                         if (subSectionObject == null)
                             throw new Exception("Can not find Sub Section. ID: " + advertisment.SubSectionID.Value);
                     }
@@ -473,6 +475,23 @@ public class CrawlWorkflow : BaseContextWorkflow
                     }
 
                     savedAdvertismentsCount++;
+                    #endregion New Advertisment
+                }
+                else
+                {
+                    var advertismentUpdate = new Model.AdvertismentUpdate()
+                    {
+                        AdvertismentUpdateID = Guid.NewGuid(),
+                        AdvertismentID = existsAdvertisment.Id,
+                        CreateDate = Utils.GetUkranianDateTimeNow(),
+                        SearchResultID = searchResult.Id
+                    };
+                    context.AdvertismentUpdates.InsertOnSubmit(advertismentUpdate);
+
+                    //--- update modified datetime for advertisment
+                    existsAdvertisment.modifyDate = Utils.GetUkranianDateTimeNow();
+
+                    context.SubmitChanges();
                 }
             }
             catch (Exception e)

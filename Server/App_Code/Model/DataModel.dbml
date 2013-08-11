@@ -37,9 +37,11 @@
       <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Price" Type="System.Decimal" CanBeNull="true" />
       <Column Name="Address1" Type="System.String" CanBeNull="true" />
-      <Column Member="UndergroundStationID" Type="System.Int32" CanBeNull="true" />
+      <Column Name="UndergroundStationID" Type="System.Int32" CanBeNull="true" />
+      <Column Name="TextHashValue" Type="System.Byte[]" CanBeNull="true" />
       <Association Name="Advertisment_AdvertismentPhone" Member="AdvertismentPhones" ThisKey="Id" OtherKey="AdvertismentId" Type="AdvertismentPhone" />
       <Association Name="Advertisment_AdvertismentsPhoto" Member="AdvertismentsPhotos" Storage="_AdvertismentsPhotoes" ThisKey="Id" OtherKey="Advertisment_Id" Type="AdvertismentsPhoto" />
+      <Association Name="Advertisment_AdvertismentUpdate" Member="AdvertismentUpdates" ThisKey="Id" OtherKey="AdvertismentID" Type="AdvertismentUpdate" />
       <Association Name="SearchResult_Advertisment" Member="SearchResult" ThisKey="searchresult_id" OtherKey="Id" Type="SearchResult" IsForeignKey="true" DeleteRule="CASCADE" />
       <Association Name="AdvertismentSection_Advertisment" Member="AdvertismentSection" ThisKey="AdvertismentSection_Id" OtherKey="Id" Type="AdvertismentSection" IsForeignKey="true" />
       <Association Name="AdvertismentSubSection_Advertisment" Member="AdvertismentSubSection" ThisKey="AdvertismentSubSection_Id" OtherKey="Id" Type="AdvertismentSubSection" IsForeignKey="true" />
@@ -98,6 +100,7 @@
       <Column Name="AdvertismentSection_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="modifyDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="SearchResult_Advertisment" Member="Advertisments" ThisKey="Id" OtherKey="searchresult_id" Type="Advertisment" />
+      <Association Name="SearchResult_AdvertismentUpdate" Member="AdvertismentUpdates" ThisKey="Id" OtherKey="SearchResultID" Type="AdvertismentUpdate" />
       <Association Name="AdvertismentSection_SearchResult" Member="AdvertismentSection" ThisKey="AdvertismentSection_Id" OtherKey="Id" Type="AdvertismentSection" IsForeignKey="true" />
     </Type>
   </Table>
@@ -197,6 +200,16 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Filter" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="CityID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AdvertismentUpdates" Member="AdvertismentUpdates">
+    <Type Name="AdvertismentUpdate">
+      <Column Name="AdvertismentUpdateID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="AdvertismentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="SearchResultID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Advertisment_AdvertismentUpdate" Member="Advertisment" ThisKey="AdvertismentID" OtherKey="Id" Type="Advertisment" IsForeignKey="true" />
+      <Association Name="SearchResult_AdvertismentUpdate" Member="SearchResult" ThisKey="SearchResultID" OtherKey="Id" Type="SearchResult" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.CheckSubPurchases" Method="CheckSubPurchases" IsComposable="true">

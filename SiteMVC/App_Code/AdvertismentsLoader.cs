@@ -67,7 +67,7 @@ namespace SiteMVC.App_Code
 
             DateTime lastTimeUpdated;
             if (advertisments != null && advertisments.Any())
-                lastTimeUpdated = advertisments.Max(adv => adv.createDate);
+                lastTimeUpdated = advertisments.Max(adv => adv.modifyDate);
             else lastTimeUpdated = DateTime.Now;
 
             return new AdvertismentsList(advertisments, fullCount, countToShow, countToShowAfterFilter, lastTimeUpdated);
@@ -122,12 +122,12 @@ namespace SiteMVC.App_Code
             IQueryable<viewAdvertisment> searchResults =
                 dataModel.viewAdvertisments
                 .Where(a =>
-                    ((!a.isSpecial && a.createDate >= dateTimeFrom.Date) || (a.isSpecial && a.createDate >= specialFromDateTime.Date))
-                    && a.createDate < dateTimeTo.Date
+                    ((!a.isSpecial && a.modifyDate >= dateTimeFrom.Date) || (a.isSpecial && a.modifyDate >= specialFromDateTime.Date))
+                    && a.modifyDate < dateTimeTo.Date
                     && !a.not_realestate
                     && !a.not_show_advertisment)
                 .OrderByDescending(a => a.isSpecial)
-                .OrderByDescending(a => a.createDate);
+                .OrderByDescending(a => a.modifyDate);
             return searchResults;
         }
         #endregion Private Methods

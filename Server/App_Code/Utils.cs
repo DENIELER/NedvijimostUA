@@ -50,4 +50,11 @@ public class Utils
         catch
         { }
     }
+
+    public static byte[] CalculateMD5Hash(string input)
+    {
+        System.Security.Cryptography.MD5 md5Hasher = System.Security.Cryptography.MD5.Create();
+
+        return md5Hasher.ComputeHash(System.Text.Encoding.Default.GetBytes(input));
+    }
 }

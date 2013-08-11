@@ -69,6 +69,9 @@ namespace Model
     partial void InsertUndergroundStation(UndergroundStation instance);
     partial void UpdateUndergroundStation(UndergroundStation instance);
     partial void DeleteUndergroundStation(UndergroundStation instance);
+    partial void InsertAdvertismentUpdate(AdvertismentUpdate instance);
+    partial void UpdateAdvertismentUpdate(AdvertismentUpdate instance);
+    partial void DeleteAdvertismentUpdate(AdvertismentUpdate instance);
     #endregion
 		
 		public DataModel() : 
@@ -226,6 +229,14 @@ namespace Model
 			get
 			{
 				return this.GetTable<UndergroundStation>();
+			}
+		}
+		
+		public System.Data.Linq.Table<AdvertismentUpdate> AdvertismentUpdates
+		{
+			get
+			{
+				return this.GetTable<AdvertismentUpdate>();
 			}
 		}
 		
@@ -589,9 +600,13 @@ namespace Model
 		
 		private System.Nullable<int> _UndergroundStationID;
 		
+		private byte[] _TextHashValue;
+		
 		private EntitySet<AdvertismentPhone> _AdvertismentPhones;
 		
 		private EntitySet<AdvertismentsPhoto> _AdvertismentsPhotoes;
+		
+		private EntitySet<AdvertismentUpdate> _AdvertismentUpdates;
 		
 		private EntityRef<SearchResult> _SearchResult;
 		
@@ -643,12 +658,15 @@ namespace Model
     partial void OnAddress1Changed();
     partial void OnUndergroundStationIDChanging(System.Nullable<int> value);
     partial void OnUndergroundStationIDChanged();
+    partial void OnTextHashValueChanging(byte[] value);
+    partial void OnTextHashValueChanged();
     #endregion
 		
 		public Advertisment()
 		{
 			this._AdvertismentPhones = new EntitySet<AdvertismentPhone>(new Action<AdvertismentPhone>(this.attach_AdvertismentPhones), new Action<AdvertismentPhone>(this.detach_AdvertismentPhones));
 			this._AdvertismentsPhotoes = new EntitySet<AdvertismentsPhoto>(new Action<AdvertismentsPhoto>(this.attach_AdvertismentsPhotoes), new Action<AdvertismentsPhoto>(this.detach_AdvertismentsPhotoes));
+			this._AdvertismentUpdates = new EntitySet<AdvertismentUpdate>(new Action<AdvertismentUpdate>(this.attach_AdvertismentUpdates), new Action<AdvertismentUpdate>(this.detach_AdvertismentUpdates));
 			this._SearchResult = default(EntityRef<SearchResult>);
 			this._AdvertismentSection = default(EntityRef<AdvertismentSection>);
 			this._AdvertismentSubSection = default(EntityRef<AdvertismentSubSection>);
@@ -1052,6 +1070,26 @@ namespace Model
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TextHashValue")]
+		public byte[] TextHashValue
+		{
+			get
+			{
+				return this._TextHashValue;
+			}
+			set
+			{
+				if ((this._TextHashValue != value))
+				{
+					this.OnTextHashValueChanging(value);
+					this.SendPropertyChanging();
+					this._TextHashValue = value;
+					this.SendPropertyChanged("TextHashValue");
+					this.OnTextHashValueChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Advertisment_AdvertismentPhone", Storage="_AdvertismentPhones", ThisKey="Id", OtherKey="AdvertismentId")]
 		public EntitySet<AdvertismentPhone> AdvertismentPhones
 		{
@@ -1075,6 +1113,19 @@ namespace Model
 			set
 			{
 				this._AdvertismentsPhotoes.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Advertisment_AdvertismentUpdate", Storage="_AdvertismentUpdates", ThisKey="Id", OtherKey="AdvertismentID")]
+		public EntitySet<AdvertismentUpdate> AdvertismentUpdates
+		{
+			get
+			{
+				return this._AdvertismentUpdates;
+			}
+			set
+			{
+				this._AdvertismentUpdates.Assign(value);
 			}
 		}
 		
@@ -1253,6 +1304,18 @@ namespace Model
 		}
 		
 		private void detach_AdvertismentsPhotoes(AdvertismentsPhoto entity)
+		{
+			this.SendPropertyChanging();
+			entity.Advertisment = null;
+		}
+		
+		private void attach_AdvertismentUpdates(AdvertismentUpdate entity)
+		{
+			this.SendPropertyChanging();
+			entity.Advertisment = this;
+		}
+		
+		private void detach_AdvertismentUpdates(AdvertismentUpdate entity)
 		{
 			this.SendPropertyChanging();
 			entity.Advertisment = null;
@@ -2151,6 +2214,8 @@ namespace Model
 		
 		private EntitySet<Advertisment> _Advertisments;
 		
+		private EntitySet<AdvertismentUpdate> _AdvertismentUpdates;
+		
 		private EntityRef<AdvertismentSection> _AdvertismentSection;
 		
     #region Extensibility Method Definitions
@@ -2172,6 +2237,7 @@ namespace Model
 		public SearchResult()
 		{
 			this._Advertisments = new EntitySet<Advertisment>(new Action<Advertisment>(this.attach_Advertisments), new Action<Advertisment>(this.detach_Advertisments));
+			this._AdvertismentUpdates = new EntitySet<AdvertismentUpdate>(new Action<AdvertismentUpdate>(this.attach_AdvertismentUpdates), new Action<AdvertismentUpdate>(this.detach_AdvertismentUpdates));
 			this._AdvertismentSection = default(EntityRef<AdvertismentSection>);
 			OnCreated();
 		}
@@ -2293,6 +2359,19 @@ namespace Model
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SearchResult_AdvertismentUpdate", Storage="_AdvertismentUpdates", ThisKey="Id", OtherKey="SearchResultID")]
+		public EntitySet<AdvertismentUpdate> AdvertismentUpdates
+		{
+			get
+			{
+				return this._AdvertismentUpdates;
+			}
+			set
+			{
+				this._AdvertismentUpdates.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AdvertismentSection_SearchResult", Storage="_AdvertismentSection", ThisKey="AdvertismentSection_Id", OtherKey="Id", IsForeignKey=true)]
 		public AdvertismentSection AdvertismentSection
 		{
@@ -2354,6 +2433,18 @@ namespace Model
 		}
 		
 		private void detach_Advertisments(Advertisment entity)
+		{
+			this.SendPropertyChanging();
+			entity.SearchResult = null;
+		}
+		
+		private void attach_AdvertismentUpdates(AdvertismentUpdate entity)
+		{
+			this.SendPropertyChanging();
+			entity.SearchResult = this;
+		}
+		
+		private void detach_AdvertismentUpdates(AdvertismentUpdate entity)
 		{
 			this.SendPropertyChanging();
 			entity.SearchResult = null;
@@ -3981,6 +4072,222 @@ namespace Model
 					this._CityID = value;
 					this.SendPropertyChanged("CityID");
 					this.OnCityIDChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AdvertismentUpdates")]
+	public partial class AdvertismentUpdate : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _AdvertismentUpdateID;
+		
+		private int _AdvertismentID;
+		
+		private System.DateTime _CreateDate;
+		
+		private System.Nullable<int> _SearchResultID;
+		
+		private EntityRef<Advertisment> _Advertisment;
+		
+		private EntityRef<SearchResult> _SearchResult;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAdvertismentUpdateIDChanging(System.Guid value);
+    partial void OnAdvertismentUpdateIDChanged();
+    partial void OnAdvertismentIDChanging(int value);
+    partial void OnAdvertismentIDChanged();
+    partial void OnCreateDateChanging(System.DateTime value);
+    partial void OnCreateDateChanged();
+    partial void OnSearchResultIDChanging(System.Nullable<int> value);
+    partial void OnSearchResultIDChanged();
+    #endregion
+		
+		public AdvertismentUpdate()
+		{
+			this._Advertisment = default(EntityRef<Advertisment>);
+			this._SearchResult = default(EntityRef<SearchResult>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdvertismentUpdateID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid AdvertismentUpdateID
+		{
+			get
+			{
+				return this._AdvertismentUpdateID;
+			}
+			set
+			{
+				if ((this._AdvertismentUpdateID != value))
+				{
+					this.OnAdvertismentUpdateIDChanging(value);
+					this.SendPropertyChanging();
+					this._AdvertismentUpdateID = value;
+					this.SendPropertyChanged("AdvertismentUpdateID");
+					this.OnAdvertismentUpdateIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdvertismentID", DbType="Int NOT NULL")]
+		public int AdvertismentID
+		{
+			get
+			{
+				return this._AdvertismentID;
+			}
+			set
+			{
+				if ((this._AdvertismentID != value))
+				{
+					if (this._Advertisment.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAdvertismentIDChanging(value);
+					this.SendPropertyChanging();
+					this._AdvertismentID = value;
+					this.SendPropertyChanged("AdvertismentID");
+					this.OnAdvertismentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SearchResultID", DbType="Int")]
+		public System.Nullable<int> SearchResultID
+		{
+			get
+			{
+				return this._SearchResultID;
+			}
+			set
+			{
+				if ((this._SearchResultID != value))
+				{
+					if (this._SearchResult.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSearchResultIDChanging(value);
+					this.SendPropertyChanging();
+					this._SearchResultID = value;
+					this.SendPropertyChanged("SearchResultID");
+					this.OnSearchResultIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Advertisment_AdvertismentUpdate", Storage="_Advertisment", ThisKey="AdvertismentID", OtherKey="Id", IsForeignKey=true)]
+		public Advertisment Advertisment
+		{
+			get
+			{
+				return this._Advertisment.Entity;
+			}
+			set
+			{
+				Advertisment previousValue = this._Advertisment.Entity;
+				if (((previousValue != value) 
+							|| (this._Advertisment.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Advertisment.Entity = null;
+						previousValue.AdvertismentUpdates.Remove(this);
+					}
+					this._Advertisment.Entity = value;
+					if ((value != null))
+					{
+						value.AdvertismentUpdates.Add(this);
+						this._AdvertismentID = value.Id;
+					}
+					else
+					{
+						this._AdvertismentID = default(int);
+					}
+					this.SendPropertyChanged("Advertisment");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SearchResult_AdvertismentUpdate", Storage="_SearchResult", ThisKey="SearchResultID", OtherKey="Id", IsForeignKey=true)]
+		public SearchResult SearchResult
+		{
+			get
+			{
+				return this._SearchResult.Entity;
+			}
+			set
+			{
+				SearchResult previousValue = this._SearchResult.Entity;
+				if (((previousValue != value) 
+							|| (this._SearchResult.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._SearchResult.Entity = null;
+						previousValue.AdvertismentUpdates.Remove(this);
+					}
+					this._SearchResult.Entity = value;
+					if ((value != null))
+					{
+						value.AdvertismentUpdates.Add(this);
+						this._SearchResultID = value.Id;
+					}
+					else
+					{
+						this._SearchResultID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("SearchResult");
 				}
 			}
 		}

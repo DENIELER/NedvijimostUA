@@ -66,8 +66,8 @@ public class AdvertismentsLoadingWorkflow : BaseContextWorkflow
         IQueryable<Advertisment> searchResults = from adv in context.Advertisments
                              where 
                                 !adv.isSpecial
-                                && adv.createDate >= dateTimeFrom.Date
-                                && adv.createDate < dateTimeTo.Date
+                                && adv.modifyDate >= dateTimeFrom.Date
+                                && adv.modifyDate < dateTimeTo.Date
                                 && !adv.not_realestate
                              select adv;
 
