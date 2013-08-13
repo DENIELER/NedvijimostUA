@@ -53,8 +53,39 @@ public class Utils
 
     public static byte[] CalculateMD5Hash(string input)
     {
-        System.Security.Cryptography.MD5 md5Hasher = System.Security.Cryptography.MD5.Create();
+        var md5Hasher = System.Security.Cryptography.MD5.Create();
+        List<byte> bytes = new List<byte>();
+        string leaveString = input;
+        
+        int length = leaveString.Length;
+        while (length >= 8000)
+        {
+            string substring = leaveString.Substring(0, 8000);
+            bytes.AddRange(
+                md5Hasher.ComputeHash(
+                    System.Text.Encoding.Default.GetBytes(substring)
+                )
+            );
 
-        return md5Hasher.ComputeHash(System.Text.Encoding.Default.GetBytes(input));
+            leaveString = leaveString.Remove(0, 8000);
+            length = leaveString.Length;
+        }
+
+        bytes.AddRange(
+                md5Hasher.ComputeHash(
+                    System.Text.Encoding.Default.GetBytes(leaveString)
+                )
+            );
+        return bytes.ToArray();
+    }
+
+    public static string HashToHex(byte[] bytes, bool upperCase)
+    {
+        System.Text.StringBuilder result = new System.Text.StringBuilder(bytes.Length * 2);
+
+        for (int i = 0; i < bytes.Length; i++)
+            result.Append(bytes[i].ToString(upperCase ? "X2" : "x2"));
+
+        return result.ToString();
     }
 }
