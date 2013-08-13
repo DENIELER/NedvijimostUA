@@ -378,7 +378,7 @@ public class CrawlWorkflow : BaseContextWorkflow
         {
             try
             {
-                var textHash = Utils.CalculateMD5Hash(advertisment.Text);
+                var textHash = Utils.HashToHex(Utils.CalculateMD5Hash(advertisment.Text), true);
                 Model.Advertisment existsAdvertisment = context.Advertisments
                                                         .Where(a => a.TextHashValue == textHash)
                                                         .FirstOrDefault();

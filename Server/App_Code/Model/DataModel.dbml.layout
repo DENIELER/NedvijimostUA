@@ -82,7 +82,7 @@
         <classShapeMoniker Id="e8757b66-aa63-447e-b454-43097f70d63b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 2.44794840494792); (3.5 : 2.44794840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 2.44794840494792); (3.5 : 2.44794840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataModel/AdvertismentSection/AdvertismentSection_SearchResult" />
       <nodes>
         <classShapeMoniker Id="b10c1c7c-5b9b-4ca4-ba30-416e71946c67" />
@@ -115,7 +115,7 @@
         <classShapeMoniker Id="e8757b66-aa63-447e-b454-43097f70d63b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 5.01520914713542); (4.60416666666667 : 5.01520914713542 : JumpStart); (4.77083333333333 : 5.01520914713542 : JumpEnd); (6.25 : 5.01520914713542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.75 : 5.01520914713542); (6.25 : 5.01520914713542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataModel/AdvertismentSubSection/AdvertismentSubSection_Advertisment" />
       <nodes>
         <classShapeMoniker Id="01a1c007-59ad-4d1e-ae32-453dfc365171" />
@@ -174,7 +174,7 @@
         <classShapeMoniker Id="b6356186-dcd6-4fe9-919d-fc69630c784e" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(4.6875 : 2.77089680989583); (4.6875 : 7.875); (5.5 : 7.875); (5.5 : 9.41429768880208); (6.25 : 9.41429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(4.6875 : 2.77089680989583); (4.6875 : 7.875); (5.5 : 7.875); (5.5 : 9.41429768880208); (6.25 : 9.41429768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataModel/SearchResult/SearchResult_AdvertismentUpdate" />
       <nodes>
         <classShapeMoniker Id="e99565db-327c-4004-8c96-19a42faedf0e" />

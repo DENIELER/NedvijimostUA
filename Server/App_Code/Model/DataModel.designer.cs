@@ -600,7 +600,7 @@ namespace Model
 		
 		private System.Nullable<int> _UndergroundStationID;
 		
-		private byte[] _TextHashValue;
+		private string _TextHashValue;
 		
 		private EntitySet<AdvertismentPhone> _AdvertismentPhones;
 		
@@ -658,7 +658,7 @@ namespace Model
     partial void OnAddress1Changed();
     partial void OnUndergroundStationIDChanging(System.Nullable<int> value);
     partial void OnUndergroundStationIDChanged();
-    partial void OnTextHashValueChanging(byte[] value);
+    partial void OnTextHashValueChanging(string value);
     partial void OnTextHashValueChanged();
     #endregion
 		
@@ -1071,7 +1071,7 @@ namespace Model
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TextHashValue")]
-		public byte[] TextHashValue
+		public string TextHashValue
 		{
 			get
 			{
