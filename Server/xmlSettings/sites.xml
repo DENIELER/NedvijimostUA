@@ -87,7 +87,7 @@
         <nexPageUrl>http://objava.kharkov.ua/board/arenda/{0}</nexPageUrl>
 		    <startPageIndex>1</startPageIndex>
         <parsingOptions>
-          <encoding>windows-1251</encoding>
+          <encoding>utf-8</encoding>
           <containerDiv>
             <![CDATA[//div[contains(@class,'objava')]]]>
           </containerDiv>
