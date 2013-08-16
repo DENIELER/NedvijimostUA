@@ -58,16 +58,16 @@ public class Utils
         string leaveString = input;
         
         int length = leaveString.Length;
-        while (length >= 8000)
+        while (length >= 3000)
         {
-            string substring = leaveString.Substring(0, 8000);
+            string substring = leaveString.Substring(0, 3000);
             bytes.AddRange(
                 md5Hasher.ComputeHash(
                     System.Text.Encoding.Unicode.GetBytes(substring)
                 )
             );
 
-            leaveString = leaveString.Remove(0, 8000);
+            leaveString = leaveString.Remove(0, 3000);
             length = leaveString.Length;
         }
 
