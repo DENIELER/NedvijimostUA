@@ -63,7 +63,7 @@ public class Utils
             string substring = leaveString.Substring(0, 8000);
             bytes.AddRange(
                 md5Hasher.ComputeHash(
-                    System.Text.Encoding.Default.GetBytes(substring)
+                    System.Text.Encoding.Unicode.GetBytes(substring)
                 )
             );
 
@@ -73,7 +73,7 @@ public class Utils
 
         bytes.AddRange(
                 md5Hasher.ComputeHash(
-                    System.Text.Encoding.Default.GetBytes(leaveString)
+                    System.Text.Encoding.Unicode.GetBytes(leaveString)
                 )
             );
         return bytes.ToArray();
