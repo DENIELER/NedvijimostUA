@@ -110,9 +110,9 @@ public class CrawlWorkflow : BaseContextWorkflow
                 if (siteSetting.pagesCount > 0
                     && pageNum > siteSetting.pagesCount)
                     advExists = false;
-#if DEBUG
-                advExists = false;
-#endif
+//#if DEBUG
+//                advExists = false;
+//#endif
             } while (advExists);
         }
         catch (Exception e)
