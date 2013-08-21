@@ -110,7 +110,9 @@ public class CrawlWorkflow : BaseContextWorkflow
                 if (siteSetting.pagesCount > 0
                     && pageNum > siteSetting.pagesCount)
                     advExists = false;
-
+#if DEBUG
+                advExists = false;
+#endif
             } while (advExists);
         }
         catch (Exception e)
@@ -489,7 +491,9 @@ public class CrawlWorkflow : BaseContextWorkflow
                     context.AdvertismentUpdates.InsertOnSubmit(advertismentUpdate);
 
                     //--- update modified datetime for advertisment
-                    existsAdvertisment.modifyDate = Utils.GetUkranianDateTimeNow();
+                    var modifyAdvertisment = context.Advertisments
+                                                    .FirstOrDefault(a => a.Id == existsAdvertisment.Id);
+                    modifyAdvertisment.modifyDate = Utils.GetUkranianDateTimeNow();
 
                     context.SubmitChanges();
                 }
