@@ -183,6 +183,33 @@
                     </div>
                 </div>
             </div>
+            
+            if (i == 4)
+            {
+                <noindex>
+                <div style="margin: 10px auto; width: 620px; text-align: center;">
+                        <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- Прямоугольник NedvijimostUA -->
+                        <ins class="adsbygoogle"
+                                style="display:inline-block;width:300px;height:250px"
+                                data-ad-client="ca-pub-5891602113354577"
+                                data-ad-slot="4998995771"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>   
+                    
+                        <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- Прямоугольник NedvijimostUA -->
+                        <ins class="adsbygoogle"
+                                style="display:inline-block;width:300px;height:250px"
+                                data-ad-client="ca-pub-5891602113354577"
+                                data-ad-slot="4998995771"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>   
+                </div>
+                </noindex>
+            }
         }
         
         @{
@@ -197,7 +224,7 @@
             {
                 var prevPage = currentPage - 1;
                 var nextPage = currentPage + 1;
-                
+
                 var prevPageUrl = currentPage <= 1 ? "" : SystemUtils.Utils.Url.InsertURLParam(Request.RawUrl, "page", prevPage.ToString());
                 var nextPageUrl = currentPage >= lastPage ? "" : SystemUtils.Utils.Url.InsertURLParam(Request.RawUrl, "page", nextPage.ToString());
                 
@@ -210,10 +237,10 @@
                 
                 <div>
                     <ul class="pager">
-                        <li class="previous @( currentPage <= 1 ? "disabled" : "" )">
+                        <li class="previous @( currentPage <= 1 ? "disabled" : "")">
                             <a href="@prevPageUrl">&larr; Назад</a>
                         </li>
-                        <li class="next @( currentPage >= lastPage ? "disabled" : "" )">
+                        <li class="next @( currentPage >= lastPage ? "disabled" : "")">
                             <a href="@nextPageUrl">Далее &rarr;</a>
                         </li>
                     </ul>
@@ -237,7 +264,7 @@
         </div>*@
     </div>
 
-    <noindex>
+    @*<noindex>
         <div style="margin-top: 10px; text-align:center;">
             <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
             <!-- NedvijimostUA между объяв -->
@@ -249,7 +276,7 @@
                 (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
         </div>
-    </noindex>
+    </noindex>*@
 </div>
 
 <script src="~/Scripts/blueimp-gallery.min.js"></script>
