@@ -7,19 +7,30 @@ using System.Xml.Linq;
 
 public class SiteSettingsWorkflow
 {
-    public string fileName;
-    public string mainSection;
+    private string fileName;
+    private string mainSection;
+    private string city = "Kharkiv";
 
-    public SiteSettingsWorkflow(string fileName, string mainSection)
+    public SiteSettingsWorkflow(string fileName, string mainSection, string city)
     {
         this.fileName = fileName;
         this.mainSection = mainSection;
+
+        if(!string.IsNullOrEmpty(city))
+            this.city = city;
     }
 
-    public SiteSettingsWorkflow(string fileName, string mainSection, int processorPart)
+    public SiteSettingsWorkflow(string fileName, string mainSection, int? processorPart, string city)
     {
         this.fileName = fileName;
-        this.mainSection = mainSection + "_" + processorPart.ToString();
+
+        if(processorPart != null)
+            this.mainSection = mainSection + "_" + processorPart.ToString();
+        else
+            this.mainSection = mainSection;
+
+        if (!string.IsNullOrEmpty(city))
+            this.city = city;
     }
 
     public IList<SiteSetting> getSiteSettings()
@@ -34,13 +45,14 @@ public class SiteSettingsWorkflow
         XmlDocument xmlDocument = new XmlDocument();
         xmlDocument.Load(System.Web.Hosting.HostingEnvironment.MapPath(fileName));
 
-        XmlNodeList sites = xmlDocument.DocumentElement.SelectSingleNode(mainSection).SelectNodes("site");
+        XmlNodeList sites = xmlDocument.DocumentElement.SelectSingleNode(city).SelectSingleNode(mainSection).SelectNodes("site");
         foreach (XmlNode site in sites)
         {
             SiteSetting info = new SiteSetting();
             info.name = site["name"].InnerText;
             info.url = site["url"].InnerText;
             info.nextPageUrl = site["nexPageUrl"].InnerText;
+            info.City = city;
 
             var startIndexPageXmlElement = site["startPageIndex"];
             if(startIndexPageXmlElement != null)
@@ -104,4 +116,6 @@ public struct SiteSetting
     public bool excludeTags { get; set; }
 
     public int pagesCount { get; set; }
+
+    public string City { get; set; }
 }

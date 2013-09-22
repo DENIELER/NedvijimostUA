@@ -1152,6 +1152,8 @@ namespace SiteMVC.Models
 		
 		private System.Nullable<int> _UndergroundStationID;
 		
+		private string _City;
+		
 		private EntitySet<AdvertismentPhone> _AdvertismentPhones;
 		
 		private EntitySet<AdvertismentsPhoto> _AdvertismentsPhotos;
@@ -1202,6 +1204,8 @@ namespace SiteMVC.Models
     partial void OnPriceChanged();
     partial void OnUndergroundStationIDChanging(System.Nullable<int> value);
     partial void OnUndergroundStationIDChanged();
+    partial void OnCityChanging(string value);
+    partial void OnCityChanged();
     #endregion
 		
 		public viewAdvertisment()
@@ -1602,6 +1606,26 @@ namespace SiteMVC.Models
 					this._UndergroundStationID = value;
 					this.SendPropertyChanged("UndergroundStationID");
 					this.OnUndergroundStationIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_City")]
+		public string City
+		{
+			get
+			{
+				return this._City;
+			}
+			set
+			{
+				if ((this._City != value))
+				{
+					this.OnCityChanging(value);
+					this.SendPropertyChanging();
+					this._City = value;
+					this.SendPropertyChanged("City");
+					this.OnCityChanged();
 				}
 			}
 		}
@@ -3651,6 +3675,8 @@ namespace SiteMVC.Models
 		
 		private System.Nullable<int> _UndergroundStationID;
 		
+		private string _City;
+		
 		private EntitySet<AdvertismentPhone> _AdvertismentPhones;
 		
 		private EntitySet<AdvertismentsPhoto> _AdvertismentsPhotos;
@@ -3701,6 +3727,8 @@ namespace SiteMVC.Models
     partial void OnPriceChanged();
     partial void OnUndergroundStationIDChanging(System.Nullable<int> value);
     partial void OnUndergroundStationIDChanged();
+    partial void OnCityChanging(string value);
+    partial void OnCityChanged();
     #endregion
 		
 		public Advertisment()
@@ -4092,6 +4120,26 @@ namespace SiteMVC.Models
 					this._UndergroundStationID = value;
 					this.SendPropertyChanged("UndergroundStationID");
 					this.OnUndergroundStationIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_City")]
+		public string City
+		{
+			get
+			{
+				return this._City;
+			}
+			set
+			{
+				if ((this._City != value))
+				{
+					this.OnCityChanging(value);
+					this.SendPropertyChanging();
+					this._City = value;
+					this.SendPropertyChanged("City");
+					this.OnCityChanged();
 				}
 			}
 		}

@@ -19,7 +19,9 @@ public class SaleHousesProcessor : IHttpHandler {
         if (!string.IsNullOrWhiteSpace(context.Request["password"])
             && context.Request["password"] == "gtycbz")
         {
-            var parser = new ParsingController("sale", "SaleHousesCrawler", "SaleHouses");
+            string city = context.Request["city"];
+            
+            var parser = new ParsingController("sale", "SaleHousesCrawler", "SaleHouses", null, city);
             parser.StartParsing();
         }
     }

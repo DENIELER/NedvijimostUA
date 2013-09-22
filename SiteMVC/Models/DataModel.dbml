@@ -76,6 +76,7 @@
       <Column Name="CountByTextColumn" Type="System.Int32" IsReadOnly="true" CanBeNull="false" />
       <Column Name="Price" Type="System.Decimal" CanBeNull="true" />
       <Column Name="UndergroundStationID" Type="System.Int32" CanBeNull="true" />
+      <Column Member="City" Type="System.String" CanBeNull="true" />
       <Association Name="viewAdvertisment_AdvertismentPhone" Member="AdvertismentPhones" ThisKey="Id" OtherKey="AdvertismentId" Type="AdvertismentPhone" />
       <Association Name="viewAdvertisment_AdvertismentsPhoto" Member="AdvertismentsPhotos" ThisKey="Id" OtherKey="Advertisment_Id" Type="AdvertismentsPhoto" />
       <Association Name="viewAdvertisment_AdvertismentComment" Member="AdvertismentComments" ThisKey="Id" OtherKey="AdvertismentID" Type="AdvertismentComment" />
@@ -200,6 +201,7 @@
       <Column Name="Address1" Type="System.String" CanBeNull="true" />
       <Column Name="Price" Type="System.Decimal" CanBeNull="true" />
       <Column Name="UndergroundStationID" Type="System.Int32" CanBeNull="true" />
+      <Column Name="City" Type="System.String" CanBeNull="true" />
       <Association Name="Advertisment_AdvertismentPhone" Member="AdvertismentPhones" ThisKey="Id" OtherKey="AdvertismentId" Type="AdvertismentPhone" />
       <Association Name="Advertisment_AdvertismentsPhoto" Member="AdvertismentsPhotos" ThisKey="Id" OtherKey="Advertisment_Id" Type="AdvertismentsPhoto" />
       <Association Name="Advertisment_AdvertismentComment" Member="AdvertismentComments" ThisKey="Id" OtherKey="AdvertismentID" Type="AdvertismentComment" />
@@ -229,7 +231,7 @@
       <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="AdvertismentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Member="Login" Type="System.String" CanBeNull="true" />
+      <Column Name="Login" Type="System.String" CanBeNull="true" />
       <Association Name="Advertisment_AdvertismentComment" Member="Advertisment" ThisKey="AdvertismentID" OtherKey="Id" Type="Advertisment" IsForeignKey="true" />
       <Association Name="viewAdvertisment_AdvertismentComment" Member="viewAdvertisment" ThisKey="AdvertismentID" OtherKey="Id" Type="viewAdvertisment" IsForeignKey="true" />
       <Association Name="User_AdvertismentComment" Member="User" ThisKey="UserID" OtherKey="UserID" Type="User" IsForeignKey="true" />

@@ -3,6 +3,7 @@ using SiteMVC.Models.Engine.Advertisment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using System.Web;
 
 namespace SiteMVC.App_Code
@@ -18,59 +19,74 @@ namespace SiteMVC.App_Code
         #region Methods
         public AdvertismentsList LoadAdversitments(SiteMVC.Models.Engine.AdvertismentsRequest request)
         {
-            IQueryable<viewAdvertisment> advertisments = LoadAdvertismentsByDate(request.DateFrom.Value, request.DateTo.Value);
-            int fullCount = 0;
-            int countToShow = 0;
-            int countToShowAfterFilter = 0;
-            if (advertisments != null)
+            using (var txn = new TransactionScope(
+                        TransactionScopeOption.Required,
+                        new TransactionOptions
+                        {
+                            IsolationLevel = IsolationLevel.ReadUncommitted
+                        }
+            ))
             {
-                advertisments = advertisments.Where(adv => adv.AdvertismentSection_Id == request.SectionId);
-
-                if (request.SubSectionId != null)
-                    advertisments = advertisments.Where(adv => adv.AdvertismentSubSection_Id == request.SubSectionId.Value);
-
-                fullCount = advertisments.Count();
-
-                switch (request.State)
+                IQueryable<viewAdvertisment> advertisments = LoadAdvertismentsByDate(request.DateFrom.Value, request.DateTo.Value);
+                int fullCount = 0;
+                int countToShow = 0;
+                int countToShowAfterFilter = 0;
+                if (advertisments != null)
                 {
-                    case State.JustParsed:
-                        advertisments = advertisments.Where(
-                            adv => adv.subpurchaseAdvertisment && adv.SubPurchase_Id == null
-                            );
-                        break;
-                    case State.NotSubpurchase:
-                        advertisments = advertisments.Where(
-                            adv => !adv.subpurchaseAdvertisment
-                            );
-                        break;
-                    case State.Subpurchase:
-                        advertisments = advertisments.Where(
-                            adv => adv.subpurchaseAdvertisment && adv.SubPurchase_Id != null
-                            );
-                        break;
-                    case State.SubpurchaseWithNotSubpurchase:
-                        advertisments = advertisments.Where(
-                            adv => !adv.subpurchaseAdvertisment || adv.SubPurchase_Id != null
-                            );
-                        break;
+                    advertisments = advertisments.Where(adv => adv.AdvertismentSection_Id == request.SectionId);
+
+                    if (request.SubSectionId != null)
+                        advertisments = advertisments.Where(adv => adv.AdvertismentSubSection_Id == request.SubSectionId.Value);
+
+                    if (!string.IsNullOrEmpty(request.City))
+                        advertisments = advertisments.Where(adv => adv.City == request.City);
+                    else
+                        //--- Null means Kharkiv city
+                        advertisments = advertisments.Where(adv => adv.City == null);
+
+                    fullCount = advertisments.Count();
+
+                    switch (request.State)
+                    {
+                        case State.JustParsed:
+                            advertisments = advertisments.Where(
+                                adv => adv.subpurchaseAdvertisment && adv.SubPurchase_Id == null
+                                );
+                            break;
+                        case State.NotSubpurchase:
+                            advertisments = advertisments.Where(
+                                adv => !adv.subpurchaseAdvertisment
+                                );
+                            break;
+                        case State.Subpurchase:
+                            advertisments = advertisments.Where(
+                                adv => adv.subpurchaseAdvertisment && adv.SubPurchase_Id != null
+                                );
+                            break;
+                        case State.SubpurchaseWithNotSubpurchase:
+                            advertisments = advertisments.Where(
+                                adv => !adv.subpurchaseAdvertisment || adv.SubPurchase_Id != null
+                                );
+                            break;
+                    }
+
+                    countToShow = advertisments.Count();
+
+                    //--- special filters
+                    if (request.Filter != null)
+                        ApplyFilters(request.Filter, ref advertisments);
+
+                    countToShowAfterFilter = advertisments.Count();
+                    advertisments = advertisments.Skip(request.Offset).Take(request.Limit);
                 }
 
-                countToShow = advertisments.Count();
+                DateTime lastTimeUpdated;
+                if (advertisments != null && advertisments.Any())
+                    lastTimeUpdated = advertisments.Max(adv => adv.modifyDate);
+                else lastTimeUpdated = DateTime.Now;
 
-                //--- special filters
-                if (request.Filter != null)
-                    ApplyFilters(request.Filter, ref advertisments);
-
-                countToShowAfterFilter = advertisments.Count();
-                advertisments = advertisments.Skip(request.Offset).Take(request.Limit);
+                return new AdvertismentsList(advertisments, fullCount, countToShow, countToShowAfterFilter, lastTimeUpdated);
             }
-
-            DateTime lastTimeUpdated;
-            if (advertisments != null && advertisments.Any())
-                lastTimeUpdated = advertisments.Max(adv => adv.modifyDate);
-            else lastTimeUpdated = DateTime.Now;
-
-            return new AdvertismentsList(advertisments, fullCount, countToShow, countToShowAfterFilter, lastTimeUpdated);
         }
         
         public bool IsLoaded(AdvertismentsList response)

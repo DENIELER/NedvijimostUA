@@ -22,6 +22,8 @@ namespace Server.Entities
 
         public int? UndergroundStationID { get; set; }
 
+        public string City { get; set; }
+
         public Advertisment()
         {
 

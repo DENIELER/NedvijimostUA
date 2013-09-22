@@ -188,7 +188,8 @@ public class CrawlWorkflow : BaseContextWorkflow
                             Link = pageUrl,
                             SiteName = siteSetting.name,
                             Price = CrawlPrice(advertismentText, siteSetting),
-                            Address1 = CrawlAddress(advertismentText, siteSetting)
+                            Address1 = CrawlAddress(advertismentText, siteSetting),
+                            City = siteSetting.City
                         };
 
                         advertismentsCrawledCount++;
@@ -409,7 +410,8 @@ public class CrawlWorkflow : BaseContextWorkflow
                         AdvertismentSubSection = subSectionObject,
                         Price = advertisment.Price,
                         Address1 = advertisment.Address1,
-                        UndergroundStationID = advertisment.UndergroundStationID
+                        UndergroundStationID = advertisment.UndergroundStationID,
+                        City = advertisment.City
                     };
                     context.Advertisments.InsertOnSubmit(advertismentEntity);
 

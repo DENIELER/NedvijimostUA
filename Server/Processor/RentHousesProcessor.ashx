@@ -19,7 +19,9 @@ public class RentHousesProcessor : IHttpHandler {
         if (!string.IsNullOrWhiteSpace(context.Request["password"])
             && context.Request["password"] == "gtycbz")
         {
-            var parser = new ParsingController("rent", "RentHousesCrawler", "RentHouses");
+            string city = context.Request["city"];
+
+            var parser = new ParsingController("rent", "RentHousesCrawler", "RentHouses", null, city);
             parser.StartParsing();
         }
     }

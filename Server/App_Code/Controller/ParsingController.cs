@@ -16,18 +16,22 @@ public class ParsingController
     protected string _parsingProcessName;
     protected int? _parsingProcessPart;
 
+    private string _city;
+
     /// <summary>
     /// For long running operation execution
     /// </summary>
     private delegate void LongRun();
     #endregion variables
 
-    public ParsingController(string sectionCode, string logServiceCode, string parsingProcessName, int? parsingProcessPart = null)
+    public ParsingController(string sectionCode, string logServiceCode, string parsingProcessName, int? parsingProcessPart, string city)
 	{
         _advertismentSectionCode = sectionCode;
 
         _parsingProcessName = parsingProcessName;
         _parsingProcessPart = parsingProcessPart;
+
+        _city = city;
 
         _log = new Log(logServiceCode, sectionCode);
 	}
@@ -48,12 +52,7 @@ public class ParsingController
                 _log.WriteLog("------------------" +
                                 Environment.NewLine +
                                 "Start " + _parsingProcessName + " parse processing.");
-                //var Long = new LongRun(Parse);
-                //var thread = new System.Threading.Thread(new System.Threading.ThreadStart(Long));
-
-                //var jobHost = new JobHost(_log);
-                //jobHost.DoWork(thread.Start);
-
+                
                 Task.Factory.StartNew(Parse);
             }
             catch (Exception exc)
@@ -66,10 +65,7 @@ public class ParsingController
         try
         {
             //-- get sites settings
-            var siteSettingsWorkflow = 
-                _parsingProcessPart != null
-                ? new SiteSettingsWorkflow(Resources.Constants.SiteSettingsFile, _advertismentSectionCode, _parsingProcessPart.Value)
-                : new SiteSettingsWorkflow(Resources.Constants.SiteSettingsFile, _advertismentSectionCode);
+            var siteSettingsWorkflow = new SiteSettingsWorkflow(Resources.Constants.SiteSettingsFile, _advertismentSectionCode, _parsingProcessPart, _city);
             System.Collections.Generic.IList<SiteSetting> siteSettings = siteSettingsWorkflow.getSiteSettings();
 
             var advertsProcessing = new CrawlWorkflow(_advertismentSectionCode);

@@ -39,6 +39,7 @@
       <Column Name="Address1" Type="System.String" CanBeNull="true" />
       <Column Name="UndergroundStationID" Type="System.Int32" CanBeNull="true" />
       <Column Name="TextHashValue" Type="System.String" CanBeNull="true" />
+      <Column Name="City" Type="System.String" CanBeNull="true" />
       <Association Name="Advertisment_AdvertismentPhone" Member="AdvertismentPhones" ThisKey="Id" OtherKey="AdvertismentId" Type="AdvertismentPhone" />
       <Association Name="Advertisment_AdvertismentsPhoto" Member="AdvertismentsPhotos" Storage="_AdvertismentsPhotoes" ThisKey="Id" OtherKey="Advertisment_Id" Type="AdvertismentsPhoto" />
       <Association Name="Advertisment_AdvertismentUpdate" Member="AdvertismentUpdates" ThisKey="Id" OtherKey="AdvertismentID" Type="AdvertismentUpdate" />

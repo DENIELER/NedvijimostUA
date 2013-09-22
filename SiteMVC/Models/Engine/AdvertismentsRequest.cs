@@ -13,6 +13,8 @@ namespace SiteMVC.Models.Engine
         }
 
         #region common parameters
+        public string City { get; set; }
+
         public int SectionId { get; set; }
         public int? SubSectionId { get; set; }
 

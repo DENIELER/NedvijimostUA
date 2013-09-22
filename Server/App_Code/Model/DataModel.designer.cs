@@ -602,6 +602,8 @@ namespace Model
 		
 		private string _TextHashValue;
 		
+		private string _City;
+		
 		private EntitySet<AdvertismentPhone> _AdvertismentPhones;
 		
 		private EntitySet<AdvertismentsPhoto> _AdvertismentsPhotoes;
@@ -660,6 +662,8 @@ namespace Model
     partial void OnUndergroundStationIDChanged();
     partial void OnTextHashValueChanging(string value);
     partial void OnTextHashValueChanged();
+    partial void OnCityChanging(string value);
+    partial void OnCityChanged();
     #endregion
 		
 		public Advertisment()
@@ -1086,6 +1090,26 @@ namespace Model
 					this._TextHashValue = value;
 					this.SendPropertyChanged("TextHashValue");
 					this.OnTextHashValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_City")]
+		public string City
+		{
+			get
+			{
+				return this._City;
+			}
+			set
+			{
+				if ((this._City != value))
+				{
+					this.OnCityChanging(value);
+					this.SendPropertyChanging();
+					this._City = value;
+					this.SendPropertyChanged("City");
+					this.OnCityChanged();
 				}
 			}
 		}
