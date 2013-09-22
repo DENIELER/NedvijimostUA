@@ -10,7 +10,7 @@ namespace SiteMVC.Controllers
 {
     public class AdvertismentsController : Controller
     {
-        public ActionResult Index(string sectionUrl, string subSectionUrl, string subpurchaseMode, [System.Web.Http.FromUri] Models.Engine.AdvertismentsFilter advertismentsFilter)
+        public ActionResult Index(string sectionUrl, string subSectionUrl, string subpurchaseMode, [System.Web.Http.FromUri] Models.Engine.AdvertismentsFilter advertismentsFilter, string city = null)
         {
             var result = new SiteMVC.ViewModels.Advertisments.AdvertismentsPageViewModel();
             result.Request = new SiteMVC.Models.Engine.AdvertismentsRequest();
@@ -50,12 +50,13 @@ namespace SiteMVC.Controllers
                 if (!string.IsNullOrEmpty(subSection.Keywords))
                     result.SectionKeywords = subSection.Keywords;
             }
-
+        
             result.Request.State = State.NotSubpurchase;
             if (subpurchaseMode == Resources.Resource.VKLUCHAYA_POSREDNIKOV)
                 result.Request.State = State.SubpurchaseWithNotSubpurchase;
 
             result.Request.Url = Request.RawUrl;
+            result.Request.City = city;
 
             return View(result);
         }

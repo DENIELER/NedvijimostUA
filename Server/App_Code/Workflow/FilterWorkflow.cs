@@ -53,12 +53,13 @@ public class FilterWorkflow : BaseContextWorkflow
         var goodAdvList = new List<Model.Advertisment>();
 
         int advertismentsCount = adversitments.Count;
+        int sendSqlCheckCount = 20;
 
         List<Tuple<int, string>> advertismentsPhonesToFilter = new List<Tuple<int, string>>();
         for (int i = 0; i < advertismentsCount; i++)
         {
             Model.Advertisment adversitment = adversitments[i];
-            if (i == 0 || i % 50 == 0)
+            if (i == 0 || i % sendSqlCheckCount == 0)
                 advertismentsPhonesToFilter.Clear();
 
             foreach (var advertismentPhone in adversitment.AdvertismentPhones
@@ -74,7 +75,7 @@ public class FilterWorkflow : BaseContextWorkflow
                     );
             }
 
-            if ((i + 1) % 50 == 0 || (i + 1) == advertismentsCount)
+            if ((i + 1) % sendSqlCheckCount == 0 || (i + 1) == advertismentsCount)
             {
                 // The XML
                 XElement xml = new XElement("root",
@@ -109,7 +110,7 @@ public class FilterWorkflow : BaseContextWorkflow
                 context.SubmitChanges();
             }
 
-            if (i % 50 == 0)
+            if (i % sendSqlCheckCount == 0)
             {
                 WriteLog("Filtering..." + i.ToString() + " advertisments. " + Environment.NewLine +
                         "Good - " + goodAdvList.Count.ToString());
