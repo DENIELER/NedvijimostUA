@@ -131,6 +131,37 @@
         </site>-->
     </Kharkiv>
   </rent_1>
+  
+  <rent_2>
+    <Dnepropetrovsk>
+      <site>
+        <name>Днепр Аренда</name>
+        <url>http://www.dnepr-arenda.dp.ua/arenda.html</url>
+        <nexPageUrl>http://www.dnepr-arenda.dp.ua/arenda.html?start={0}0</nexPageUrl>
+        <startPageIndex>1</startPageIndex>
+        <parsingOptions>
+          <encoding>utf-8</encoding>
+          <containerListDiv>
+            <![CDATA[//div[@class='main']//dl[@class='jea_item']]]>
+          </containerListDiv>
+          <containerListCurrentAdvUrl>
+            <![CDATA[//div[@class='main']//dl[@class='jea_item']//dt[@class='title']//a]]>
+          </containerListCurrentAdvUrl>
+          <containerListCurrentAdvUrlHost>http://www.dnepr-arenda.dp.ua/</containerListCurrentAdvUrlHost>
+          <containerDiv>
+            <![CDATA[//div[@class='main']]]>
+          </containerDiv>
+          <regexTemplate>
+            <![CDATA[//div[@class='item_description']]]>
+          </regexTemplate>
+          <phonesRegexTemplate>
+            <![CDATA[//div[@class='item_description']//p[2]//b]]>
+          </phonesRegexTemplate>
+          <pagesCount>10</pagesCount>
+        </parsingOptions>
+      </site>
+    </Dnepropetrovsk>
+  </rent_2>
 
   <sale>
     <Kharkiv>

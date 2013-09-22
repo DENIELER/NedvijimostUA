@@ -45,7 +45,7 @@ public class SiteSettingsWorkflow
         XmlDocument xmlDocument = new XmlDocument();
         xmlDocument.Load(System.Web.Hosting.HostingEnvironment.MapPath(fileName));
 
-        XmlNodeList sites = xmlDocument.DocumentElement.SelectSingleNode(city).SelectSingleNode(mainSection).SelectNodes("site");
+        XmlNodeList sites = xmlDocument.DocumentElement.SelectSingleNode(mainSection).SelectSingleNode(city).SelectNodes("site");
         foreach (XmlNode site in sites)
         {
             SiteSetting info = new SiteSetting();
