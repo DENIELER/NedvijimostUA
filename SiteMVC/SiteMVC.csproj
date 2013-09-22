@@ -132,6 +132,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Code\AdvertismentsLoader.cs" />
+    <Compile Include="App_Code\SocialMedia.cs" />
+    <Compile Include="App_Code\Vkontakte.cs" />
     <Compile Include="Models\ModelInterlayerObjects\Comment.cs" />
     <Compile Include="Models\ModelInterlayerObjects\User.cs" />
     <Compile Include="ViewModels\Admin\ServerLogsViewModel.cs" />
@@ -190,6 +192,10 @@
     <Compile Include="ViewModels\SubPurchase.cs" />
     <Compile Include="ViewModels\User.cs" />
     <Compile Include="WebServices\IExternalService.cs" />
+    <Compile Include="WebServices\ISocialMediaService.cs" />
+    <Compile Include="WebServices\SocialMediaService.svc.cs">
+      <DependentUpon>SocialMediaService.svc</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -257,6 +263,7 @@
     <Content Include="Areas\Controls\Views\AdvertismentsFilter\Index.cshtml" />
     <Content Include="WebServices\ExternalService.svc" />
     <Content Include="Areas\Controls\Views\AdvertismentsList\AddComment.cshtml" />
+    <Content Include="WebServices\SocialMediaService.svc" />
     <None Include="Properties\PublishProfiles\Arvixe FTP.pubxml" />
     <None Include="Scripts\jquery-2.0.2.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.2.js" />
