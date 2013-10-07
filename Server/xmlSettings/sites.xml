@@ -162,6 +162,37 @@
       </site>
     </Dnepropetrovsk>
   </rent_2>
+  
+  <rent_3>
+    <Kiev>
+      <site>
+        <name>Dom.ria.ua</name>
+        <url>http://dom.ria.ua/ru/search/?category=1&amp;realty_type=0&amp;advert_type=3&amp;state_id=10&amp;characteristic[209][to]=1</url>
+        <nexPageUrl>http://dom.ria.ua/ru/search/?category=1&amp;realty_type=0&amp;advert_type=3&amp;state_id=10&amp;characteristic[209][to]=1&amp;page={0}</nexPageUrl>
+        <startPageIndex>1</startPageIndex>
+        <parsingOptions>
+          <encoding>utf-8</encoding>
+          <containerListDiv>
+            <![CDATA[//div[@class='standart-view']]]>
+          </containerListDiv>
+          <containerListCurrentAdvUrl>
+            <![CDATA[//div[@class='standart-view']//div[contains(@class, 'realty_item')]//div[@class='content-bar']//div[@class='footer-ticket']//span[@class='view-all']//a]]>
+          </containerListCurrentAdvUrl>
+          <containerListCurrentAdvUrlHost>http://dom.ria.ua/</containerListCurrentAdvUrlHost>
+          <containerDiv>
+            <![CDATA[//div[contains(@class, 'page-cars')]]]>
+          </containerDiv>
+          <regexTemplate>
+            <![CDATA[//div[@class='right-bar-view']//div[@class='gallery-view']//section[@class='box-panel']//div[contains(@class, 'description-view')]]]>
+          </regexTemplate>
+          <phonesRegexTemplate>
+            <![CDATA[//div[contains(@class, 'left-bar-view')]//div[contains(@class, 'seller-data')]//div[contains(@class, 'contact-data-seller')]//strong[@class='phone']]]>
+          </phonesRegexTemplate>
+          <pagesCount>20</pagesCount>
+        </parsingOptions>
+      </site>
+    </Kiev>
+  </rent_3>
 
   <sale>
     <Kharkiv>
