@@ -83,6 +83,13 @@
 
                     </div>
 
+                    @if (isAdmin)
+                    {
+                        <div class="row-fluid" style="margin: 10px 0;">
+                            <strong>Ссылка:</strong> @advertisment.Link
+                        </div>
+                    }
+
                     @*      Photos    *@
                     @if(advertisment.Photos.Any())
                     {
