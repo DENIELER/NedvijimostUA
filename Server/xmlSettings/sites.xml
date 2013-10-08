@@ -166,6 +166,50 @@
   <rent_3>
     <Kiev>
       <site>
+        <name>ArendaGazeta.com.ua</name>
+        <url>http://www.arendagazeta.com.ua/q/s/Folder/2/SortBy/Time/Dir/d/pg/1/?City=420</url>
+        <nexPageUrl>http://www.arendagazeta.com.ua/q/s/Folder/2/SortBy/Time/Dir/d/pg/{0}/?City=420</nexPageUrl>
+        <startPageIndex>2</startPageIndex>
+        <parsingOptions>
+          <encoding>utf-8</encoding>
+          <containerListDiv>
+            <![CDATA[//div[@class='found']//table//tr//td[1]//table]]>
+          </containerListDiv>
+          <containerListCurrentAdvUrl>
+            <![CDATA[//div[@class='found']//table//tr//td[1]//table//tr[@valign='top']//td[contains(@class, 'fadv')]//h4//a]]>
+          </containerListCurrentAdvUrl>
+          <containerDiv>
+            <![CDATA[//div[@class='main_content']//div//div//table//tr//td[1][contains(@style, 'width: 600px')]]]>
+          </containerDiv>
+          <regexTemplate>
+            <![CDATA[]]>
+          </regexTemplate>
+          <pagesCount>15</pagesCount>
+        </parsingOptions>
+      </site>
+      <site>
+        <name>Aviso.ua</name>
+        <url>http://www.aviso.ua/kiev/list.php?r=121&amp;s=&amp;distr=0&amp;room%5B1%5D=1&amp;spacefrom=&amp;spaceto=&amp;pricefrom=&amp;priceto=&amp;curr=5&amp;livefrom=&amp;liveto=&amp;kitchfrom=&amp;kitchto=&amp;flrfrom=&amp;flrto=&amp;flrsfrom=&amp;flrsto=&amp;source=0&amp;relevance=0&amp;text=</url>
+        <nexPageUrl>http://www.aviso.ua/kiev/list.php?r=121&amp;s=&amp;distr=0&amp;room%5B1%5D=1&amp;spacefrom=&amp;spaceto=&amp;pricefrom=&amp;priceto=&amp;curr=5&amp;livefrom=&amp;liveto=&amp;kitchfrom=&amp;kitchto=&amp;flrfrom=&amp;flrto=&amp;flrsfrom=&amp;flrsto=&amp;source=0&amp;relevance=0&amp;text=&amp;p={0}</nexPageUrl>
+        <startPageIndex>2</startPageIndex>
+        <parsingOptions>
+          <encoding>utf-8</encoding>
+          <containerListDiv>
+            <![CDATA[//div[@class='container']//div[@class='row']//div[@class='span9 center']]]>
+          </containerListDiv>
+          <containerListCurrentAdvUrl>
+            <![CDATA[//div[@class='container']//div[@class='row']//div[@class='span9 center']//div[@class='line_ads creame']//div[@class='row-fluid']//div[@id='highlight-text']//a]]>
+          </containerListCurrentAdvUrl>
+          <containerDiv>
+            <![CDATA[//div[@class='container']//div[@class='row']//div[@class='span9 center']//div[@class='row-fluid']//div[@class='span12 item']]]>
+          </containerDiv>
+          <regexTemplate>
+            <![CDATA[]]>
+          </regexTemplate>
+          <pagesCount>26</pagesCount>
+        </parsingOptions>
+      </site>
+      <site>
         <name>Dom.ria.ua</name>
         <url>http://dom.ria.ua/ru/search/?category=1&amp;realty_type=0&amp;advert_type=3&amp;state_id=10&amp;characteristic[209][to]=1</url>
         <nexPageUrl>http://dom.ria.ua/ru/search/?category=1&amp;realty_type=0&amp;advert_type=3&amp;state_id=10&amp;characteristic[209][to]=1&amp;page={0}</nexPageUrl>
