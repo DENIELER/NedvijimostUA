@@ -42,6 +42,10 @@
     <phoneFormat format="xxx-x-xxx">\d{3}-\d{1}-\d{3}</phoneFormat>
     <phoneFormat format="x-xxx-xxx">\d{1}-\d{3}-\d{3}</phoneFormat>
     <phoneFormat format="xx-xxx-xx">\d{2}-\d{3}-\d{2}</phoneFormat>
+    <phoneFormat format="(xx) xxx-xx-xx">(\d{2}) \d{3}-\d{2}-\d{2}</phoneFormat>
+    <phoneFormat format="(xx) xxxxxxx">(\d{2}) \d{7}</phoneFormat>
+    <phoneFormat format="(xx)xxx-xx-xx">(\d{2})\d{3}-\d{2}-\d{2}</phoneFormat>
+    <phoneFormat format="(xx)xxxxxxx">(\d{2})\d{7}</phoneFormat>
   </phoneFormats>
 
   <rentStopSearchWords>

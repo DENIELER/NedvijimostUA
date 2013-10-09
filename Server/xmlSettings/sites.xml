@@ -184,7 +184,7 @@
           <regexTemplate>
             <![CDATA[]]>
           </regexTemplate>
-          <pagesCount>15</pagesCount>
+          <pagesCount>10</pagesCount>
         </parsingOptions>
       </site>
       <site>
@@ -206,7 +206,7 @@
           <regexTemplate>
             <![CDATA[]]>
           </regexTemplate>
-          <pagesCount>26</pagesCount>
+          <pagesCount>20</pagesCount>
         </parsingOptions>
       </site>
       <site>
