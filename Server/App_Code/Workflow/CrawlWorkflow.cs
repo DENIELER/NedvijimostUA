@@ -414,21 +414,21 @@ public class CrawlWorkflow : BaseContextWorkflow
                         City = advertisment.City
                     };
                     context.Advertisments.InsertOnSubmit(advertismentEntity);
-
-                    try
-                    {
-                        context.SubmitChanges();
-                    }
-                    catch (Exception e)
-                    {
-                        WriteLog("Saving advertisment error. " + Environment.NewLine
-                            + "Text: " + advertisment.Text + Environment.NewLine
-                            + "Link: " + advertisment.Link + Environment.NewLine
-                            + "Site: " + advertisment.SiteName + Environment.NewLine
-                            + "Error: " + e.Message + Environment.NewLine
-                            + ". Trace:" + e.StackTrace);
-                        throw;
-                    }
+                    
+                    //try
+                    //{
+                    //    context.SubmitChanges();
+                    //}
+                    //catch (Exception e)
+                    //{
+                    //    WriteLog("Saving advertisment error. " + Environment.NewLine
+                    //        + "Text: " + advertisment.Text + Environment.NewLine
+                    //        + "Link: " + advertisment.Link + Environment.NewLine
+                    //        + "Site: " + advertisment.SiteName + Environment.NewLine
+                    //        + "Error: " + e.Message + Environment.NewLine
+                    //        + ". Trace:" + e.StackTrace);
+                    //    throw;
+                    //}
 
                     //--- add phones
                     foreach (var phone in advertisment.Phones)
@@ -442,8 +442,7 @@ public class CrawlWorkflow : BaseContextWorkflow
                                 Advertisment = advertismentEntity
                             };
                             context.AdvertismentPhones.InsertOnSubmit(advertismentPhoneEntity);
-
-                            advertismentEntity.AdvertismentPhones.Add(advertismentPhoneEntity);
+                            //advertismentEntity.AdvertismentPhones.Add(advertismentPhoneEntity);
                         }
                     }
                     //----
@@ -460,8 +459,7 @@ public class CrawlWorkflow : BaseContextWorkflow
                                 Advertisment = advertismentEntity
                             };
                             context.AdvertismentsPhotos.InsertOnSubmit(advertismentPhotoEntity);
-
-                            advertismentEntity.AdvertismentsPhotos.Add(advertismentPhotoEntity);
+                            //advertismentEntity.AdvertismentsPhotos.Add(advertismentPhotoEntity);
                         }
                     }
                     //---
@@ -472,7 +470,7 @@ public class CrawlWorkflow : BaseContextWorkflow
                     }
                     catch (Exception e)
                     {
-                        WriteLog("Saving advertisment's elements error. " + Environment.NewLine
+                        WriteLog("Saving advertisment's error. " + Environment.NewLine
                             + "Error: " + e.Message + Environment.NewLine
                             + ". Trace:" + e.StackTrace);
                         throw;
